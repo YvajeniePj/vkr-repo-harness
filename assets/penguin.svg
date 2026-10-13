@@ -1,0 +1,107 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%">
+  <defs>
+    <!-- Background glow -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#38bdf8" stop-opacity="0"/>
+    </radialGradient>
+    
+    <!-- Body gradients -->
+    <linearGradient id="tuxBody" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="50%" stop-color="#0f172a"/>
+      <stop offset="100%" stop-color="#020617"/>
+    </linearGradient>
+
+    <linearGradient id="tuxBelly" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="100%" stop-color="#e2e8f0"/>
+    </linearGradient>
+
+    <!-- Beak and feet -->
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+
+    <!-- Sunglasses Gradient & Glow -->
+    <linearGradient id="shadesLens" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0284c7"/>
+      <stop offset="40%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#ec4899"/>
+    </linearGradient>
+
+    <linearGradient id="shadesGlare" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="6" flood-color="#000000" flood-opacity="0.5"/>
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow -->
+  <circle cx="200" cy="200" r="180" fill="url(#bgGlow)" />
+
+  <!-- Shadow below penguin -->
+  <ellipse cx="200" cy="370" rx="110" ry="20" fill="#000000" opacity="0.35" />
+
+  <!-- Feet -->
+  <ellipse cx="145" cy="355" rx="36" ry="18" fill="url(#orangeGrad)" transform="rotate(-10 145 355)" filter="url(#shadow)"/>
+  <ellipse cx="255" cy="355" rx="36" ry="18" fill="url(#orangeGrad)" transform="rotate(10 255 355)" filter="url(#shadow)"/>
+
+  <!-- Flippers (Wings) -->
+  <!-- Left Flipper -->
+  <path d="M 120 180 C 70 200, 50 260, 80 290 C 100 310, 125 250, 130 220 Z" fill="url(#tuxBody)" filter="url(#shadow)"/>
+  <!-- Right Flipper -->
+  <path d="M 280 180 C 330 200, 350 260, 320 290 C 300 310, 275 250, 270 220 Z" fill="url(#tuxBody)" filter="url(#shadow)"/>
+
+  <!-- Penguin Body -->
+  <path d="M 200 70 
+           C 130 70, 110 130, 110 210 
+           C 110 280, 125 350, 200 350 
+           C 275 350, 290 280, 290 210 
+           C 290 130, 270 70, 200 70 Z" 
+        fill="url(#tuxBody)" filter="url(#shadow)"/>
+
+  <!-- White Belly -->
+  <path d="M 200 160 
+           C 150 160, 135 210, 135 265 
+           C 135 315, 160 340, 200 340 
+           C 240 340, 265 315, 265 265 
+           C 265 210, 250 160, 200 160 Z" 
+        fill="url(#tuxBelly)"/>
+
+  <!-- Beak -->
+  <path d="M 175 168 Q 200 205 225 168 Q 200 156 175 168 Z" fill="url(#orangeGrad)" filter="url(#shadow)"/>
+
+  <!-- COOL SUNGLASSES -->
+  <!-- Frame bridge -->
+  <path d="M 185 142 Q 200 138 215 142" stroke="#0f172a" stroke-width="8" stroke-linecap="round" fill="none"/>
+  
+  <!-- Sunglasses Left Rim -->
+  <path d="M 125 132 L 185 136 C 187 155, 175 174, 155 174 C 132 174, 122 155, 125 132 Z" 
+        fill="#0f172a" stroke="#020617" stroke-width="5" filter="url(#shadow)"/>
+  <!-- Sunglasses Left Lens -->
+  <path d="M 129 136 L 181 139 C 183 153, 173 169, 155 169 C 136 169, 127 153, 129 136 Z" 
+        fill="url(#shadesLens)"/>
+  <!-- Glare on Left Lens -->
+  <polygon points="135,138 155,139 142,166 133,163" fill="url(#shadesGlare)" opacity="0.8"/>
+
+  <!-- Sunglasses Right Rim -->
+  <path d="M 215 136 L 275 132 C 278 155, 268 174, 245 174 C 225 174, 213 155, 215 136 Z" 
+        fill="#0f172a" stroke="#020617" stroke-width="5" filter="url(#shadow)"/>
+  <!-- Sunglasses Right Lens -->
+  <path d="M 219 139 L 271 136 C 273 153, 264 169, 245 169 C 227 169, 217 153, 219 139 Z" 
+        fill="url(#shadesLens)"/>
+  <!-- Glare on Right Lens -->
+  <polygon points="225,139 245,138 232,166 223,163" fill="url(#shadesGlare)" opacity="0.8"/>
+
+  <!-- Sunglasses temples (sides) -->
+  <path d="M 125 136 Q 112 134 105 142" stroke="#0f172a" stroke-width="6" stroke-linecap="round" fill="none"/>
+  <path d="M 275 136 Q 288 134 295 142" stroke="#0f172a" stroke-width="6" stroke-linecap="round" fill="none"/>
+
+  <!-- Gold chain necklace for ultimate swag -->
+  <path d="M 160 220 Q 200 260 240 220" stroke="url(#orangeGrad)" stroke-width="7" stroke-dasharray="12 4" stroke-linecap="round" fill="none" filter="url(#shadow)"/>
+</svg>
