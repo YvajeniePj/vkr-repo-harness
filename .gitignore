@@ -7,3 +7,5 @@ venv/
 *.log
 .venv-linux/
 scratch/
+отчёты_платформа/Отчет_Неделя_1_v*.html
+scratch_*.png
