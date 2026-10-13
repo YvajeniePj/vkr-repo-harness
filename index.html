@@ -547,7 +547,7 @@
             </div>
             <div class="card-inner">
                 <h4>Исследования Gartner и Standish Group</h4>
-                <p>Анализ Gartner по стратегиям модернизации приложений (<em>«Strategies for Enterprise Applications Modernization Success»</em>, ноябрь 2024 г.) <a href="https://www.gartner.com/en/documents/5959999" target="_blank" class="link-ext">[Gartner, 2024]</a> и отчёты Standish Group CHAOS демонстрируют системные барьеры:</p>
+                <p>Анализ Gartner по стратегиям модернизации приложений (<em>«Strategies for Enterprise Applications Modernization Success»</em>, ноябрь 2024 г.) <a href="https://www.gartner.com/en/documents/5947839" target="_blank" class="link-ext">[Gartner, 2024]</a> и отчёты Standish Group CHAOS демонстрируют системные барьеры:</p>
                 <ul>
                     <li>До <strong>70% комплексных инициатив модернизации</strong> не укладываются в изначально заложенные сроки, бюджеты или не достигают целевых функциональных показателей.</li>
                     <li>От <strong>60% до 80% IT-бюджетов</strong> корпоративного сектора заморожены в задачах поддержания работоспособности устаревших контуров («run the business»).</li>
@@ -846,13 +846,13 @@ flowchart TD
                 <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">1. Claude Code (Anthropic)</h4>
                 <span class="badge badge-blue">CLI Autonomous Agent</span>
             </div>
-            <p><strong>Описание:</strong> Официальный терминальный агент компании Anthropic, запущенный в 2025 году для автономного выполнения задач в локальных репозиториях <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview" target="_blank" class="link-ext">[Anthropic Docs, 2025]</a>.</p>
+            <p><strong>Описание:</strong> Официальный терминальный агент компании Anthropic, запущенный в 2025 году для автономного выполнения задач в локальных репозиториях <a href="https://code.claude.com/docs" target="_blank" class="link-ext">[Anthropic Docs, 2025]</a>.</p>
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> Встроенный набор низкоуровневых операций: <code>Read</code> (чтение файла), <code>Edit</code> (точечный str_replace патчинг), <code>Write</code> (создание файла), <code>Grep</code> (поиск регулярных выражений), <code>Glob</code> (поиск по маске), <code>Bash</code> (выполнение shell-команд), <code>Agent</code> (спавн субагента для изолированной подзадачи), <code>AskUserQuestion</code>, <code>WebFetch</code>, <code>WebSearch</code>. Поддерживает протокол <strong>MCP (Model Context Protocol)</strong> для подключения внешних инструментов.</li>
                 <li><strong>Устройство Harness:</strong> Терминальный цикл ReAct с контекстным сжатием (compaction). Проектные инструкции считываются из стоячего файла <code>CLAUDE.md</code> в корне репозитория. Для тяжелых задач планирования агент порождает дочерние контексты <code>Plan</code> и <code>Explore</code>.</li>
                 <li><strong>Модель разрешений (Permissions):</strong> Трёхуровневая: <em>Manual Mode</em> (запрос одобрения на каждую модификацию файла и сетевой вызов), <em>Auto Mode</em> (встроенный классификатор безопасности автоматически одобряет безопасные действия), <em>Bypass Mode</em> (флаг <code>--allow-dangerously-skip-permissions</code>). Белый список команд настраивается в файле <code>.claude/settings.local.json</code>. Безопасные команды чтения (<code>git status</code>, <code>git diff</code>) разрешены по умолчанию.</li>
                 <li><strong>Песочница (Sandbox):</strong> По умолчанию исполняется прямо в терминале пользователя под правами текущей сессии с перехватом команд через whitelist/blacklist. Корпоративный запуск изолируется через внешний Docker-контейнер.</li>
-                <li><strong>Источник и уровень доказательности:</strong> Официальная документация Anthropic Docs <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Specs); анализ утёкших системных промптов в репозитории <code>Piebald-AI/claude-code-system-prompts</code> <a href="https://github.com/Piebald-AI/claude-code-system-prompts" target="_blank" class="link-ext">[GitHub]</a> (Level 4 Evidence: Reverse-Engineering).</li>
+                <li><strong>Источник и уровень доказательности:</strong> Официальная документация Anthropic Docs <a href="https://code.claude.com/docs" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Specs); анализ утёкших системных промптов в репозитории <code>Piebald-AI/claude-code-system-prompts</code> <a href="https://github.com/Piebald-AI/claude-code-system-prompts" target="_blank" class="link-ext">[GitHub]</a> (Level 4 Evidence: Reverse-Engineering).</li>
             </ul>
             <div class="mermaid-container">
                 <pre class="mermaid">
@@ -883,7 +883,7 @@ flowchart LR
                 <li><strong>Устройство Harness:</strong> Полнодуплексный стейт-машинный цикл. Контекст непрерывно насыщается активными файлами редактора, положением курсора, историей правок и диагностикой LSP (Language Server Protocol). Для поддержания фокуса вставляются скрытые системные блоки <code>&lt;system_reminder&gt;</code>.</li>
                 <li><strong>Модель разрешений (Permissions):</strong> Изменения в коде представляются пользователю в виде диффов прямо в окне редактора с кнопками <em>Accept / Reject</em> (построчно или для всего файла). Запуск терминальных команд требует подтверждения, если не включен авто-режим.</li>
                 <li><strong>Песочница (Sandbox) — Shadow Workspace:</strong> Уникальная архитектурная особенность Cursor — концепция <strong>теневого рабочего пространства (Shadow Workspace)</strong>. При глубоком рефакторинге модификации сначала применяются к виртуальной in-memory копии файлов. Фоновый процесс запускает линтеры и тайпчекеры (LSP) против теневого состояния. Если агент сломал типы или синтаксис, ошибка возвращается в модель <em>до</em> того, как пользователь увидит сломанный diff на диске.</li>
-                <li><strong>Источник и уровень доказательности:</strong> Официальная документация Cursor Docs <a href="https://cursor.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence); технический разбор теневого воркспейса <a href="https://tianpan.co/notes/2024-10-cursor-composer-shadow-workspace" target="_blank" class="link-ext">[Tianpan, 2024]</a> (Level 2 Evidence); дампы промптов в <code>x1xhlol/system-prompts-and-models-of-ai-tools</code> <a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools" target="_blank" class="link-ext">[GitHub]</a> (Level 4 Evidence).</li>
+                <li><strong>Источник и уровень доказательности:</strong> Официальная документация Cursor Docs <a href="https://cursor.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence); технический разбор теневого воркспейса <a href="https://docs.cursor.com" target="_blank" class="link-ext">[Tianpan, 2024]</a> (Level 2 Evidence); дампы промптов в <code>x1xhlol/system-prompts-and-models-of-ai-tools</code> <a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools" target="_blank" class="link-ext">[GitHub]</a> (Level 4 Evidence).</li>
             </ul>
             <div class="mermaid-container">
                 <pre class="mermaid">
@@ -942,7 +942,7 @@ flowchart LR
                 <li><strong>Устройство Harness:</strong> Асинхронный пайплайн: считывание метаданных задачи &rarr; чтение файла инструкций <code>AGENTS.md</code> &rarr; генерация формального плана изменений &rarr; генерация кода &rarr; запуск тестов в облаке &rarr; создание PR.</li>
                 <li><strong>Модель разрешений (Permissions):</strong> Двухрежимная архитектура: в стандартном веб-интерфейсе реализован строгий <em>Human-Sign-Off on Plan</em> (план изменений требует явного утверждения человеком до модификации файлов). В официальном Jules API предусмотрен параметр <code>requirePlanApproval</code>: при значении <code>false</code> агент функционирует в полностью автономном headless-режиме, утверждая план автоматически. Финальные изменения передаются на ревью через GitHub PR.</li>
                 <li><strong>Песочница (Sandbox):</strong> Эфемерные виртуальные машины Google Cloud (GCP Ephemeral Sandboxes). Исходный код клонируется в защищённую изолированную среду, где выполняются тесты и сборка. Локальная машина разработчика не задействуется.</li>
-                <li><strong>Источник и уровень доказательности:</strong> Официальная платформа Google Jules <a href="https://jules.google.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Platform); официальный анонс в Google Blog <a href="https://blog.google/technology/developers/google-labs-jules-ai-code-agent/" target="_blank" class="link-ext">[Google Blog, 2024]</a> (Level 2 Evidence).</li>
+                <li><strong>Источник и уровень доказательности:</strong> Официальная платформа Google Jules <a href="https://jules.google.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Platform); официальный анонс в Google Blog <a href="https://jules.google/docs/api/reference/sessions/" target="_blank" class="link-ext">[Google Blog, 2024]</a> (Level 2 Evidence).</li>
             </ul>
             <div class="mermaid-container">
                 <pre class="mermaid">
@@ -960,19 +960,19 @@ flowchart LR
             </div>
         </div>
 
-        <!-- COMPETITOR 5: GITHUB COPILOT WORKSPACE -->
+        <!-- COMPETITOR 5: GITHUB COPILOT CODING AGENT & WORKSPACE -->
         <div class="card-inner" style="margin-bottom: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">5. GitHub Copilot Agent Mode / Workspace (GitHub / Microsoft)</h4>
-                <span class="badge badge-blue">Spec-Driven Development Environment</span>
+                <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">5. GitHub Copilot Coding Agent & Workspace (GitHub / Microsoft)</h4>
+                <span class="badge badge-blue">Autonomous Cloud & Spec-Driven Agent</span>
             </div>
-            <p><strong>Описание:</strong> Экспериментальная среда разработки от GitHub Next, реализующая концепцию Spec-Driven Development (разработка через формальную спецификацию) <a href="https://githubnext.com/projects/copilot-workspace" target="_blank" class="link-ext">[GitHub Next, 2024]</a>.</p>
+            <p><strong>Описание:</strong> Среда автономной разработки GitHub, развившаяся от экспериментальной спецификационной среды Copilot Workspace <a href="https://github.blog/news-insights/product-news/github-copilot-workspace/" target="_blank" class="link-ext">[GitHub Blog, 2024]</a> к полнофункциональному автономному агенту <strong>GitHub Copilot Coding Agent</strong>, запущенному в мае 2025 года <a href="https://github.blog/news-insights/product-news/github-copilot-meet-the-new-coding-agent/" target="_blank" class="link-ext">[GitHub Blog, 2025]</a>.</p>
             <ul>
-                <li><strong>Инструменты агента (Tools):</strong> Семантический индексатор репозитория, генератор спецификаций (Spec Generator), генератор плана (Plan Generator), интерактивный диффер с поддержкой ручного редактирования, интегратор с GitHub Codespaces.</li>
-                <li><strong>Устройство Harness:</strong> Четырёхфазный управляемый контур: <code>Task &rarr; Specification &rarr; Plan &rarr; Implementation (Diff)</code>. Главный принцип — <em>Steerability (управляемость)</em>: каждый промежуточный артефакт (спека, план, дифф) открыт для прямой правки человеком до перехода на следующий шаг.</li>
-                <li><strong>Модель разрешений (Permissions):</strong> Пользователь имеет абсолютный контроль над переходами между фазами. Спека разбита на «Current State» и «Desired State». Код не коммитится автоматически — разработчик принимает или корректирует diff построчно.</li>
-                <li><strong>Песочница (Sandbox):</strong> Интеграция с GitHub Codespaces и защищёнными микро-контейнерами. Код запускается в изолированной облачной среде разработки Azure/GitHub с контролем сетевых портов и секретов.</li>
-                <li><strong>Источник и уровень доказательности:</strong> Официальная публикация проекта GitHub Next Copilot Workspace <a href="https://githubnext.com/projects/copilot-workspace" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence); архитектурные публикации GitHub Engineering Blog <a href="https://github.blog" target="_blank" class="link-ext">[GitHub Blog, 2024]</a> (Level 2 Evidence).</li>
+                <li><strong>Инструменты агента (Tools):</strong> Автономное сканирование графа файлов, фоновый запуск терминальных сборок и тестов, генерация спецификаций и пошаговых планов, автоматическое открытие pull request в GitHub.</li>
+                <li><strong>Устройство Harness:</strong> Двухконтурная модель: в локальной IDE (VS Code) работает <em>Agent Mode</em> с интерактивным подтверждением правок, а в облаке — асинхронный <em>Coding Agent</em>, развёрнутый на инфраструктуре GitHub Actions и Azure.</li>
+                <li><strong>Модель разрешений (Permissions):</strong> <em>Steerability & Gatekeeping</em>: промежуточные планы открыты для ручной правки человеком; в облачном автономном режиме агент производит фиксацию правок в отдельную изолированную ветку без прямого коммита в main.</li>
+                <li><strong>Песочница (Sandbox):</strong> Защищённые эфемерные контейнеры GitHub Codespaces и виртуальные раннеры GitHub Actions с контролем сетевого периметра и секретов.</li>
+                <li><strong>Источник и уровень доказательности:</strong> Официальный анонс GitHub Copilot Coding Agent <a href="https://github.blog/news-insights/product-news/github-copilot-meet-the-new-coding-agent/" target="_blank" class="link-ext">[GitHub Blog, 2025]</a> (Level 2 Evidence); техническая документация спецификационной разработки Copilot Workspace <a href="https://githubnext.com/projects/copilot-workspace" target="_blank" class="link-ext">[GitHub Next Docs]</a> (Level 3 Evidence).</li>
             </ul>
             <div class="mermaid-container">
                 <pre class="mermaid">
@@ -992,7 +992,7 @@ flowchart LR
                 <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">6. OpenAI Codex Agent (2025–2026) & SWE-Agent Baseline</h4>
                 <span class="badge badge-purple">Cloud/CLI Autonomous Agent</span>
             </div>
-            <p><strong>Описание:</strong> Эволюция OpenAI от исторической специализированной модели генерации кода <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">[Chen et al., 2021]</a> и академического харнеса SWE-agent <a href="https://arxiv.org/abs/2405.15793" target="_blank" class="link-ext">[Yang et al., 2024]</a> к <strong>полноценному автономному программному агенту OpenAI Codex</strong>, представленному в мае 2025 года и запущенному в открытый доступ осенью 2025 – 2026 гг. <a href="https://openai.com/index/openai-codex/" target="_blank" class="link-ext">[OpenAI Docs, 2025]</a>.</p>
+            <p><strong>Описание:</strong> Эволюция OpenAI от исторической специализированной модели генерации кода <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">[Chen et al., 2021]</a> и академического харнеса SWE-agent <a href="https://arxiv.org/abs/2405.15793" target="_blank" class="link-ext">[Yang et al., 2024]</a> к <strong>полноценному автономному программному агенту OpenAI Codex</strong>, представленному в мае 2025 года и запущенному в открытый доступ осенью 2025 – 2026 гг. <a href="https://openai.com/index/introducing-codex/" target="_blank" class="link-ext">[OpenAI Docs, 2025]</a>.</p>
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> Унифицированный интерфейс терминального агента: автономное чтение файлов по путям, поиск по кодовой базе (ripgrep/file-search), генерация структурированных patch-блоков, выполнение команд в изолированном шелле и запуск тестовых наборов.</li>
                 <li><strong>Устройство Harness:</strong> Асинхронный многошаговый ReAct-цикл с поддержкой отслеживания контекста репозитория. В современном Codex Agent реализован управляемый планировщик и механизм контрольных точек для отката ошибочных изменений.</li>
@@ -1022,13 +1022,13 @@ flowchart LR
                 <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">7. Windsurf & Cascade Agent (Cognition / Codeium)</h4>
                 <span class="badge badge-cyan" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.4);">AI Flow Paradigm IDE</span>
             </div>
-            <p><strong>Описание:</strong> Интегрированная среда разработки нового поколения, представившая концепцию «AI Flow» и агентного движка Cascade <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">[Windsurf Docs, 2024]</a>. В июле 2025 года компания Cognition (создатель Devin) официально приобрела Windsurf, объединив под единым корпоративным контуром облачного автономного разработчика (Devin) и локальный IDE-инструмент (Cascade).</p>
+            <p><strong>Описание:</strong> Интегрированная среда разработки нового поколения, представившая концепцию «AI Flow» и агентного движка Cascade. 14 июля 2025 года компания Cognition (создатель Devin) официально приобрела Windsurf <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">[Cognition Announcement, 2025]</a>, объединив под единым корпоративным контуром облачного автономного инженера (Devin) и локальную агентную среду (в 2026 году развиваемую как Devin Desktop / Devin Local).</p>
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> Мультимодальный поиск по кодовой базе (Codebase RAG), непрерывное чтение и редактирование файлов, интеграция с терминалом (выполнение команд сборки, тестов, git), глубокий анализ LSP (Language Server Protocol), веб-поиск и проектные инструкции <code>.windsurfrules</code>.</li>
                 <li><strong>Устройство Harness:</strong> Парадигма <em>AI Flow</em>. В отличие от пошагового чата, Cascade способен выполнять цепочки из <strong>20–25 последовательных вызовов инструментов в рамках одного непрерывного цикла</strong> (Uninterrupted Flow). Поддерживает <strong>Persistent Project Memory</strong> — долговременную память архитектурных соглашений и решений между сессиями. В сложных сценариях задействует параллельных субагентов для монорепозиториев (один обновляет сигнатуру, второй правит зависимые вызовы, третий обновляет тесты).</li>
                 <li><strong>Модель разрешений (Permissions):</strong> Два режима взаимодействия: <em>Write Mode</em> (агент автономно применяет правки и запускает билды с возможностью отката через Undo Flow) и <em>Chat Mode</em> (режим безопасного чтения и консультаций). Критические терминальные команды требуют подтверждения разработчика.</li>
                 <li><strong>Песочница (Sandbox):</strong> Локальное окружение разработчика с отслеживанием изменений через теневые контрольные точки (Checkpoints) и валидацией синтаксиса через фоновый LSP-сервер до сохранения финального состояния.</li>
-                <li><strong>Источник и уровень доказательности:</strong> Официальная архитектурная документация Codeium Windsurf <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Specs); технические анонсы архитектуры Cascade <a href="https://codeium.com/blog" target="_blank" class="link-ext">[Codeium Blog, 2024]</a> (Level 2 Evidence).</li>
+                <li><strong>Источник и уровень доказательности:</strong> Официальный анонс приобретения Cognition <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">[Cognition Blog, 2025]</a> (Level 2 Evidence); техническая спецификация Cascade и перенос в Devin Desktop <a href="https://cognition.com/blog/introducing-devin-desktop" target="_blank" class="link-ext">[Cognition Specs, 2026]</a> (Level 3 Evidence).</li>
             </ul>
             <div class="mermaid-container">
                 <pre class="mermaid">
@@ -1051,7 +1051,7 @@ flowchart LR
                 <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">8. Aider & RepoMap Architecture (Paul Gauthier)</h4>
                 <span class="badge badge-green">Open-Source SOTA CLI Agent</span>
             </div>
-            <p><strong>Описание:</strong> Ведущий открытый терминальный инструмент парного программирования от Пола Готье, ставший де-факто мировым стандартом локального агентного рефакторинга с открытым исходным кодом <a href="https://github.com/paul-gauthier/aider" target="_blank" class="link-ext">[Gauthier, 2023-2024]</a>.</p>
+            <p><strong>Описание:</strong> Ведущий открытый терминальный инструмент парного программирования от Пола Готье, ставший де-факто мировым стандартом локального агентного рефакторинга с открытым исходным кодом <a href="https://github.com/Aider-AI/aider" target="_blank" class="link-ext">[Gauthier, 2023-2024]</a>.</p>
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> Прямой доступ к Git (автоматические атомарные коммиты с информативными сообщениями), Tree-sitter парсинг более чем 100 языков программирования, выполнение терминальных тестовых команд (pytest, npm test), контекстный селектор файлов.</li>
                 <li><strong>Устройство Harness — Архитектура RepoMap:</strong> Ключевой инженерный вклад Aider — алгоритм <strong>RepoMap</strong> <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">[Aider RepoMap Docs]</a>:
@@ -1403,16 +1403,16 @@ flowchart TD
                 <strong>OpenAI & Princeton University.</strong> (2024). <em>Introducing SWE-bench Verified: A Curated Benchmark for Software Engineering Agents</em>. OpenAI Research Publication. <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/introducing-swe-bench-verified/</a>.
             </li>
             <li>
-                <strong>OpenAI Research.</strong> (2026). <em>Why SWE-bench Verified No Longer Measures Frontier Coding Capabilities</em>. OpenAI Research Report (February 23, 2026). <a href="https://openai.com/index/why-swe-bench-verified-no-longer-measures-frontier-coding-capabilities/" target="_blank" class="link-ext">https://openai.com/index/why-swe-bench-verified-no-longer-measures-frontier-coding-capabilities/</a>.
+                <strong>OpenAI Research.</strong> (2026). <em>Why SWE-bench Verified No Longer Measures Frontier Coding Capabilities</em>. OpenAI Research Report (February 23, 2026). <a href="https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/</a>.
             </li>
             <li>
                 <strong>Gauthier, P.</strong> (2023-2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.
             </li>
             <li>
-                <strong>Codeium Inc.</strong> (2024). <em>Windsurf IDE and the Cascade Agentic Flow Architecture</em>. Codeium Technical Whitepaper. <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">https://codeium.com/windsurf</a>.
+                <strong>Cognition AI.</strong> (2025). <em>Cognition’s Acquisition of Windsurf and Integration into Devin Ecosystem</em>. Cognition Technical Announcement (July 14, 2025). <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">https://cognition.com/blog/windsurf</a>.
             </li>
             <li>
-                <strong>Anthropic PBC.</strong> (2024). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
+                <strong>Anthropic PBC.</strong> (2024–2026). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
             </li>
         </ol>
     </div>
@@ -1557,10 +1557,13 @@ flowchart LR
                 <strong>Page, M. J., McKenzie, J. E., Bossuyt, P. M., et al.</strong> (2021). <em>The PRISMA 2020 statement: an updated guideline for reporting systematic reviews</em>. BMJ, 372:n71. <a href="https://doi.org/10.1136/bmj.n71" target="_blank" class="link-ext">DOI: 10.1136/bmj.n71</a>.
             </li>
             <li>
-                <strong>Stripe Inc.</strong> (2018). <em>The Developer Coefficient: How software engineering efficiency impacts global GDP</em>. Stripe Research Report. <a href="https://stripe.com/reports/developer-coefficient" target="_blank" class="link-ext">https://stripe.com/reports/developer-coefficient</a>.
+                <strong>Stripe Inc.</strong> (2018). <em>The Developer Coefficient: How software engineering efficiency impacts global GDP</em>. Stripe Research Report. <a href="https://stripe.com/files/reports/the-developer-coefficient.pdf" target="_blank" class="link-ext">https://stripe.com/files/reports/the-developer-coefficient.pdf</a>.
             </li>
             <li>
-                <strong>Gartner Inc.</strong> (2023). <em>Top Trends in Application Modernization and Cloud Migration</em>. Gartner Research Press. <a href="https://www.gartner.com/en/newsroom/press-releases" target="_blank" class="link-ext">https://www.gartner.com/en/newsroom/press-releases</a>.
+                <strong>Gartner Inc.</strong> (2024). <em>Strategies for Enterprise Applications Modernization Success</em>. Gartner Research ID: 5947839 (November 25, 2024). <a href="https://www.gartner.com/en/documents/5947839" target="_blank" class="link-ext">https://www.gartner.com/en/documents/5947839</a>.
+            </li>
+            <li>
+                <strong>The Standish Group International.</strong> (2020–2024). <em>CHAOS Report: Beyond Infinity — Software Modernization and Resolution Benchmark</em>. Standish Research. <a href="https://www.standishgroup.com/" target="_blank" class="link-ext">https://www.standishgroup.com/</a>.
             </li>
             <li>
                 <strong>Jimenez, C. E., Yang, J., Wettig, A., et al.</strong> (2024). <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em>. In Proceedings of the Twelfth International Conference on Learning Representations (ICLR 2024). <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">arXiv:2310.06770</a>.
@@ -1587,10 +1590,13 @@ flowchart LR
                 <strong>Qian, C., et al.</strong> (2024). <em>Communicative Agents for Software Development</em>. In Proceedings of ACL 2024. <a href="https://arxiv.org/abs/2307.07924" target="_blank" class="link-ext">arXiv:2307.07924</a>.
             </li>
             <li>
-                <strong>Chen, M., et al.</strong> (2021). <em>Evaluating Large Language Models Trained on Code</em>. arXiv preprint (OpenAI Codex). <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">arXiv:2107.03374</a>.
+                <strong>Chen, M., et al.</strong> (2021). <em>Evaluating Large Language Models Trained on Code</em>. arXiv preprint (OpenAI Codex Model). <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">arXiv:2107.03374</a>.
             </li>
             <li>
-                <strong>Anthropic PBC.</strong> (2025). <em>Claude Code Overview and CLI Architecture Documentation</em>. Anthropic Docs. <a href="https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview" target="_blank" class="link-ext">https://docs.anthropic.com/en/docs/agents-and-tools/claude-code/overview</a>.
+                <strong>OpenAI.</strong> (2025). <em>Introducing Codex: Autonomous Software Engineering Agent</em>. Product Release & Documentation (May 16, 2025). <a href="https://openai.com/index/introducing-codex/" target="_blank" class="link-ext">https://openai.com/index/introducing-codex/</a>.
+            </li>
+            <li>
+                <strong>Anthropic PBC.</strong> (2025). <em>Claude Code Overview and CLI Architecture Documentation</em>. Anthropic Docs. <a href="https://code.claude.com/docs" target="_blank" class="link-ext">https://code.claude.com/docs</a>.
             </li>
             <li>
                 <strong>Cognition Labs.</strong> (2024). <em>Introducing Devin, the first AI software engineer</em>. Technical Report & Blog. <a href="https://www.cognition.ai/blog/introducing-devin" target="_blank" class="link-ext">https://www.cognition.ai/blog/introducing-devin</a>.
@@ -1617,10 +1623,10 @@ flowchart LR
                 <strong>Gauthier, P.</strong> (2023-2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.
             </li>
             <li>
-                <strong>Codeium Inc.</strong> (2024). <em>Windsurf IDE and the Cascade Agentic Flow Architecture</em>. Codeium Technical Whitepaper. <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">https://codeium.com/windsurf</a>.
+                <strong>Cognition AI.</strong> (2025). <em>Cognition’s Acquisition of Windsurf and Integration into Devin Ecosystem</em>. Cognition Technical Announcement (July 14, 2025). <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">https://cognition.com/blog/windsurf</a>.
             </li>
             <li>
-                <strong>Anthropic PBC.</strong> (2024). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
+                <strong>Anthropic PBC.</strong> (2024–2026). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
             </li>
         </ol>
     </div>
