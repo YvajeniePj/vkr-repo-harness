@@ -917,9 +917,9 @@
                     </tr>
                     <tr>
                         <td><strong>K9</strong></td>
-                        <td><strong>Human Intervention Time Saved</strong></td>
-                        <td>$$K_9 = 1 - \frac{t_{\text{review}} + t_{\text{manual\_fix}}}{t_{\text{manual\_migration\_baseline}}}$$</td>
-                        <td>Экономия времени ведущего инженера-архитектора по сравнению с эталонным ручным переносом. Целевая инженерная гипотеза: <strong>&ge; 80%</strong>.</td>
+                        <td><strong>Стабильность и дисперсия прогона (Run Stability &amp; Pass@k Variance)</strong></td>
+                        <td>$$\sigma(\text{Pass@}1) \le 5\%, \quad \text{CI}_{95\%} \text{ по 3+ независимым прогонам}$$</td>
+                        <td>Статистическая воспроизводимость результатов автономного агента при фиксированной температуре (0.0/0.2) и seed. Доверительный интервал (bootstrap CI 95%) разброса метрики Pass@1 по 3+ повторным итерациям не превышает 5%.</td>
                     </tr>
                 </tbody>
             </table>
@@ -972,9 +972,9 @@ AND ("harness" OR "sandbox" OR "execution feedback"
         </div>
 
         <h4>Воронка отбора публикаций (PRISMA Flow Diagram)</h4>
-        <div class="mermaid-wrapper" data-title="Архитектура Aider RepoMap (Paul Gauthier)">
+        <div class="mermaid-wrapper" data-title="Методологическая схема систематического отбора литературы (PRISMA 2020 Flow Diagram)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Архитектура Aider RepoMap (Paul Gauthier)</span>
+                <span class="mermaid-label">◈ PRISMA 2020 Flow Diagram</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1032,13 +1032,13 @@ flowchart TD
                     <tr>
                         <td>4</td>
                         <td><strong>Fengji Zhang et al.</strong> (RepoCoder)</td>
-                        <td>ACM TOSEM 2023</td>
+                        <td>EMNLP 2023</td>
                         <td>Итеративный поиск контекста на уровне репозитория (Repository-Level Code Completion).</td>
                         <td><span class="badge badge-cyan">RQ1</span></td>
                     </tr>
                     <tr>
                         <td>5</td>
-                        <td><strong>Lachaux et al.</strong> (TransCoder)</td>
+                        <td><strong>Rozière, Lachaux et al.</strong> (TransCoder)</td>
                         <td>NeurIPS 2020*</td>
                         <td>Фундаментальный безнадзорный перенос кода между языками программирования (C++, Java, Python).</td>
                         <td><span class="badge badge-blue">RQ3</span></td>
@@ -1102,7 +1102,7 @@ flowchart TD
                     <tr>
                         <td>14</td>
                         <td><strong>Zhong et al.</strong> (LDB Debugger)</td>
-                        <td>ICLR 2024</td>
+                        <td>Findings of ACL 2024</td>
                         <td>Пошаговая отладка кода агентами на основе трейсов выполнения промежуточных переменных.</td>
                         <td><span class="badge badge-purple">RQ1, RQ2</span></td>
                     </tr>
@@ -1116,7 +1116,7 @@ flowchart TD
                     <tr>
                         <td>16</td>
                         <td><strong>Hou et al.</strong> (LLMs for SE Survey)</td>
-                        <td>ACM CSUR 2024</td>
+                        <td>ACM TOSEM 2024</td>
                         <td>Комплексный мета-анализ применения LLM в разработке программного обеспечения и верификации.</td>
                         <td><span class="badge badge-blue">RQ1–RQ3</span></td>
                     </tr>
@@ -1132,7 +1132,7 @@ flowchart TD
             <ul>
                 <li><strong>Оригинальный SWE-bench (ICLR 2024):</strong> Революционный датасет из 2 294 задач реальных GitHub-репозиториев <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">[Jimenez et al., 2024]</a>. Однако выявил высокую долю нестабильных тестов (flaky tests) и подверженность утечке данных (data contamination).</li>
                 <li><strong>SWE-bench Verified (август 2024):</strong> Совместная инициатива OpenAI и авторов бенчмарка <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">[OpenAI & Princeton, 2024]</a> по отбору 500 задач, вручную верифицированных разработчиками. Стал главным отраслевым мерилом второй половины 2024 – 2025 годов.</li>
-                <li><strong>Кризис насыщения и исследование OpenAI (февраль 2026):</strong> 23 февраля 2026 года исследовательская группа OpenAI опубликовала отчёт <em>«Why SWE-bench Verified no longer measures frontier coding capabilities»</em>. В выборке из 138 наиболее сложных задач свыше <strong>59.4% имели существенные проблемы</strong> со спецификацией тестов или окружением, а передовые frontier-модели подошли к потолку разрешения известных проблем. В качестве частичной альтернативы предложен SWE-bench Pro.</li>
+                <li><strong>Кризис насыщения и исследование OpenAI (февраль 2026):</strong> 23 февраля 2026 года исследовательская группа OpenAI опубликовала отчёт <a href="https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/" target="_blank" class="link-ext"><em>«Why SWE-bench Verified no longer measures frontier coding capabilities»</em> [OpenAI Research, 2026]</a>. В выборке из 138 наиболее сложных задач свыше <strong>59.4% имели существенные проблемы</strong> со спецификацией тестов или окружением, а передовые frontier-модели подошли к потолку разрешения известных проблем. В качестве частичной альтернативы предложен SWE-bench Pro.</li>
             </ul>
             <p><strong>Принципиальный методологический вывод для ВКР:</strong> Ни оригинальный SWE-bench, ни SWE-bench Verified, ни SWE-bench Pro <strong>не предназначены для оценки межъязыкового переноса кодовых баз</strong>. Все они тестируют локальное исправление дефектов (bug-fixing / issue resolution) внутри однородных Python-проектов. Бенчмарк исправления ошибок не проверяет трансляцию структур данных, удержание графа типов и межрепозиторное слияние (TypeScript &rarr; Python). Это академически обосновывает необходимость собственной трёхуровневой методологии бенчмаркинга Repo-Harness и метрик $K_1$–$K_9$.</p>
         </div>
@@ -1154,9 +1154,9 @@ flowchart TD
                 <li><strong>Песочница (Sandbox):</strong> По умолчанию исполняется прямо в терминале пользователя под правами текущей сессии с перехватом команд через whitelist/blacklist. Корпоративный запуск изолируется через внешний Docker-контейнер.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная документация Anthropic Docs <a href="https://code.claude.com/docs" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Specs); анализ утёкших системных промптов в репозитории <code>Piebald-AI/claude-code-system-prompts</code> <a href="https://github.com/Piebald-AI/claude-code-system-prompts" target="_blank" class="link-ext">[GitHub]</a> (Level 4 Evidence: Reverse-Engineering).</li>
             </ul>
-            <div class="mermaid-wrapper" data-title="Архитектурная схема Claude Code (Anthropic)">
+            <div class="mermaid-wrapper" data-title="Архитектура терминального агента Claude Code (CLI &amp; Architecture)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Архитектурная схема Claude Code (Anthropic)</span>
+                <span class="mermaid-label">◈ Архитектура Claude Code (Anthropic)</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1188,7 +1188,7 @@ flowchart LR
                 <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">2. Cursor Agent / Composer (Anysphere)</h4>
                 <span class="badge badge-blue">IDE Multi-File Agent</span>
             </div>
-            <p><strong>Описание:</strong> Интегрированная среда разработки нового поколения на базе VS Code, использующая фоновый мульти-файловый агент Composer <a href="https://cursor.com" target="_blank" class="link-ext">[Cursor Docs, 2024]</a>.</p>
+            <p><strong>Описание:</strong> Интегрированная среда разработки нового поколения на базе VS Code, использующая фоновый мульти-файловый агент Composer <a href="https://docs.cursor.com" target="_blank" class="link-ext">[Cursor Documentation]</a> и архитектура теневого рабочего пространства <a href="https://www.cursor.com/blog/shadow-workspace" target="_blank" class="link-ext">[Lunnemark, Cursor Blog, 2024]</a>.</p>
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> <code>codebase_search</code> (локальный эмбеддинг-поиск по векторизованному репозиторию), <code>read_file</code> (чанковое чтение ~250 строк), <code>edit_file</code> (генерация структурированных diff-блоков), <code>terminal_run</code> (выполнение bash-скриптов с перехватом stdout/stderr), <code>@docs</code> индексатор.</li>
                 <li><strong>Устройство Harness:</strong> Полнодуплексный стейт-машинный цикл. Контекст непрерывно насыщается активными файлами редактора, положением курсора, историей правок и диагностикой LSP (Language Server Protocol). Для поддержания фокуса вставляются скрытые системные блоки <code>&lt;system_reminder&gt;</code>.</li>
@@ -1196,9 +1196,9 @@ flowchart LR
                 <li><strong>Песочница (Sandbox) — Shadow Workspace:</strong> Уникальная архитектурная особенность Cursor — концепция <strong>теневого рабочего пространства (Shadow Workspace)</strong>. При глубоком рефакторинге модификации сначала применяются к виртуальной in-memory копии файлов. Фоновый процесс запускает линтеры и тайпчекеры (LSP) против теневого состояния. Если агент сломал типы или синтаксис, ошибка возвращается в модель <em>до</em> того, как пользователь увидит сломанный diff на диске.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная документация Cursor Docs <a href="https://cursor.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence); технический разбор теневого воркспейса <a href="https://www.cursor.com/blog/shadow-workspace" target="_blank" class="link-ext">[Lunnemark, Cursor Blog, 2024]</a> (Level 2 Evidence); дампы промптов в <code>x1xhlol/system-prompts-and-models-of-ai-tools</code> <a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools" target="_blank" class="link-ext">[GitHub]</a> (Level 4 Evidence).</li>
             </ul>
-            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-wrapper" data-title="Архитектура фонового исполнения Cursor Composer &amp; Shadow Workspace">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <span class="mermaid-label">◈ Архитектура Cursor Composer &amp; Shadow Workspace</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1236,9 +1236,9 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Каждая сессия запускается в строго изолированной облачной виртуальной машине (Devbox / Outpost) на базе Linux. Виртуальная машина эфемерна: имеет собственную сеть, файловую систему и runtime. Изолирует хост заказчика от любых деструктивных команд агента.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Технический анонс Cognition Labs <a href="https://www.cognition.ai/blog/introducing-devin" target="_blank" class="link-ext">[Cognition Blog, 2024]</a> (Level 2 Evidence: Vendor Whitepaper); верификация на SWE-bench Benchmark <a href="https://www.swebench.com" target="_blank" class="link-ext">[SWE-bench Leaderboard]</a> (Level 1 Evidence: Empirical Benchmark).</li>
             </ul>
-            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-wrapper" data-title="Архитектура облачного автономного инженера Devin (Cognition Labs)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <span class="mermaid-label">◈ Архитектура Devin (Cognition Labs)</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1277,9 +1277,9 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Эфемерные виртуальные машины Google Cloud (GCP Ephemeral Sandboxes). Исходный код клонируется в защищённую изолированную среду, где выполняются тесты и сборка. Локальная машина разработчика не задействуется.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная платформа Google Jules <a href="https://jules.google.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Platform); официальный анонс в Google Blog <a href="https://jules.google/docs/api/reference/sessions/" target="_blank" class="link-ext">[Google Blog, 2024]</a> (Level 2 Evidence).</li>
             </ul>
-            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-wrapper" data-title="Архитектура асинхронного агента Google Jules (Cloud Execution Graph)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <span class="mermaid-label">◈ Архитектура Google Jules (Google Labs)</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1318,9 +1318,9 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Защищённые эфемерные контейнеры GitHub Codespaces и виртуальные раннеры GitHub Actions с контролем сетевого периметра и секретов.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальный анонс GitHub Copilot Coding Agent <a href="https://github.blog/news-insights/product-news/github-copilot-meet-the-new-coding-agent/" target="_blank" class="link-ext">[GitHub Blog, 2025]</a> (Level 2 Evidence); техническая документация спецификационной разработки Copilot Workspace <a href="https://githubnext.com/projects/copilot-workspace" target="_blank" class="link-ext">[GitHub Next Docs]</a> (Level 3 Evidence).</li>
             </ul>
-            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-wrapper" data-title="Архитектура GitHub Copilot Coding Agent &amp; Workspace (Spec-to-PR Pipeline)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <span class="mermaid-label">◈ Архитектура GitHub Copilot Coding Agent</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1347,7 +1347,7 @@ flowchart LR
                 <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">6. OpenAI Codex Agent (2025–2026) & SWE-Agent Baseline</h4>
                 <span class="badge badge-purple">Cloud/CLI Autonomous Agent</span>
             </div>
-            <p><strong>Описание:</strong> Эволюция OpenAI от исторической специализированной модели генерации кода <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">[Chen et al., 2021]</a> и академического харнеса SWE-agent <a href="https://arxiv.org/abs/2405.15793" target="_blank" class="link-ext">[Yang et al., 2024]</a> к <strong>полноценному автономному программному агенту OpenAI Codex</strong>, представленному в мае 2025 года и запущенному в открытый доступ осенью 2025 – 2026 гг. <a href="https://openai.com/index/introducing-codex/" target="_blank" class="link-ext">[OpenAI Docs, 2025]</a>.</p>
+            <p><strong>Описание:</strong> Эволюция OpenAI от исторической специализированной модели генерации кода <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">[Chen et al., 2021]</a> и академического харнеса SWE-agent <a href="https://arxiv.org/abs/2405.15793" target="_blank" class="link-ext">[Yang et al., 2024]</a> к <strong>полноценному автономному программному агенту OpenAI Codex</strong>, представленному в мае 2025 года и запущенному в открытый доступ осенью 2025 – 2026 гг. <a href="https://platform.openai.com/docs/guides/codex" target="_blank" class="link-ext">[OpenAI Codex Docs]</a> и официальный открытый CLI-репозиторий <a href="https://github.com/openai/codex" target="_blank" class="link-ext">[GitHub: openai/codex]</a>.</p>
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> Унифицированный интерфейс терминального агента: автономное чтение файлов по путям, поиск по кодовой базе (ripgrep/file-search), генерация структурированных patch-блоков, выполнение команд в изолированном шелле и запуск тестовых наборов.</li>
                 <li><strong>Устройство Harness:</strong> Асинхронный многошаговый ReAct-цикл с поддержкой отслеживания контекста репозитория. В современном Codex Agent реализован управляемый планировщик и механизм контрольных точек для отката ошибочных изменений.</li>
@@ -1355,9 +1355,9 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Эфемерные микро-виртуальные машины (Firecracker / Docker Sandboxes) с защищённым сетевым периметром, где агент изолирован от хост-системы и производит компиляцию, установку зависимостей и прогон pytest/npm.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная документация платформы OpenAI Codex <a href="https://openai.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence); исторические рецензируемые публикации Chen et al. (2021) и SWE-agent (2024) (Level 1 Evidence).</li>
             </ul>
-            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-wrapper" data-title="Архитектура OpenAI Codex Agent &amp; SWE-Agent Baseline (ACI Loop)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <span class="mermaid-label">◈ Архитектура OpenAI Codex &amp; SWE-Agent</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1396,9 +1396,9 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Локальное окружение разработчика с отслеживанием изменений через теневые контрольные точки (Checkpoints) и валидацией синтаксиса через фоновый LSP-сервер до сохранения финального состояния.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальный анонс приобретения Cognition <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">[Cognition Blog, 2025]</a> (Level 2 Evidence); техническая спецификация Cascade и перенос в Devin Desktop <a href="https://cognition.com/blog/introducing-devin-desktop" target="_blank" class="link-ext">[Cognition Specs, 2026]</a> (Level 3 Evidence).</li>
             </ul>
-            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-wrapper" data-title="Архитектура агентного движка Windsurf Cascade (AI Flow &amp; Memory)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <span class="mermaid-label">◈ Архитектура Windsurf &amp; Cascade (Cognition / Codeium)</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1422,7 +1422,52 @@ flowchart LR
         </div>
         </div>
 
-        <!-- COMPETITOR 8: AIDER REPOMAP -->
+        
+        <!-- COMPETITOR 8: OPENHANDS (ALL-HANDS AI) -->
+        <div class="card-inner" style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">8. OpenHands (ex-OpenDevin) &amp; EventStream Architecture (All-Hands AI)</h4>
+                <span class="badge badge-purple" style="background: rgba(168, 85, 247, 0.2); color: #c084fc; border: 1px solid rgba(168, 85, 247, 0.4);">Open-Source Autonomous Platform (SOTA SWE-bench)</span>
+            </div>
+            <p><strong>Описание:</strong> Ведущая академическая и открытая промышленная платформа автономной разработки программного обеспечения (ранее OpenDevin), развиваемая международным консорциумом исследователей и компанией All-Hands AI под руководством Graham Neubig <a href="https://arxiv.org/abs/2407.16741" target="_blank" class="link-ext">[Wang, Li, Song, et al., 2024]</a>. Платформа представляет собой модульный каркас общего назначения для создания программных агентов, функционирующий на базе парадигмы CodeAct (исполнение Python-кода как универсального интерфейса действий) и масштабируемой шины событий EventStream. Решение продемонстрировало передовые показатели на бенчмарке SWE-bench Verified (75.8% в ансамблевой конфигурации с рефлексивным декодированием и CodeActAgent), служа академическим эталоном автономных open-source агентов.</p>
+            <ul>
+                <li><strong>Инструменты агента (Tools):</strong> Парадигма <em>CodeAct</em> — вместо фрагментированных JSON-манифестов агент генерирует и динамически исполняет исполняемые фрагменты кода на Python, что позволяет выполнять комплексные вычисления, обработку данных, вызовы внешних API и манипуляции с файлами в едином шаге рассуждения. Инструменты прямого взаимодействия с оболочкой (Bash Execution Engine с потоковым перехватом stdout/stderr), модуль файловых трансформаций с поддержкой patch/diff и прямого перезаписывания, веб-браузер на базе Playwright для сбора документации, навигации по issue-трекерам и тестирования веб-интерфейсов, плагины сред исполнения (Jupyter execution server, специализированные среды для Python, Node.js, C++).</li>
+                <li><strong>Устройство Harness:</strong> <em>EventStream архитектура</em> — полностью событийно-ориентированное ядро (Event-Driven Backbone), где каждый шаг агента, вывод терминала, изменение файловой системы, сетевой отклик и запрос к пользователю сериализуются в строгие Pydantic-события (<code>ActionEvent</code>, <code>ObservationEvent</code>) с монотонно возрастающим ID. Это гарантирует детерминированное воспроизведение (replay) сессии, аудит и отладку. Микроагентная оркестрация поддерживает модульных субагентов — <code>CodeActAgent</code> (основной рабочий контур генерации и исправления кода), <code>PlannerAgent</code> (высокоуровневая декомпозиция эпиков на подзадачи), <code>BrowsingAgent</code> (исследование внешней документации). Персистентность состояния поддерживается в базе данных (PostgreSQL / SQLite) с возможностью сохранения контрольных точек и возобновления прерванных длительных задач.</li>
+                <li><strong>Модель разрешений (Permissions):</strong> Встроенный <em>Security Analyzer (Runtime Security Policy)</em> — превентивный анализатор команд, оценивающий уровень риска каждой терминальной операции (выявление деструктивных команд вроде <code>rm -rf</code>, сетевого туннелирования, попыток побега из песочницы, утечки переменных окружения и API-ключей). Трёхуровневая модель авторизации: Automatic Execution (для безопасных операций чтения и синтаксического анализа), Confirmation Required (для деструктивных правок, запуска тестов и модификаций конфигураций) и Strict Block (для команд с критическим уровнем риска).</li>
+                <li><strong>Песочница (Sandbox):</strong> Изолированные контейнеры Docker (Runtime Docker Sandboxing / Docker-in-Docker), предотвращающие несанкционированный доступ к хост-системе разработчика. Поддержка подключаемых облачных сред выполнения (All-Hands Cloud, Modal, Daytona, Kubernetes) для параллельного масштабирования нескольких инстансов агента.</li>
+                <li><strong>Источник и уровень доказательности:</strong> Рецензированная научная статья Wang, X., Li, B., Song, Y., et al. <em>«OpenHands: An Open Platform for AI Software Developers as Generalist Agents»</em> <a href="https://arxiv.org/abs/2407.16741" target="_blank" class="link-ext">[arXiv:2407.16741, 2024]</a> (<strong>Level 1 Evidence</strong>, академическая публикация); официальный открытый репозиторий <a href="https://github.com/All-Hands-AI/OpenHands" target="_blank" class="link-ext">[GitHub: All-Hands-AI/OpenHands]</a> (<strong>Level 2 Evidence</strong>, 40k+ stars).</li>
+            </ul>
+            <div class="mermaid-wrapper" data-title="Архитектура автономной платформы разработки OpenHands (CodeAct &amp; EventStream)">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Архитектура OpenHands (All-Hands AI)</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan &amp; Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
+            <div class="mermaid-container">
+                <pre class="mermaid">
+flowchart TD
+    UserReq["Пользователь / GitHub Issue / API Webhook"] --> Backend["OpenHands Backend (FastAPI + EventStream Core)"]
+    Backend -->|"Append ActionEvent"| EventStream["EventStream Bus (Append-Only Event Store)"]
+    EventStream -->|"State & Trajectory Stream"| AgentLoop["CodeAct Agent (LLM Reasoning Core)"]
+    AgentLoop -->|"Emit Python/Bash Action"| SecPolicy{"Security Analyzer (Risk Evaluation Engine)"}
+    SecPolicy -->|"High Risk / Sensitive"| Approval["Запрос подтверждения разработчика (User Review)"]
+    SecPolicy -->|"Approved / Safe"| SandboxEnv["Docker Sandbox Runtime (Isolated Container)"]
+    SandboxEnv -->|"Executes Python/Bash/Browser"| ToolExecution["Runtime Engine (CodeAct, Playwright, Git)"]
+    ToolExecution -->|"Stdout, Stderr, Diffs"| ObsEvent["ObservationEvent Factory"]
+    ObsEvent -->|"Append ObservationEvent"| EventStream
+    EventStream -->|"Evaluate Task Success"| EvaluationState{"Task Complete?"}
+    EvaluationState -->|"Reflect / Fix"| AgentLoop
+    EvaluationState -->|"Done"| FinalPR["Export Patch / Pull Request to Git"]
+                </pre>
+            </div>
+        </div>
+        </div>
+
+        <!-- COMPETITOR 9: AIDER REPOMAP -->
         <div class="card-inner" style="margin-bottom: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
                 <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">9. Aider & RepoMap Architecture (Paul Gauthier)</h4>
@@ -1448,9 +1493,9 @@ flowchart LR
                 <li><strong>Модель разрешений и Песочница (Permissions & Sandbox):</strong> Работает прямо в терминале разработчика; песочницей безопасности выступает Git-репозиторий — каждый шаг агента коммитится в отдельную ветку, что позволяет в любой момент выполнить откат через <code>/undo</code>.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Полностью открытая кодовая база и публичные бенчмарки Aider Leaderboard <a href="https://aider.chat/docs/leaderboards/" target="_blank" class="link-ext">[URL]</a> (Level 1 Evidence: Peer-Verifiable Open Source Code).</li>
             </ul>
-            <div class="mermaid-wrapper" data-title="Архитектурная схема Aider RepoMap (Paul Gauthier)">
+            <div class="mermaid-wrapper" data-title="Архитектура контекстной карты репозитория Aider RepoMap (Tree-sitter &amp; PageRank)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Архитектурная схема Aider RepoMap (Paul Gauthier)</span>
+                <span class="mermaid-label">◈ Архитектура Aider RepoMap (Paul Gauthier)</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1635,9 +1680,9 @@ flowchart LR
         <h3>3.1. Сквозная архитектурная схема контура</h3>
         <p>Спроектирована архитектура Repo-Harness как модульная детерминированная инженерная среда, преобразующая стохастические генерации языковых моделей в формальный верифицируемый граф:</p>
 
-        <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+        <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness (8 фаз)">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <span class="mermaid-label">◈ Сквозной процессный конвейер Repo-Harness (8 фаз)</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1780,7 +1825,7 @@ flowchart TD
         </div>
 
         <h3>4.1. Облачные модели: Google AI Studio (Free Tier)</h3>
-        <p>Доступ к облачным моделям настроен через официальный API Google AI Studio с использованием официально поддерживаемых бесплатных моделей в рамках квот Free Tier:</p>
+        <p>Доступ к облачным моделям настроен через официальный API Google AI Studio (техническая спецификация и документация доступных моделей: <a href="https://ai.google.dev/gemini-api/docs/models" target="_blank" class="link-ext">Google Gemini API Models</a>) с использованием официально поддерживаемых бесплатных моделей в рамках квот Free Tier:</p>
 
         <div class="table-responsive">
             <table>
@@ -1943,9 +1988,9 @@ flowchart TD
         <p><strong>Почему именно она выбрана первой:</strong> Ни один агент не способен перенести проект без знания порядка компиляции: стохастический перенос порождает каскадные <code>ModuleNotFoundError</code> и <code>NameError</code>. Фича №1 гарантирует, что каждый модуль компилируется только тогда, когда все его зависимости уже мигрированы и типизированы.</p>
 
         <h3>7.2. Архитектурная схема работы модуля</h3>
-        <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+        <div class="mermaid-wrapper" data-title="Архитектурная схема Фичи №1: Модуль синтаксического анализа Repo-Mapper &amp; AST Extractor">
             <div class="mermaid-toolbar">
-                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <span class="mermaid-label">◈ Архитектура Фичи №1 (Repo-Mapper &amp; AST Extractor)</span>
                 <div class="mermaid-actions">
                     <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
                     <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
@@ -1969,7 +2014,7 @@ flowchart LR
         <h3>7.3. Входные, промежуточные и выходные форматы данных</h3>
         <ul>
             <li><strong>Вход:</strong> Локальный путь к корню репозитория-донора, список целевых расширений файлов, конфигурация исключений (<code>node_modules</code>, <code>dist</code>, <code>.git</code>).</li>
-            <li><strong>Промежуточная обработка:</strong> Парсинг с использованием си-биндингов <code>tree_sitter_languages</code> в среде Linux WSL2. Обход дерева узлов <code>import_statement</code>, <code>export_statement</code>, <code>class_declaration</code>, <code>function_declaration</code>.</li>
+            <li><strong>Промежуточная обработка:</strong> Парсинг с использованием модульных биндингов <code>tree-sitter</code> (v0.23+), <code>tree-sitter-python</code> и <code>tree-sitter-typescript</code> с компиляцией GCC 13.3 в среде Linux Ubuntu 24.04 (WSL2). Обход дерева узлов <code>import_statement</code>, <code>export_statement</code>, <code>class_declaration</code>, <code>function_declaration</code>.</li>
             <li><strong>Выход (JSON Artifact):</strong> Строго типизированная Pydantic-схема графа зависимостей:
                 <pre><code>{
   "project_name": "sample-migration",
@@ -2002,109 +2047,42 @@ flowchart LR
         <p>Все представленные ниже источники снабжены верифицированными постоянными гиперссылками (DOI, arXiv, официальные технические отчёты и спецификации). Библиографический аппарат оформлен в соответствии с требованиями научной проверяемости и открытой воспроизводимости данных.</p>
 
                 <ol style="font-size: 13.5px; line-height: 1.8;">
-            <!-- 16 ФУНДАМЕНТАЛЬНЫХ ПУБЛИКАЦИЙ ВЫБОРКИ PRISMA 2020 -->
-            <li>
-                <strong>Yang, J., Jimenez, C. E., Wettig, A., Lieret, K., Yao, S., Narasimhan, K., & Press, O.</strong> (2024). <em>SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>. arXiv preprint arXiv:2405.15793. <a href="https://arxiv.org/abs/2405.15793" target="_blank" class="link-ext">https://arxiv.org/abs/2405.15793</a>.
-            </li>
-            <li>
-                <strong>Jimenez, C. E., Yang, J., Wettig, A., Yao, S., Pei, K., Press, O., & Narasimhan, K.</strong> (2024). <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em>. In Proceedings of the International Conference on Learning Representations (ICLR 2024). <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">https://arxiv.org/abs/2310.06770</a>.
-            </li>
-            <li>
-                <strong>Wang, G., Brockett, C., Holtzman, A., et al.</strong> (2024). <em>OpenHands: An Open Platform for AI Software Developers as Generalist Agents</em>. arXiv preprint arXiv:2407.16741. <a href="https://arxiv.org/abs/2407.16741" target="_blank" class="link-ext">https://arxiv.org/abs/2407.16741</a>.
-            </li>
-            <li>
-                <strong>Zhang, K., Li, G., Li, J., Li, Z., & Jin, Z.</strong> (2023). <em>RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation</em>. In Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP 2023), pp. 2471–2484. <a href="https://arxiv.org/abs/2303.12570" target="_blank" class="link-ext">https://arxiv.org/abs/2303.12570</a>.
-            </li>
-            <li>
-                <strong>Rozière, B., Lachaux, M. A., Chanussot, L., & Lample, G.</strong> (2020). <em>Unsupervised Translation of Programming Languages</em>. In Advances in Neural Information Processing Systems (NeurIPS 2020), Vol. 33, pp. 20601–20611. <a href="https://arxiv.org/abs/2006.03511" target="_blank" class="link-ext">https://arxiv.org/abs/2006.03511</a>.
-            </li>
-            <li>
-                <strong>Svyatkovskiy, A., Deng, S. K., Fu, S., & Sundaresan, N.</strong> (2020). <em>IntelliCode Compose: Code Generation Using Transformer</em>. In Proceedings of the 28th ACM Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering (ESEC/FSE 2020), pp. 1433–1443. <a href="https://doi.org/10.1145/3368089.3417058" target="_blank" class="link-ext">DOI: 10.1145/3368089.3417058</a>.
-            </li>
-            <li>
-                <strong>Chen, M., Tworek, J., Jun, H., et al.</strong> (2021). <em>Evaluating Large Language Models Trained on Code</em> (HumanEval Technical Report). arXiv preprint arXiv:2107.03374. <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">https://arxiv.org/abs/2107.03374</a>.
-            </li>
-            <li>
-                <strong>Bairi, R., Sonwane, A., Kanade, A., et al.</strong> (2023). <em>CodePlan: Repository-Level Coding using Planned Searching and Multi-Step LLM Prompting</em>. arXiv preprint arXiv:2309.12499. <a href="https://arxiv.org/abs/2309.12499" target="_blank" class="link-ext">https://arxiv.org/abs/2309.12499</a>.
-            </li>
-            <li>
-                <strong>Hong, S., Zheng, M., Chen, J., et al.</strong> (2023). <em>MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework</em>. arXiv preprint arXiv:2308.00352. <a href="https://arxiv.org/abs/2308.00352" target="_blank" class="link-ext">https://arxiv.org/abs/2308.00352</a>.
-            </li>
-            <li>
-                <strong>Yu, H., Shen, B., Ran, D., Zhang, Y., Chen, J., Wang, H., & Xiong, Y.</strong> (2024). <em>Agentless: Demystifying LLM-based Software Engineering Agents</em>. arXiv preprint arXiv:2407.01489. <a href="https://arxiv.org/abs/2407.01489" target="_blank" class="link-ext">https://arxiv.org/abs/2407.01489</a>.
-            </li>
-            <li>
-                <strong>Yang, J., Prabhakar, A., Narasimhan, K., & Yao, S.</strong> (2023). <em>InterCode: Standardizing and Benchmarking Interactive Coding with Execution Feedback</em>. In Advances in Neural Information Processing Systems (NeurIPS 2023). <a href="https://arxiv.org/abs/2306.14898" target="_blank" class="link-ext">https://arxiv.org/abs/2306.14898</a>.
-            </li>
-            <li>
-                <strong>Schick, T., Dwivedi-Yu, J., Dessì, R., et al.</strong> (2023). <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>. In Advances in Neural Information Processing Systems (NeurIPS 2023). <a href="https://arxiv.org/abs/2302.04761" target="_blank" class="link-ext">https://arxiv.org/abs/2302.04761</a>.
-            </li>
-            <li>
-                <strong>Shinn, N., Cassano, F., Gopinath, A., Narasimhan, K., & Yao, S.</strong> (2023). <em>Reflexion: Language Agents with Verbal Reinforcement Learning</em>. In Advances in Neural Information Processing Systems (NeurIPS 2023). <a href="https://arxiv.org/abs/2303.11366" target="_blank" class="link-ext">https://arxiv.org/abs/2303.11366</a>.
-            </li>
-            <li>
-                <strong>Zhong, L., Wang, Z., & Shang, J.</strong> (2024). <em>LDB: A Large Language Model Debugger via Verifying Runtime Execution Step-by-Step</em>. In Findings of the Association for Computational Linguistics (ACL 2024), pp. 5824–5839. <a href="https://arxiv.org/abs/2402.16906" target="_blank" class="link-ext">https://arxiv.org/abs/2402.16906</a>.
-            </li>
-            <li>
-                <strong>Cassano, F., Gouwar, J., Nguyen, D., et al.</strong> (2023). <em>MultiPL-E: A Scalable and Polyglot Harness for Evaluating Large Language Models on Code</em>. IEEE Transactions on Software Engineering (TSE), Vol. 49, No. 7, pp. 3675–3691. <a href="https://arxiv.org/abs/2208.08227" target="_blank" class="link-ext">https://arxiv.org/abs/2208.08227</a>.
-            </li>
-            <li>
-                <strong>Hou, X., Zhao, Y., Liu, Y., et al.</strong> (2024). <em>Large Language Models for Software Engineering: A Systematic Literature Review</em>. ACM Transactions on Software Engineering and Methodology (TOSEM), Vol. 33, No. 5. <a href="https://arxiv.org/abs/2308.10620" target="_blank" class="link-ext">https://arxiv.org/abs/2308.10620</a>.
-            </li>
-
-            <!-- ИНДУСТРИАЛЬНЫЕ ОТЧЕТЫ, СТАНДАРТЫ И МЕТОДОЛОГИИ -->
-            <li>
-                <strong>Page, M. J., McKenzie, J. E., Bossuyt, P. M., et al.</strong> (2021). <em>The PRISMA 2020 statement: an updated guideline for reporting systematic reviews</em>. BMJ, 372:n71. <a href="https://doi.org/10.1136/bmj.n71" target="_blank" class="link-ext">DOI: 10.1136/bmj.n71</a>.
-            </li>
-            <li>
-                <strong>Stripe Inc.</strong> (2018). <em>The Developer Coefficient: How software engineering efficiency impacts global GDP</em>. Stripe Research Report. <a href="https://stripe.com/files/reports/the-developer-coefficient.pdf" target="_blank" class="link-ext">https://stripe.com/files/reports/the-developer-coefficient.pdf</a>.
-            </li>
-            <li>
-                <strong>Gartner Inc.</strong> (2024). <em>Strategies for Enterprise Applications Modernization Success</em>. Gartner Research ID: 5947839 (November 25, 2024). <a href="https://www.gartner.com/en/documents/5947839" target="_blank" class="link-ext">https://www.gartner.com/en/documents/5947839</a>.
-            </li>
-            <li>
-                <strong>The Standish Group.</strong> (2020). <em>CHAOS 2020: Beyond Infinity — Software Modernization Success and Failure Rates</em>. Boston, MA: Standish Group International. <a href="https://www.standishgroup.com/" target="_blank" class="link-ext">https://www.standishgroup.com/</a>.
-            </li>
-            <li>
-                <strong>OpenAI & Princeton University.</strong> (2024). <em>Introducing SWE-bench Verified: A Curated Benchmark for Software Engineering Agents</em>. OpenAI Research Publication (August 2024). <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/introducing-swe-bench-verified/</a>.
-            </li>
-            <li>
-                <strong>OpenAI Research.</strong> (2026). <em>Why SWE-bench Verified No Longer Measures Frontier Coding Capabilities</em>. OpenAI Technical Report (February 23, 2026). <a href="https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/</a>.
-            </li>
-            <li>
-                <strong>Gauthier, P.</strong> (2023–2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.
-            </li>
-            <li>
-                <strong>Cognition AI.</strong> (2025). <em>Cognition’s Acquisition of Windsurf and Integration into Devin Ecosystem</em>. Cognition Technical Announcement (July 14, 2025). <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">https://cognition.com/blog/windsurf</a>.
-            </li>
-            <li>
-                <strong>Lunnemark, A.</strong> (2024). <em>Shadow Workspace: Iterating on code in the background</em>. Cursor Engineering Blog (May 2024). <a href="https://www.cursor.com/blog/shadow-workspace" target="_blank" class="link-ext">https://www.cursor.com/blog/shadow-workspace</a>.
-            </li>
-            <li>
-                <strong>OpenAI.</strong> (2025). <em>OpenAI Codex CLI and Agent Architecture Specification</em>. Official Documentation and Open Source Repository. <a href="https://github.com/openai/codex" target="_blank" class="link-ext">https://github.com/openai/codex</a>.
-            </li>
-            <li>
-                <strong>Google DeepMind.</strong> (2024–2025). <em>Google Jules: Autonomous GitHub Integration Agent</em>. Google Technical Documentation. <a href="https://jules.google/" target="_blank" class="link-ext">https://jules.google/</a>.
-            </li>
-            <li>
-                <strong>Anthropic PBC.</strong> (2024–2026). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
-            </li>
-            <li>
-                <strong>GitHub.</strong> (2024). <em>GitHub State of the Octoverse 2024: The State of Open Source and AI</em>. GitHub Research. <a href="https://octoverse.github.com/2024/" target="_blank" class="link-ext">https://octoverse.github.com/2024/</a>.
-            </li>
-            <li>
-                <strong>Shopify Engineering.</strong> (2020). <em>Deconstructing the Monolith: Designing a Modular Monolith Architecture</em>. Shopify Technology Blog. <a href="https://shopify.engineering/deconstructing-the-monolith" target="_blank" class="link-ext">https://shopify.engineering/deconstructing-the-monolith</a>.
-            </li>
-            <li>
-                <strong>Hansson, D. H. (DHH).</strong> (2016–2023). <em>The Majestic Monolith & Why We're Leaving the Cloud</em>. 37signals & Signal v. Noise. <a href="https://m.signalvnoise.com/the-majestic-monolith/" target="_blank" class="link-ext">https://m.signalvnoise.com/the-majestic-monolith/</a>.
-            </li>
-            <li>
-                <strong>Amazon Prime Video Tech.</strong> (2023). <em>Scaling up the Prime Video audio/video monitoring service and reducing costs by 90%</em>. Prime Video Technology Report. <a href="https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90" target="_blank" class="link-ext">https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90</a>.
-            </li>
-            <li>
-                <strong>Community Repositories.</strong> (2024–2025). <em>System Prompts and Model Manifests of Frontier Coding Agents</em>. Reverse-Engineering Archives (Piebald-AI & x1xhlol). <a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools" target="_blank" class="link-ext">https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools</a>.
-            </li>
-        </ol>
+                <li><strong>Jimenez, C. E., Yang, J., Wettig, A., Yao, S., Pei, K., Press, O., &amp; Narasimhan, K.</strong> (2024). <em>SWE-bench: Can Language Models Resolve Real-World GitHub Issues?</em>. In Proceedings of the International Conference on Learning Representations (ICLR 2024). <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">https://arxiv.org/abs/2310.06770</a>.</li>
+                <li><strong>Yang, J., Jimenez, C. E., Wettig, A., Lieret, K., Yao, S., Narasimhan, K., &amp; Press, O.</strong> (2024). <em>SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>. arXiv preprint arXiv:2405.15793. <a href="https://arxiv.org/abs/2405.15793" target="_blank" class="link-ext">https://arxiv.org/abs/2405.15793</a>.</li>
+                <li><strong>Wang, X., Li, B., Song, Y., Xu, F. F., Tang, X., Zhuge, M., Pan, J., Song, Y., Li, B., Singh, J., Tran, H. H., Ding, F., Ma, R., Zheng, M., Qian, B., Chen, Y., He, X., Guan, Z., Wan, X., Chang, T.-Y., Zhang, K., Qian, S., Wang, L., Dai, W., Shen, Z., Zhang, J., &amp; Neubig, G.</strong> (2024). <em>OpenHands: An Open Platform for AI Software Developers as Generalist Agents</em>. arXiv preprint arXiv:2407.16741. <a href="https://arxiv.org/abs/2407.16741" target="_blank" class="link-ext">https://arxiv.org/abs/2407.16741</a>.</li>
+                <li><strong>Zhang, F., Chen, B., Zhang, Y., Keung, J., Liu, J., Zan, D., Mao, Y., Lou, J.-G., &amp; Zhang, L.</strong> (2023). <em>RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation</em>. In Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing (EMNLP 2023), pp. 2471–2484. <a href="https://arxiv.org/abs/2303.12570" target="_blank" class="link-ext">https://arxiv.org/abs/2303.12570</a>.</li>
+                <li><strong>Rozière, B., Lachaux, M.-A., Chanussot, L., &amp; Lample, G.</strong> (2020). <em>Unsupervised Translation of Programming Languages</em>. In Advances in Neural Information Processing Systems (NeurIPS 2020), Vol. 33, pp. 20601–20611. <a href="https://arxiv.org/abs/2006.03511" target="_blank" class="link-ext">https://arxiv.org/abs/2006.03511</a>.</li>
+                <li><strong>Lu, S., Guo, D., Ren, S., Huang, J., Svyatkovskiy, A., Blanco, A., Clement, C. B., Drain, D., Jiang, D., Yin, D., Zhou, D. X., Ray, B., Hellendoorn, V., Svyatkovskiy, A., Wang, S., Zhou, J., Liu, B., Duan, N., Sundaresan, N., &amp; Zhou, M.</strong> (2021). <em>CodeXGLUE: A Machine Learning Benchmark Dataset for Code Understanding and Generation</em>. In Thirty-fifth Conference on Neural Information Processing Systems Datasets and Benchmarks Track (NeurIPS 2021). <a href="https://arxiv.org/abs/2102.04664" target="_blank" class="link-ext">https://arxiv.org/abs/2102.04664</a>.</li>
+                <li><strong>Hong, S., Zheng, M., Chen, J., Cheng, Q., Zhang, C., Wang, Z., Yau, K. C., Lin, Z., Zhou, L., Ran, C., Xiao, L., Wu, C., &amp; Zhang, Q.</strong> (2024). <em>MetaGPT: Meta Programming for A Multi-Agent Collaborative Framework</em>. In Proceedings of the International Conference on Learning Representations (ICLR 2024). <a href="https://arxiv.org/abs/2308.00352" target="_blank" class="link-ext">https://arxiv.org/abs/2308.00352</a>.</li>
+                <li><strong>Qian, C., Liu, W., Liu, H., Chen, N., Dang, Y., Li, J., Yang, C., Chen, W., Su, Y., Cong, X., Xu, J., Xu, D., Liu, Z., &amp; Sun, M.</strong> (2024). <em>ChatDev: Communicative Agents for Software Development</em>. In Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (ACL 2024), pp. 15174–15186. <a href="https://arxiv.org/abs/2307.07924" target="_blank" class="link-ext">https://arxiv.org/abs/2307.07924</a>.</li>
+                <li><strong>Chen, M., Tworek, J., Jun, H., Yuan, Q., Pinto, H. P. de O., Kaplan, J., Edwards, H., Burda, Y., Joseph, N., Brockman, G., Ray, A., Puri, R., Dennison, G., Sigler, F., Prashanth, N., Arora, A., Chantzis, M., Runge, F., Hess, P., ... Zaremba, W.</strong> (2021). <em>Evaluating Large Language Models Trained on Code</em>. arXiv preprint arXiv:2107.03374. <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">https://arxiv.org/abs/2107.03374</a>.</li>
+                <li><strong>Yu, H., Shen, B., Ran, D., Zhang, Y., Chen, J., Wang, H., &amp; Xiong, Y.</strong> (2024). <em>Agentless: Demystifying LLM-based Software Engineering Agents</em>. arXiv preprint arXiv:2407.01489. <a href="https://arxiv.org/abs/2407.01489" target="_blank" class="link-ext">https://arxiv.org/abs/2407.01489</a>.</li>
+                <li><strong>Yang, J., Prabhakar, A., Narasimhan, K., &amp; Yao, S.</strong> (2023). <em>InterCode: Standardizing and Benchmarking Interactive Coding with Execution Feedback</em>. In Advances in Neural Information Processing Systems (NeurIPS 2023). <a href="https://arxiv.org/abs/2306.14898" target="_blank" class="link-ext">https://arxiv.org/abs/2306.14898</a>.</li>
+                <li><strong>Schick, T., Dwivedi-Yu, J., Dessì, R., Raileanu, R., Lomeli, M., Zettlemoyer, L., Cancedda, N., &amp; Scialom, T.</strong> (2023). <em>Toolformer: Language Models Can Teach Themselves to Use Tools</em>. In Advances in Neural Information Processing Systems (NeurIPS 2023). <a href="https://arxiv.org/abs/2302.04761" target="_blank" class="link-ext">https://arxiv.org/abs/2302.04761</a>.</li>
+                <li><strong>Shinn, N., Cassano, F., Gopinath, A., Narasimhan, K., &amp; Yao, S.</strong> (2023). <em>Reflexion: Language Agents with Verbal Reinforcement Learning</em>. In Advances in Neural Information Processing Systems (NeurIPS 2023). <a href="https://arxiv.org/abs/2303.11366" target="_blank" class="link-ext">https://arxiv.org/abs/2303.11366</a>.</li>
+                <li><strong>Zhong, L., Wang, Z., &amp; Shang, J.</strong> (2024). <em>LDB: A Large Language Model Debugger via Verifying Runtime Execution Step-by-Step</em>. In Findings of the Association for Computational Linguistics (ACL 2024), pp. 5824–5839. <a href="https://arxiv.org/abs/2402.16906" target="_blank" class="link-ext">https://arxiv.org/abs/2402.16906</a>.</li>
+                <li><strong>Cassano, F., Gouwar, J., Nguyen, D., Nguyen, S., Phipps-Costin, L., Pinckney, D., Yee, M.-H., Zi, Y., Anderson, C. J., Feldman, M. Q., Guha, A., Greenberg, M., &amp; Jangda, A.</strong> (2023). <em>MultiPL-E: A Scalable and Polyglot Harness for Evaluating Large Language Models on Code</em>. IEEE Transactions on Software Engineering (TSE), Vol. 49, No. 7, pp. 3675–3691. <a href="https://arxiv.org/abs/2208.08227" target="_blank" class="link-ext">https://arxiv.org/abs/2208.08227</a>.</li>
+                <li><strong>Hou, X., Zhao, Y., Liu, Y., Yang, Z., Wang, K., Li, L., Luo, X., Lo, D., Grundy, J., &amp; Wang, H.</strong> (2024). <em>Large Language Models for Software Engineering: A Systematic Literature Review</em>. ACM Transactions on Software Engineering and Methodology (TOSEM), Vol. 33, No. 8, Article 220, pp. 1–79. DOI: 10.1145/3695988. <a href="https://arxiv.org/abs/2308.10620" target="_blank" class="link-ext">https://arxiv.org/abs/2308.10620</a>.</li>
+                <li><strong>Page, M. J., McKenzie, J. E., Bossuyt, P. M., et al.</strong> (2021). <em>The PRISMA 2020 statement: an updated guideline for reporting systematic reviews</em>. BMJ, 372:n71. DOI: 10.1136/bmj.n71. <a href="https://doi.org/10.1136/bmj.n71" target="_blank" class="link-ext">https://doi.org/10.1136/bmj.n71</a>.</li>
+                <li><strong>Stripe Inc.</strong> (2018). <em>The Developer Coefficient: How software engineering efficiency impacts global GDP</em>. Stripe Research Report. <a href="https://stripe.com/files/reports/the-developer-coefficient.pdf" target="_blank" class="link-ext">https://stripe.com/files/reports/the-developer-coefficient.pdf</a>.</li>
+                <li><strong>Gartner Inc.</strong> (2024). <em>Strategies for Enterprise Applications Modernization Success</em>. Gartner Research ID: 5947839 (November 25, 2024). <a href="https://www.gartner.com/en/documents/5947839" target="_blank" class="link-ext">https://www.gartner.com/en/documents/5947839</a>.</li>
+                <li><strong>The Standish Group.</strong> (2020). <em>CHAOS 2020: Beyond Infinity — Software Modernization Success and Failure Rates</em>. Boston, MA: Standish Group International. <a href="https://www.standishgroup.com/" target="_blank" class="link-ext">https://www.standishgroup.com/</a>.</li>
+                <li><strong>OpenAI &amp; Princeton University.</strong> (2024). <em>Introducing SWE-bench Verified: A Curated Benchmark for Software Engineering Agents</em>. OpenAI Research Publication (August 2024). <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/introducing-swe-bench-verified/</a>.</li>
+                <li><strong>OpenAI Research.</strong> (2026). <em>Why SWE-bench Verified No Longer Measures Frontier Coding Capabilities</em>. OpenAI Technical Report (February 23, 2026). <a href="https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/</a>.</li>
+                <li><strong>Gauthier, P.</strong> (2023–2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.</li>
+                <li><strong>Cognition AI.</strong> (2025). <em>Cognition’s Acquisition of Windsurf and Integration into Devin Ecosystem</em>. Cognition Technical Announcement (July 14, 2025). <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">https://cognition.com/blog/windsurf</a>.</li>
+                <li><strong>Lunnemark, A.</strong> (2024). <em>Shadow Workspace: Iterating on code in the background</em>. Cursor Engineering Blog (May 2024). <a href="https://www.cursor.com/blog/shadow-workspace" target="_blank" class="link-ext">https://www.cursor.com/blog/shadow-workspace</a>.</li>
+                <li><strong>OpenAI.</strong> (2025). <em>OpenAI Codex CLI and Agent Architecture Specification</em>. Official Documentation and Open Source Repository. <a href="https://platform.openai.com/docs/guides/codex" target="_blank" class="link-ext">https://platform.openai.com/docs/guides/codex</a>, <a href="https://github.com/openai/codex" target="_blank" class="link-ext">https://github.com/openai/codex</a>.</li>
+                <li><strong>Google DeepMind.</strong> (2024–2025). <em>Google Jules: Autonomous GitHub Integration Agent</em>. Google Technical Documentation. <a href="https://jules.google/" target="_blank" class="link-ext">https://jules.google/</a>.</li>
+                <li><strong>Anthropic PBC.</strong> (2024–2026). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.</li>
+                <li><strong>GitHub.</strong> (2024). <em>GitHub State of the Octoverse 2024: The State of Open Source and AI</em>. GitHub Research. <a href="https://octoverse.github.com/2024/" target="_blank" class="link-ext">https://octoverse.github.com/2024/</a>.</li>
+                <li><strong>Shopify Engineering.</strong> (2020). <em>Deconstructing the Monolith: Designing a Modular Monolith Architecture</em>. Shopify Technology Blog. <a href="https://shopify.engineering/deconstructing-the-monolith" target="_blank" class="link-ext">https://shopify.engineering/deconstructing-the-monolith</a>.</li>
+                <li><strong>Hansson, D. H. (DHH).</strong> (2016–2023). <em>The Majestic Monolith &amp; Why We're Leaving the Cloud</em>. 37signals &amp; Signal v. Noise. <a href="https://m.signalvnoise.com/the-majestic-monolith/" target="_blank" class="link-ext">https://m.signalvnoise.com/the-majestic-monolith/</a>.</li>
+                <li><strong>Amazon Prime Video Tech.</strong> (2023). <em>Scaling up the Prime Video audio/video monitoring service and reducing costs by 90%</em>. Prime Video Technology Report. <a href="https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90" target="_blank" class="link-ext">https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90</a>.</li>
+                <li><strong>Community Repositories.</strong> (2024–2025). <em>System Prompts and Model Manifests of Frontier Coding Agents</em>. Reverse-Engineering Archives (Piebald-AI &amp; x1xhlol). <a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools" target="_blank" class="link-ext">https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools</a>.</li>
+                <li><strong>Google Cloud &amp; DeepMind.</strong> (2024–2026). <em>Gemini Models and Capabilities Documentation: Gemini 3.1 Flash Lite &amp; Gemini 3.8 Flash</em>. Google AI Studio Technical Reference. <a href="https://ai.google.dev/gemini-api/docs/models" target="_blank" class="link-ext">https://ai.google.dev/gemini-api/docs/models</a>.</li>
+                <li><strong>Hui, B., Yang, J., Cui, Z., Yang, J., Liu, D., Zhang, L., Liu, B., Zhang, J., Yu, B., Dang, K., Lu, K., Bao, J., Yang, G., Tang, Y., Shen, P., Zhou, H., Xing, D., Song, Y., Peng, S., ... Lin, J.</strong> (2024). <em>Qwen2.5-Coder Technical Report</em>. arXiv preprint arXiv:2409.12186. <a href="https://arxiv.org/abs/2409.12186" target="_blank" class="link-ext">https://arxiv.org/abs/2409.12186</a>.</li>
+            </ol>
     </div>
 
     <!-- PLAN FOR WEEK 2 & RISKS -->
@@ -2132,7 +2110,7 @@ flowchart LR
                 <h4>Идентифицированные риски и меры минимизации</h4>
                 <ul>
                     <li><strong>Риск 1: Сложные циклические импорты в больших проектах.</strong><br/><em>Минимизация:</em> Внедрение алгоритма Тарьяна (Tarjan's strongly connected components) для группировки циклических узлов в единый мета-модуль миграции.</li>
-                    <li><strong>Риск 2: Исчерпание бесплатных квот Google AI Studio при массовом парсинге.</strong><br/><em>Минимизация:</em> Первичное извлечение и валидация выполняются локальным синтаксическим парсером Tree-sitter без вызова LLM. Для семантических шагов задействуется локальная модель <code>qwen2.5:14b</code> на RTX 4070 Super.</li>
+                    <li><strong>Риск 2: Исчерпание бесплатных квот Google AI Studio при массовом парсинге.</strong><br/><em>Минимизация:</em> Первичное извлечение и валидация выполняются локальным синтаксическим парсером Tree-sitter без вызова LLM. Для семантических шагов задействуется квантованная специализированная кодовая модель <code>qwen2.5-coder:14b</code> на аппаратном GPU-ускорителе NVIDIA GeForce RTX 4070 Super (12 ГБ VRAM).</li>
                 </ul>
             </div>
         </div>
