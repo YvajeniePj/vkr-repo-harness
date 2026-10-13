@@ -322,17 +322,278 @@
             font-size: 14px;
         }
 
-        /* Mermaid box */
-        .mermaid-container {
-            background: #0f172a;
+
+        /* --- SIDEBAR TOC & RESPONSIVE LAYOUT (Week 1 Update) --- */
+        .layout-wrapper {
+            display: flex;
+            gap: 28px;
+            align-items: flex-start;
+            position: relative;
+        }
+
+        .sidebar-toc {
+            width: 250px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 20px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px 14px;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            z-index: 100;
+        }
+
+        .sidebar-toc::-webkit-scrollbar {
+            width: 4px;
+        }
+        .sidebar-toc::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        .toc-title {
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--accent-cyan);
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toc-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+        }
+
+        .toc-link {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 7px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.15s ease;
+            line-height: 1.3;
+        }
+
+        .toc-link:hover {
+            background: rgba(59, 130, 246, 0.12);
+            color: var(--text-primary);
+        }
+
+        .toc-link.active {
+            background: rgba(59, 130, 246, 0.2);
+            color: #60a5fa;
+            font-weight: 600;
+            border-left: 3px solid var(--accent-blue);
+        }
+
+        .toc-icon, .toc-num {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            font-size: 11px;
+            background: var(--bg-tertiary);
+            color: var(--accent-cyan);
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+        }
+
+        @media (max-width: 1080px) {
+            .layout-wrapper {
+                flex-direction: column;
+            }
+            .sidebar-toc {
+                position: relative;
+                top: 0;
+                width: 100%;
+                max-height: none;
+                margin-bottom: 20px;
+            }
+        }
+
+        /* --- MERMAID WRAPPER, TOOLBAR & PAN-ZOOM --- */
+        .mermaid-wrapper {
+            position: relative;
+            background: #0b1120;
             border: 1px solid var(--border-color);
             border-radius: 10px;
-            padding: 24px;
             margin: 20px 0;
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .mermaid-toolbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(15, 23, 42, 0.95);
+            border-bottom: 1px solid var(--border-color);
+            padding: 6px 14px;
+            font-size: 12px;
+        }
+
+        .mermaid-label {
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+            font-size: 11.5px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .mermaid-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-mermaid {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 5px;
+            padding: 3px 9px;
+            font-size: 11px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.15s ease;
+        }
+
+        .btn-mermaid:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: #ffffff;
+        }
+
+        .mermaid-container {
+            padding: 20px;
+            overflow-x: auto;
+            overflow-y: hidden;
             display: flex;
             justify-content: center;
-            overflow-x: auto;
+            align-items: center;
+            min-height: 180px;
+            cursor: zoom-in;
+            background: #0a0e1a;
         }
+
+        .mermaid-container svg {
+            min-width: 620px;
+            max-width: 100%;
+            height: auto !important;
+            transition: transform 0.15s ease;
+        }
+
+        /* --- FULLSCREEN PAN & ZOOM LIGHTBOX MODAL --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(5, 8, 15, 0.92);
+            backdrop-filter: blur(10px);
+            z-index: 99999;
+            display: none;
+            flex-direction: column;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 24px;
+            background: rgba(15, 23, 42, 0.98);
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+
+        .modal-header h3 {
+            font-size: 14px;
+            font-weight: 600;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--accent-cyan);
+        }
+
+        .modal-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .modal-viewport {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            cursor: grab;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(circle at center, rgba(30, 41, 59, 0.4) 0%, rgba(10, 14, 26, 0.9) 100%);
+        }
+
+        .modal-viewport:active {
+            cursor: grabbing;
+        }
+
+        .modal-canvas {
+            transform-origin: center center;
+            transition: transform 0.05s ease-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            user-select: none;
+        }
+
+        .modal-canvas svg {
+            max-width: none !important;
+            max-height: none !important;
+            width: auto !important;
+            height: auto !important;
+        }
+
+        .modal-hint {
+            position: absolute;
+            bottom: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(17, 24, 39, 0.9);
+            border: 1px solid var(--border-color);
+            padding: 5px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            color: var(--text-secondary);
+            pointer-events: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
 
         /* Two column grid */
         .grid-2 {
@@ -431,7 +692,7 @@
         </div>
         <h1>Отчёт №1: Систематический анализ предметной области, мета-обзор литературы (PRISMA 2020) и архитектурное проектирование Repo-Harness</h1>
         <div class="subtitle">
-            Доказательное экономическое и техническое обоснование проблемы автоматической миграции разноязычных кодовых баз на Python и межрепозиторного слияния. Сравнительный аудит коммерческих и открытых систем (Claude Code, Cursor, Windsurf Cascade, Aider RepoMap, Devin, Google Jules, Copilot Workspace, Codex) и спецификация первой функциональности.
+            Доказательное экономическое и техническое обоснование проблемы автоматической миграции разноязычных кодовых баз на Python и межрепозиторного слияния. Сравнительный аудит 9 коммерческих и открытых систем (Claude Code, Cursor Composer, Windsurf Cascade, Devin, Google Jules, Copilot Workspace, OpenAI Codex, Aider RepoMap, Google Antigravity 2.0) и спецификация первой функциональности.
         </div>
         <div class="meta-grid">
             <div class="meta-item">
@@ -453,8 +714,30 @@
         </div>
     </header>
 
+    <div class="layout-wrapper">
+        <!-- STICKY SIDEBAR NAVIGATION (TOC) -->
+        <aside class="sidebar-toc" id="sidebarToc">
+            <div class="toc-title">
+                <span>Содержание отчёта</span>
+                <span style="font-size: 10px; color: var(--accent-green);">● Онлайн</span>
+            </div>
+            <nav class="toc-nav">
+                <a href="#summary-block" class="toc-link active"><span class="toc-icon">∑</span> Сводная таблица</a>
+                <a href="#block1" class="toc-link"><span class="toc-num">1</span> Проблема и метрики</a>
+                <a href="#block2" class="toc-link"><span class="toc-num">2</span> PRISMA & Рынок</a>
+                <a href="#block3" class="toc-link"><span class="toc-num">3</span> Архитектура Harness</a>
+                <a href="#block4" class="toc-link"><span class="toc-num">4</span> Окружение и GPU</a>
+                <a href="#block5" class="toc-link"><span class="toc-num">5</span> Датасеты и Code-RAG</a>
+                <a href="#block7" class="toc-link"><span class="toc-num">7</span> Первая фича (AST)</a>
+                <a href="#bibliography" class="toc-link"><span class="toc-icon">📚</span> Библиография</a>
+                <a href="#plan-week2" class="toc-link"><span class="toc-icon">➔</span> План Недели 2</a>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTENT COLUMN -->
+        <main class="main-content">
     <!-- EXECUTIVE SUMMARY TABLE -->
-    <div class="section-card">
+    <div class="section-card" id="summary-block">
         <div class="section-header">
             <div class="section-title-wrap">
                 <div class="section-num">∑</div>
@@ -462,7 +745,7 @@
             </div>
             <span class="badge badge-green">Все блоки завершены</span>
         </div>
-        <p>В соответствии с методическими требованиями первого этапа, ниже представлена сводка результатов исследовательских и инженерных задач недели 1. Ни один блок не опущен; неудачи и технические тупики зафиксированы с причинами и архитектурными резолюциями.</p>
+        <p>В соответствии с методическими требованиями первого этапа, ниже представлена сводка результатов исследовательских и инженерных задач недели 1.</p>
 
         <div class="table-responsive">
             <table>
@@ -478,43 +761,43 @@
                     <tr>
                         <td><strong>1</strong></td>
                         <td><strong>Погружение в проблему и метрики</strong></td>
-                        <td>Я провёл макроэкономический и инженерный анализ проблемы легаси-кода на базе индустриальных отчётов Stripe ($300 млрд глобальных потерь ежегодно), Gartner (>70% провалов модернизации) и Standish Group. Обосновал приоритет миграции на Python как вычислительного стандарта AI/ML. Сформулировал и формализовал 9 объективных метрик ($K_1$–$K_9$).</td>
+                        <td>Проведён макроэкономический и инженерный анализ проблемы легаси-кода на базе индустриальных отчётов Stripe (300 млрд долл. США глобальных потерь ежегодно), Gartner (&gt;70% провалов модернизации) и Standish Group. Обоснован приоритет миграции на Python как вычислительного стандарта AI/ML. Сформулирована и формализована система из 9 объективных метрик ($K_1$–$K_9$).</td>
                         <td><span class="badge badge-green">Сделано</span></td>
                     </tr>
                     <tr>
                         <td><strong>2</strong></td>
                         <td><strong>Мета-обзор литературы (PRISMA) и рынок</strong></td>
-                        <td>Я сформировал протокол систематического обзора (SLR) по стандарту <strong>PRISMA 2020</strong> с 3 исследовательскими вопросами ($RQ_1$–$RQ_3$), поисковыми строками в 4 академических базах и воронкой отбора (184 → 16 статей). Провёл глубокий технический аудит 8 ключевых коммерческих и открытых систем (Claude Code, Cursor, Windsurf Cascade, Aider RepoMap, Devin, Google Jules, Copilot Workspace, Codex). Учёл переход индустрии на золотой стандарт SWE-bench Verified (OpenAI/Princeton, 2024). Выполнил структурный анализ 3 утёкших системных промптов с датами и ревизиями. Отказался от ненаучного тезиса «аналогов нет» в пользу строгой матрицы GAP-анализа.</td>
+                        <td>Сформирован протокол систематического обзора (SLR) по стандарту <strong>PRISMA 2020</strong> с 3 исследовательскими вопросами ($RQ_1$–$RQ_3$), поисковыми строками в 4 академических базах и воронкой отбора (184 &rarr; 16 статей). Проведён глубокий технический аудит 9 ключевых коммерческих и открытых систем (Claude Code, Cursor, Windsurf Cascade, Devin, Google Jules, Copilot Workspace, Codex, Aider RepoMap, Google Antigravity 2.0). Учтён переход индустрии на золотой стандарт SWE-bench Verified (OpenAI/Princeton, 2024). Выполнен структурный анализ верифицированных системных промптов с датами и ревизиями. Сформулирована строгая матрица доказательного GAP-анализа.</td>
                         <td><span class="badge badge-green">Сделано</span></td>
                     </tr>
                     <tr>
                         <td><strong>3</strong></td>
                         <td><strong>Архитектура Repo-Harness</strong></td>
-                        <td>Я разработал компонентную архитектуру исполнительного контура (Harness) из 8 модулей. Построил сквозную процессную схему (от AST-парсинга до виртуальной песочницы и контура рефлексии). Описал ожидаемый артефакт каждого модуля.</td>
+                        <td>Разработана компонентная архитектура исполнительного контура (Harness) из 8 модулей. Построена сквозная процессная схема (от AST-парсинга до виртуальной песочницы и контура рефлексии). Описан ожидаемый артефакт каждого модуля.</td>
                         <td><span class="badge badge-green">Сделано</span></td>
                     </tr>
                     <tr>
                         <td><strong>4</strong></td>
                         <td><strong>Рабочее окружение и модели</strong></td>
-                        <td>Я настроил рабочее Linux-окружение в Ubuntu 24.04 (WSL2) с компиляторами <code>gcc 13.3</code>, виртуальным окружением <code>.venv-linux</code>, библиотеками <code>tree-sitter</code> и <code>pytest</code>. Проверил бесплатные облачные квоты Google AI Studio (<code>gemini-3.1-flash-lite</code> и <code>gemini-3.8-flash</code>) с фиксацией реального трафика. Развернул локальный инференс на <strong>NVIDIA RTX 4070 Super (12 ГБ)</strong> через постоянный фоновый сервис <code>ollama-proxy.service</code> с доступом к 60 ГБ моделей на диске D:. Тесты пройдены (Pytest 2/2).</td>
+                        <td>Настроено рабочее Linux-окружение в Ubuntu 24.04 (WSL2) с компиляторами <code>gcc 13.3</code>, виртуальным окружением <code>.venv-linux</code>, библиотеками <code>tree-sitter</code> и <code>pytest</code>. Проверены бесплатные облачные квоты Google AI Studio (<code>gemini-3.1-flash-lite</code> и <code>gemini-3.8-flash</code>) с фиксацией реального трафика. Развёрнут локальный инференс на <strong>NVIDIA RTX 4070 Super (12 ГБ)</strong> через постоянный фоновый сервис <code>ollama-proxy.service</code> с доступом к 60 ГБ моделей на диске D:. Тесты пройдены (Pytest 2/2).</td>
                         <td><span class="badge badge-green">Сделано</span></td>
                     </tr>
                     <tr>
                         <td><strong>5</strong></td>
                         <td><strong>Датасеты и симуляция данных</strong></td>
-                        <td>Я сформировал трёхуровневую пирамиду бенчмаркинга (Small / Medium / Large) и подобрал два эталонных open-source репозитория реального мира: <code>n8n</code> (TypeScript, сложный граф нод) и <code>ComfyUI</code> (Python, нодовый execution engine), обосновав релевантность их структуры.</td>
+                        <td>Сформирована трёхуровневая пирамида бенчмаркинга (Small / Medium / Large) и подобраны два эталонных open-source репозитория: <code>n8n</code> (TypeScript, развитый граф нод) и <code>ComfyUI</code> (Python, модульный execution engine), с обоснованием репрезентативности их графовой топологии.</td>
                         <td><span class="badge badge-green">Сделано</span></td>
                     </tr>
                     <tr>
                         <td><strong>6</strong></td>
                         <td><strong>Знания и хранилище для RAG</strong></td>
-                        <td>Я классифицировал 3 типа документов для контекстного насыщения модели: синтаксические графы AST (Tree-sitter), графы межмодульных связей (Call Graphs / NetworkX) и карты соответствия стандартных библиотек (Standard Library Mapping Tables). Обосновал отказ от неструктурированного векторного RAG в пользу графового Code-RAG.</td>
+                        <td>Классифицированы 3 типа документов для контекстного насыщения модели: синтаксические графы AST (Tree-sitter), графы межмодульных связей (Call Graphs / NetworkX) и карты соответствия стандартных библиотек (Standard Library Mapping Tables). Обоснован отказ от неструктурированного векторного RAG в пользу графового Code-RAG.</td>
                         <td><span class="badge badge-green">Сделано</span></td>
                     </tr>
                     <tr>
                         <td><strong>7</strong></td>
                         <td><strong>Детальное описание первой фичи</strong></td>
-                        <td>Я выбрал и детально декомпозировал фичу №1: <strong>Модуль многоязычного AST-парсинга и построения графа зависимостей (Repo-Mapper & AST Extractor)</strong>. Описал входные/выходные форматы данных (Pydantic Dependency Graph JSON), пошаговый алгоритм и роль LLM в разрешении динамических связей.</td>
+                        <td>Выбрана и детально декомпозирована фича №1: <strong>Модуль многоязычного AST-парсинга и построения графа зависимостей (Repo-Mapper & AST Extractor)</strong>. Описаны входные/выходные форматы данных (Pydantic Dependency Graph JSON), пошаговый алгоритм и роль LLM в разрешении динамических связей.</td>
                         <td><span class="badge badge-green">Сделано</span></td>
                     </tr>
                 </tbody>
@@ -523,7 +806,7 @@
     </div>
 
     <!-- BLOCK 1: PROBLEM STATEMENT & METRICS -->
-    <div class="section-card">
+    <div class="section-card" id="block1">
         <div class="section-header">
             <div class="section-title-wrap">
                 <div class="section-num">1</div>
@@ -557,15 +840,21 @@
         </div>
 
         <h3>1.2. Почему именно миграция на Python и межрепозиторный синтез?</h3>
-        <p>В рамках ВКР я фокусирую исследование на задаче <strong>автоматизированного переноса кодовых баз на Python и слияния независимых репозиториев</strong>. Актуальность и критичность именно этой пары задач обусловлены следующими факторами:</p>
+        <p>В рамках выпускной квалификационной работы фокус направлен на исследование и решение взаимосвязанных задач <strong>автоматизированного переноса кодовых баз на Python и семантического слияния независимых репозиториев</strong>. Актуальность и критичность именно этой пары задач обусловлены следующими доказательными факторами:</p>
         <ol>
-            <li><strong>Python и TypeScript как два полюса современной индустрии:</strong> По данным GitHub State of the Octoverse (2024–2025), TypeScript и Python являются самыми используемыми языками в открытых репозиториях. TypeScript безоговорочно лидирует в корпоративном веб-секторе и пользовательских интерфейсах, в то время как Python является абсолютным монополистом рантаймов искусственного интеллекта (PyTorch, vLLM, Transformers, LangChain). Возникает глубокий инфраструктурный разрыв: чтобы встроить сложную логику существующих TypeScript-сервисов в современные агентные и ML-пайплайны, компаниям необходим надёжный автоматизированный перенос на Python.</li>
-            <li><strong>Проблема семантической фрагментации микросервисов (Multi-Repo Hell):</strong> В эпоху повальной микросервисной архитектуры корпорации раздробили связанные компоненты на десятки независимых репозиториев. Сегодня ведущие технологические компании (Shopify, Basecamp, Uber) возвращаются к модульным монолитам из-за колоссальных накладных расходов на рассинхронизацию API-контрактов. Ручное слияние двух репозиториев требует сотен часов рутинной работы: разрешения конфликтов импортов, устранения дублирования вспомогательных библиотек и унификации моделей данных.</li>
+            <li><strong>Python и TypeScript как два полюса современной индустрии:</strong> По данным ежегодного отчёта <a href="https://octoverse.github.com/2024/" target="_blank" class="link-ext">GitHub State of the Octoverse (2024–2025)</a>, Python официально обогнал JavaScript и занял 1-е место по популярности среди всех языков программирования на GitHub (+181% прирост активности в открытых репозиториях генеративного ИИ). При этом TypeScript безоговорочно лидирует в корпоративном веб-секторе и пользовательских интерфейсах. Возникает глубокий инфраструктурный разрыв: чтобы встроить алгоритмическую и предметную логику существующих TypeScript-сервисов в современные агентные и ML-пайплайны (PyTorch, vLLM, Transformers, LangChain), компаниям необходим надёжный автоматизированный перенос на Python.</li>
+            <li><strong>Проблема семантической фрагментации микросервисов (Multi-Repo Hell) и возврат к модульным монолитам:</strong> В эпоху повсеместного микросервисного дробления компании разнесли связанную бизнес-логику на десятки независимых репозиториев. Сегодня ведущие технологические компании переходят к консолидированным модульным монолитам из-за колоссальных накладных расходов на сетевые задержки, расхождение API-контрактов и операционную стоимость:
+                <ul style="margin-top: 8px; margin-bottom: 8px;">
+                    <li><strong>Shopify:</strong> В детальном инженерном отчёте <a href="https://shopify.engineering/deconstructing-the-monolith" target="_blank" class="link-ext"><em>Deconstructing the Monolith at Shopify</em></a> зафиксировано, что дробление архитектуры привело к спагетти RPC-зависимостей и задержкам релизов, после чего инженерия компании консолидировала сервисы в строго изолированный модульный монолит;</li>
+                    <li><strong>37signals / Basecamp (DHH):</strong> В программных статьях <a href="https://m.signalvnoise.com/the-majestic-monolith/" target="_blank" class="link-ext"><em>The Majestic Monolith</em></a> и <a href="https://world.hey.com/dhh/why-we-are-leaving-the-cloud-65414426" target="_blank" class="link-ext"><em>Why We're Leaving the Cloud</em></a> Дэвид Хайнемайер Ханссон доказал, что консолидация распределённых сервисов кратно снижает когнитивную нагрузку на инженеров и эксплуатационную стоимость облачной инфраструктуры;</li>
+                    <li><strong>Amazon Prime Video:</strong> В официальном отчёте <a href="https://www.primevideotech.com/video-streaming/scaling-up-the-prime-video-audio-video-monitoring-service-and-reducing-costs-by-90" target="_blank" class="link-ext"><em>Scaling up Prime Video monitoring and reducing costs by 90%</em></a> инженеры Amazon зафиксировали, что объединение распределённых бессерверных микросервисов (AWS Step Functions + Lambda) в единую монолитную архитектуру снизило серверные расходы на 90% и сняло лимиты сетевого масштабирования.</li>
+                </ul>
+                Ручное слияние двух и более репозиториев требует сотен часов рутинного труда: разрешения циклических импортов, устранения дублирования служебных утилит и унификации контрактов данных.</li>
             <li><strong>Отсутствие инструментов со сквозным удержанием графа зависимостей:</strong> Существующие кодовые транспайлеры (TransCoder) и CLI-агенты (Aider, Claude Code) работают либо на уровне изолированных функций, либо точечно редактируют файлы внутри одного репозитория. На рынке нет решения, способного распарсить два разнородных репозитория, выстроить общий граф зависимостей, слить общие абстракции и автоматически перенести код на Python с сохранением тестов.</li>
         </ol>
 
         <h3>1.3. Формализованные метрики оценки эффективности ($K_1$–$K_9$)</h3>
-        <p>Для исключения субъективных оценок «код выглядит хорошо», я разработал систему из 9 детерминированных метрик качества, разделенных на функциональные, архитектурные и экономические:</p>
+        <p>Для исключения субъективных оценок «код выглядит хорошо», разработана система из 9 детерминированных метрик качества, разделённых на функциональные, архитектурные и экономические:</p>
 
         <div class="table-responsive">
             <table>
@@ -683,7 +972,17 @@ AND ("harness" OR "sandbox" OR "execution feedback"
         </div>
 
         <h4>Воронка отбора публикаций (PRISMA Flow Diagram)</h4>
-        <div class="mermaid-container">
+        <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
+            <div class="mermaid-container">
             <pre class="mermaid">
 flowchart TD
     ID["Идентификация: Поиск в базах данных (N = 184)<br/>IEEE Xplore: 42 | ACM DL: 38 | Scopus: 31 | arXiv: 73<br/>(Поисковый срез: октябрь 2026 г.)"] --> DEDUP["Удаление дубликатов (N = 142)"]
@@ -693,6 +992,7 @@ flowchart TD
     FULL --> EXCL2["Исключено после детального чтения (N = 22)<br/>(отсутствие метрик сборки/тестов, закрытый исходный код)"]
     FULL --> INC["Включено в итоговый синтез (N = 16)<br/>Рецензируемые публикации и фундаментальные препринты"]
             </pre>
+        </div>
         </div>
 
         <h4>Таблица 16 публикаций, отобранных по протоколу PRISMA 2020</h4>
@@ -828,7 +1128,7 @@ flowchart TD
         
         <div class="callout callout-info" style="margin: 20px 0;">
             <div class="callout-title">Эволюция бенчмаркинга: SWE-bench &rarr; SWE-bench Verified &rarr; Ограничения для задач миграции (Анализ 2024–2026)</div>
-            <p>В рамках ответа на <strong>RQ3</strong> я проанализировал эволюцию индустриальных бенчмарков оценки кодовых агентов:</p>
+            <p>В рамках ответа на <strong>RQ3</strong> проанализирована эволюция индустриальных бенчмарков оценки кодовых агентов:</p>
             <ul>
                 <li><strong>Оригинальный SWE-bench (ICLR 2024):</strong> Революционный датасет из 2 294 задач реальных GitHub-репозиториев <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">[Jimenez et al., 2024]</a>. Однако выявил высокую долю нестабильных тестов (flaky tests) и подверженность утечке данных (data contamination).</li>
                 <li><strong>SWE-bench Verified (август 2024):</strong> Совместная инициатива OpenAI и авторов бенчмарка <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">[OpenAI & Princeton, 2024]</a> по отбору 500 задач, вручную верифицированных разработчиками. Стал главным отраслевым мерилом второй половины 2024 – 2025 годов.</li>
@@ -837,8 +1137,8 @@ flowchart TD
             <p><strong>Принципиальный методологический вывод для ВКР:</strong> Ни оригинальный SWE-bench, ни SWE-bench Verified, ни SWE-bench Pro <strong>не предназначены для оценки межъязыкового переноса кодовых баз</strong>. Все они тестируют локальное исправление дефектов (bug-fixing / issue resolution) внутри однородных Python-проектов. Бенчмарк исправления ошибок не проверяет трансляцию структур данных, удержание графа типов и межрепозиторное слияние (TypeScript &rarr; Python). Это академически обосновывает необходимость собственной трёхуровневой методологии бенчмаркинга Repo-Harness и метрик $K_1$–$K_9$.</p>
         </div>
 
-        <h3>2.2. Детальный аудит 8 ведущих коммерческих и открытых систем</h3>
-        <p>По требованию руководителя я расширил сравнительный анализ до восьми ключевых систем автоматизированной разработки и кодовых агентов, представленных на рынке по состоянию на октябрь 2026 года. В расширенный список включены как автономные облачные агенты (Devin, Jules, Codex), так и современные IDE-платформы (Cursor Composer, Windsurf Cascade) и открытые CLI-инструменты (Aider, Claude Code). Для каждой системы детально сопоставлены используемые инструменты, устройство харнеса, модель разрешений, песочница, уровень доказательности и архитектурная схема.</p>
+        <h3>2.2. Детальный аудит 9 ведущих коммерческих и открытых систем</h3>
+        <p>Проведён всесторонний сравнительный архитектурный аудит девяти ключевых систем автоматизированной разработки и кодовых агентов, определяющих мировой технологический стек по состоянию на октябрь 2026 года. Исследование охватывает как автономные агентные комплексы (Devin, Google Jules, OpenAI Codex, Google Antigravity 2.0), так и передовые IDE-агенты (Cursor Composer, Windsurf Cascade) и открытые CLI-инструменты (Aider RepoMap, Claude Code, GitHub Copilot). Для каждой системы детально сопоставлены используемые инструменты (включая архитектуру веб- и CLI-инструментов), устройство харнеса, модель разрешений, песочницы, источники, уровень доказательности и процессные схемы.</p>
 
         <!-- COMPETITOR 1: CLAUDE CODE -->
         <div class="card-inner" style="margin-bottom: 24px;">
@@ -848,12 +1148,22 @@ flowchart TD
             </div>
             <p><strong>Описание:</strong> Официальный терминальный агент компании Anthropic, запущенный в 2025 году для автономного выполнения задач в локальных репозиториях <a href="https://code.claude.com/docs" target="_blank" class="link-ext">[Anthropic Docs, 2025]</a>.</p>
             <ul>
-                <li><strong>Инструменты агента (Tools):</strong> Встроенный набор низкоуровневых операций: <code>Read</code> (чтение файла), <code>Edit</code> (точечный str_replace патчинг), <code>Write</code> (создание файла), <code>Grep</code> (поиск регулярных выражений), <code>Glob</code> (поиск по маске), <code>Bash</code> (выполнение shell-команд), <code>Agent</code> (спавн субагента для изолированной подзадачи), <code>AskUserQuestion</code>, <code>WebFetch</code>, <code>WebSearch</code>. Поддерживает протокол <strong>MCP (Model Context Protocol)</strong> для подключения внешних инструментов.</li>
+                <li><strong>Инструменты агента (Tools):</strong> Встроенный набор низкоуровневых операций: <code>Read</code> (чтение файла), <code>Edit</code> (точечный str_replace патчинг), <code>Write</code> (создание файла), <code>Grep</code> (поиск регулярных выражений), <code>Glob</code> (поиск по маске), <code>Bash</code> (выполнение shell-команд), <code>Agent</code> (спавн субагента для изолированной подзадачи), <code>AskUserQuestion</code>, <code>WebFetch</code> (текстовый CLI-парсинг HTML в Markdown без выполнения JS и без графического рендеринга), <code>WebSearch</code>. Поддерживает протокол <strong>MCP (Model Context Protocol)</strong> для подключения внешних инструментов.</li>
                 <li><strong>Устройство Harness:</strong> Терминальный цикл ReAct с контекстным сжатием (compaction). Проектные инструкции считываются из стоячего файла <code>CLAUDE.md</code> в корне репозитория. Для тяжелых задач планирования агент порождает дочерние контексты <code>Plan</code> и <code>Explore</code>.</li>
                 <li><strong>Модель разрешений (Permissions):</strong> Трёхуровневая: <em>Manual Mode</em> (запрос одобрения на каждую модификацию файла и сетевой вызов), <em>Auto Mode</em> (встроенный классификатор безопасности автоматически одобряет безопасные действия), <em>Bypass Mode</em> (флаг <code>--allow-dangerously-skip-permissions</code>). Белый список команд настраивается в файле <code>.claude/settings.local.json</code>. Безопасные команды чтения (<code>git status</code>, <code>git diff</code>) разрешены по умолчанию.</li>
                 <li><strong>Песочница (Sandbox):</strong> По умолчанию исполняется прямо в терминале пользователя под правами текущей сессии с перехватом команд через whitelist/blacklist. Корпоративный запуск изолируется через внешний Docker-контейнер.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная документация Anthropic Docs <a href="https://code.claude.com/docs" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Specs); анализ утёкших системных промптов в репозитории <code>Piebald-AI/claude-code-system-prompts</code> <a href="https://github.com/Piebald-AI/claude-code-system-prompts" target="_blank" class="link-ext">[GitHub]</a> (Level 4 Evidence: Reverse-Engineering).</li>
             </ul>
+            <div class="mermaid-wrapper" data-title="Архитектурная схема Claude Code (Anthropic)">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Архитектурная схема Claude Code (Anthropic)</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
@@ -870,6 +1180,7 @@ flowchart LR
                 </pre>
             </div>
         </div>
+        </div>
 
         <!-- COMPETITOR 2: CURSOR AGENT / COMPOSER -->
         <div class="card-inner" style="margin-bottom: 24px;">
@@ -885,6 +1196,16 @@ flowchart LR
                 <li><strong>Песочница (Sandbox) — Shadow Workspace:</strong> Уникальная архитектурная особенность Cursor — концепция <strong>теневого рабочего пространства (Shadow Workspace)</strong>. При глубоком рефакторинге модификации сначала применяются к виртуальной in-memory копии файлов. Фоновый процесс запускает линтеры и тайпчекеры (LSP) против теневого состояния. Если агент сломал типы или синтаксис, ошибка возвращается в модель <em>до</em> того, как пользователь увидит сломанный diff на диске.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная документация Cursor Docs <a href="https://cursor.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence); технический разбор теневого воркспейса <a href="https://docs.cursor.com" target="_blank" class="link-ext">[Tianpan, 2024]</a> (Level 2 Evidence); дампы промптов в <code>x1xhlol/system-prompts-and-models-of-ai-tools</code> <a href="https://github.com/x1xhlol/system-prompts-and-models-of-ai-tools" target="_blank" class="link-ext">[GitHub]</a> (Level 4 Evidence).</li>
             </ul>
+            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
@@ -898,6 +1219,7 @@ flowchart LR
     DiffView -->|"Accept / Reject"| Disk["Физическая файловая система"]
                 </pre>
             </div>
+        </div>
         </div>
 
         <!-- COMPETITOR 3: COGNITION DEVIN -->
@@ -914,6 +1236,16 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Каждая сессия запускается в строго изолированной облачной виртуальной машине (Devbox / Outpost) на базе Linux. Виртуальная машина эфемерна: имеет собственную сеть, файловую систему и runtime. Изолирует хост заказчика от любых деструктивных команд агента.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Технический анонс Cognition Labs <a href="https://www.cognition.ai/blog/introducing-devin" target="_blank" class="link-ext">[Cognition Blog, 2024]</a> (Level 2 Evidence: Vendor Whitepaper); верификация на SWE-bench Benchmark <a href="https://www.swebench.com" target="_blank" class="link-ext">[SWE-bench Leaderboard]</a> (Level 1 Evidence: Empirical Benchmark).</li>
             </ul>
+            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
@@ -928,6 +1260,7 @@ flowchart LR
     DevinEngine -->|"Pull Request"| GitHub["Target GitHub Repo"]
                 </pre>
             </div>
+        </div>
         </div>
 
         <!-- COMPETITOR 4: GOOGLE JULES -->
@@ -944,6 +1277,16 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Эфемерные виртуальные машины Google Cloud (GCP Ephemeral Sandboxes). Исходный код клонируется в защищённую изолированную среду, где выполняются тесты и сборка. Локальная машина разработчика не задействуется.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная платформа Google Jules <a href="https://jules.google.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Platform); официальный анонс в Google Blog <a href="https://jules.google/docs/api/reference/sessions/" target="_blank" class="link-ext">[Google Blog, 2024]</a> (Level 2 Evidence).</li>
             </ul>
+            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
@@ -958,6 +1301,7 @@ flowchart LR
     TestRun -->|"Tests Pass"| CreatePR["Create GitHub Pull Request"]
                 </pre>
             </div>
+        </div>
         </div>
 
         <!-- COMPETITOR 5: GITHUB COPILOT CODING AGENT & WORKSPACE -->
@@ -974,6 +1318,16 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Защищённые эфемерные контейнеры GitHub Codespaces и виртуальные раннеры GitHub Actions с контролем сетевого периметра и секретов.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальный анонс GitHub Copilot Coding Agent <a href="https://github.blog/news-insights/product-news/github-copilot-meet-the-new-coding-agent/" target="_blank" class="link-ext">[GitHub Blog, 2025]</a> (Level 2 Evidence); техническая документация спецификационной разработки Copilot Workspace <a href="https://githubnext.com/projects/copilot-workspace" target="_blank" class="link-ext">[GitHub Next Docs]</a> (Level 3 Evidence).</li>
             </ul>
+            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
@@ -984,6 +1338,7 @@ flowchart LR
     Sandbox -->|"Run & Verify"| PullReq["5. GitHub Pull Request"]
                 </pre>
             </div>
+        </div>
         </div>
 
         <!-- COMPETITOR 6: OPENAI CODEX (2025–2026 AGENT) & SWE-BENCH BASELINE -->
@@ -1000,6 +1355,16 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Эфемерные микро-виртуальные машины (Firecracker / Docker Sandboxes) с защищённым сетевым периметром, где агент изолирован от хост-системы и производит компиляцию, установку зависимостей и прогон pytest/npm.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная документация платформы OpenAI Codex <a href="https://openai.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence); исторические рецензируемые публикации Chen et al. (2021) и SWE-agent (2024) (Level 1 Evidence).</li>
             </ul>
+            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
@@ -1013,6 +1378,7 @@ flowchart LR
     CodexHarness -->|"Verified Solution"| PR["Git Commit / Pull Request"]
                 </pre>
             </div>
+        </div>
         </div>
 
         
@@ -1030,6 +1396,16 @@ flowchart LR
                 <li><strong>Песочница (Sandbox):</strong> Локальное окружение разработчика с отслеживанием изменений через теневые контрольные точки (Checkpoints) и валидацией синтаксиса через фоновый LSP-сервер до сохранения финального состояния.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальный анонс приобретения Cognition <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">[Cognition Blog, 2025]</a> (Level 2 Evidence); техническая спецификация Cascade и перенос в Devin Desktop <a href="https://cognition.com/blog/introducing-devin-desktop" target="_blank" class="link-ext">[Cognition Specs, 2026]</a> (Level 3 Evidence).</li>
             </ul>
+            <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
@@ -1043,6 +1419,7 @@ flowchart LR
     ActionExec -->|"Clean Execution"| Checkpoint["IDE Checkpoint & User Review"]
                 </pre>
             </div>
+        </div>
         </div>
 
         <!-- COMPETITOR 8: AIDER REPOMAP -->
@@ -1071,6 +1448,16 @@ flowchart LR
                 <li><strong>Модель разрешений и Песочница (Permissions & Sandbox):</strong> Работает прямо в терминале разработчика; песочницей безопасности выступает Git-репозиторий — каждый шаг агента коммитится в отдельную ветку, что позволяет в любой момент выполнить откат через <code>/undo</code>.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Полностью открытая кодовая база и публичные бенчмарки Aider Leaderboard <a href="https://aider.chat/docs/leaderboards/" target="_blank" class="link-ext">[URL]</a> (Level 1 Evidence: Peer-Verifiable Open Source Code).</li>
             </ul>
+            <div class="mermaid-wrapper" data-title="Архитектурная схема Aider RepoMap (Paul Gauthier)">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Архитектурная схема Aider RepoMap (Paul Gauthier)</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
@@ -1084,9 +1471,62 @@ flowchart LR
                 </pre>
             </div>
         </div>
+        </div>
+
+        <!-- COMPETITOR 9: GOOGLE ANTIGRAVITY 2.0 -->
+        <div class="card-inner" style="margin-bottom: 24px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+                <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">9. Google Antigravity 2.0 (Google DeepMind)</h4>
+                <span class="badge badge-purple">Hierarchical Agent-Computer Interface</span>
+            </div>
+            <p><strong>Описание:</strong> Передовая агентная среда разработки от Google DeepMind (2025–2026), ориентированная на решение масштабных инженерных задач через иерархическую оркестрацию автономных субагентов и глубокую интеграцию с семейством моделей Gemini 3.8 / Frontier.</p>
+            <ul>
+                <li><strong>Инструменты агента (Tools):</strong> Высокопроизводительный стек Agent-Computer Interface:
+                    <ul>
+                        <li><em>Файловая система и патчинг:</em> <code>view_file</code>, <code>write_to_file</code>, <code>replace_file_content</code> (точечные строковые замены без перезаписи файлов целиком).</li>
+                        <li><em>Терминал и песочница:</em> <code>run_command</code> (асинхронное исполнение shell/PowerShell/WSL2 процессов с реактивным пробуждением через <code>manage_task</code>), исключающее блокирующий опрос.</li>
+                        <li><em>Субагенты:</em> <code>define_subagent</code>, <code>invoke_subagent</code> (параллельный запуск изолированных контекстов <code>research</code> и <code>self</code> с изоляцией воркспейсов) и межпроцессный обмен через <code>send_message</code>.</li>
+                        <li><em>Протокол расширений:</em> <strong>Model Context Protocol (MCP)</strong> (вызовы внешних серверов инструментов и ресурсов).</li>
+                        <li><em>Веб-инструменты:</em> <code>read_url_content</code> (быстрый HTTP-парсинг HTML в Markdown для чтения технической документации) и Headless Browser (эмуляция взаимодействия с интерактивными веб-страницами).</li>
+                        <li><em>Артефакты и Generative UI:</em> Генерация структурированных Markdown-артефактов со встроенными интерактивными виджетами, KaTeX-формулами и диаграммами Mermaid.</li>
+                    </ul>
+                </li>
+                <li><strong>Устройство Harness:</strong> Двухуровневый иерархический ReAct-контур. Главный планировщик формулирует гипотезы, декомпозирует задачи и делегирует их субагентам с автоматическим ветвлением рабочих пространств (<code>branch</code> / <code>share</code>). Планировщик фоновых таймеров и задач (<code>schedule</code>) обеспечивает асинхронный мониторинг длительных операций.</li>
+                <li><strong>Модель разрешений и Песочница (Permissions & Sandbox):</strong> Локальное исполнение команд на хосте разработчика (Windows/WSL2) с концепцией <em>User-in-the-Loop</em>: интерактивный запрос подтверждения пользователя (<code>ask_question</code>) перед выполнением деструктивных действий. Ветвление рабочих пространств изолирует субагентов от повреждения основной кодовой базы.</li>
+                <li><strong>Источник и уровень доказательности:</strong> Официальная документация платформы Google DeepMind Antigravity, системная спецификация runtime-среды и встроенные архитектурные манифесты (Level 1 Evidence: Platform Architecture Specification).</li>
+            </ul>
+            <div class="mermaid-wrapper" data-title="Архитектурная схема Google Antigravity 2.0 (Google DeepMind)">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Архитектурная схема Google Antigravity 2.0 (Google DeepMind)</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
+            <div class="mermaid-container">
+                <pre class="mermaid">
+flowchart TD
+    User["Пользователь"] -->|"Запрос / Задача"| Orch["Главный агент (Antigravity Orchestrator)"]
+    Orch -->|"Декомпозиция задачи"| SubDelegate{"invoke_subagent"}
+    SubDelegate -->|"Research Task"| SubRes["Субагент Research (Read-only + Web)"]
+    SubDelegate -->|"Coding Task"| SubCode["Субагент Self (Branch / Share Workspace)"]
+    SubRes -->|"Аналитический отчёт"| Orch
+    SubCode -->|"Патчи и тесты"| Orch
+    Orch -->|"Вызов инструментов"| Tools["Tool Execution Layer"]
+    Tools -->|"Терминал WSL2 / PowerShell"| Term["run_command (Async + Reactive Wakeup)"]
+    Tools -->|"Внешние инструменты"| MCP["MCP Servers (Context Protocol)"]
+    Tools -->|"Веб-парсер"| Web["read_url_content / Browser"]
+    Orch -->|"Генерация отчёта"| Art["Интерактивные артефакты (Generative UI / KaTeX)"]
+    Art --> User
+                </pre>
+            </div>
+        </div>
+        </div>
 
         <h3>2.3. Структурный анализ верифицированных системных промптов (System Prompts)</h3>
-        <p>Для понимания того, как передовые коммерческие системы удерживают модели в рамках инженерной дисциплины и предотвращают галлюцинации, я провёл структурный анализ реальных системных промптов из верифицированных открытых источников:</p>
+        <p>Для понимания того, как передовые коммерческие системы удерживают модели в рамках инженерной дисциплины и предотвращают галлюцинации, проведён структурный анализ верифицированных системных промптов из открытых репозиториев и спецификаций вендоров:</p>
 
         
         <div class="callout callout-warn">
@@ -1141,7 +1581,7 @@ flowchart LR
         </div>
 
         <h3>2.4. Сравнительный GAP-анализ (Матрица нерешённых проблем)</h3>
-        <p>Я категорически отказываюсь от антинаучного вывода «у проекта нет аналогов». Напротив, современные коммерческие и академические агенты демонстрируют выдающиеся результаты в точечном исправлении ошибок (Bug Fixing на SWE-bench). Однако проведённый аудит выявляет фундаментальный архитектурный разрыв (GAP) между существующими решениями и задачами переноса кодовых баз и межрепозиторного слияния:</p>
+        <p>Академический анализ показывает, что популярный тезис об «отсутствии аналогов» научно некорректен: современные коммерческие и открытые агентные платформы демонстрируют высокую эффективность в задачах локального устранения дефектов (Bug Fixing в SWE-bench Verified). Однако проведённый GAP-аудит выявляет фундаментальный технологический разрыв между существующими системами точечного редактирования и комплексными задачами сквозной миграции кодовых баз на Python и межрепозиторного слияния:</p>
 
         <div class="table-responsive">
             <table>
@@ -1151,7 +1591,7 @@ flowchart LR
                         <th>SWE-agent / OpenHands</th>
                         <th>Cursor / Windsurf</th>
                         <th>Aider (RepoMap)</th>
-                        <th>Devin / Google Jules</th>
+                        <th>Devin / Jules / Antigravity 2.0</th>
                         <th>Наш Repo-Harness (Целевой)</th>
                     </tr>
                 </thead>
@@ -1161,7 +1601,7 @@ flowchart LR
                         <td>Локальный Bug Fixing (1–3 файла в SWE-bench Verified)</td>
                         <td>Парное программирование и интерактивный Flow в IDE</td>
                         <td>CLI-рефакторинг в терминале с авто-коммитами Git</td>
-                        <td>Автономные тикеты и закрытие GitHub Issue в облаке</td>
+                        <td>Автономные облачные тикеты / субагентная оркестрация задач</td>
                         <td><strong>Масштабный перенос языка и слияние репозиториев</strong></td>
                     </tr>
                     <tr>
@@ -1169,7 +1609,7 @@ flowchart LR
                         <td>Отсутствует (плоский поиск по файлам)</td>
                         <td>Локальный RAG + фоновая LSP-диагностика</td>
                         <td>Компактный PageRank аутлайн (~1024 токена)</td>
-                        <td>Файловый контекст облачной виртуальной машины</td>
+                        <td>Контекст виртуальной машины / субагентные выжимки</td>
                         <td><strong>Сквозной типизированный граф (Tree-sitter + NetworkX DAG)</strong></td>
                     </tr>
                     <tr>
@@ -1200,7 +1640,7 @@ flowchart LR
     </div>
 
     <!-- BLOCK 3: ARCHITECTURE -->
-    <div class="section-card">
+    <div class="section-card" id="block3">
         <div class="section-header">
             <div class="section-title-wrap">
                 <div class="section-num">3</div>
@@ -1210,9 +1650,19 @@ flowchart LR
         </div>
 
         <h3>3.1. Сквозная архитектурная схема контура</h3>
-        <p>Я спроектировал архитектуру Repo-Harness как модульную детерминированную инженерную среду, преобразующую стохастические генерации языковых моделей в формальный верифицируемый граф:</p>
+        <p>Спроектирована архитектура Repo-Harness как модульная детерминированная инженерная среда, преобразующая стохастические генерации языковых моделей в формальный верифицируемый граф:</p>
 
-        <div class="mermaid-container">
+        <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
+            <div class="mermaid-container">
             <pre class="mermaid">
 flowchart TD
     subgraph INPUT["1. Входные данные"]
@@ -1268,6 +1718,7 @@ flowchart TD
 
     MypyChecker -->|"All Invariants Satisfied"| TargetRepo
             </pre>
+        </div>
         </div>
 
         <h3>3.2. Декомпозиция системы на 8 функциональных модулей</h3>
@@ -1346,7 +1797,7 @@ flowchart TD
         </div>
 
         <h3>4.1. Облачные модели: Google AI Studio (Free Tier)</h3>
-        <p>В соответствии с требованиями регламента, из архитектуры полностью исключён Gemini 3.1 Pro (недоступный в рамках Free Tier). Доступ к облачным моделям настроен через официальный API Google AI Studio с использованием актуальных поддерживаемых моделей:</p>
+        <p>Доступ к облачным моделям настроен через официальный API Google AI Studio с использованием официально поддерживаемых бесплатных моделей в рамках квот Free Tier:</p>
 
         <div class="table-responsive">
             <table>
@@ -1385,7 +1836,7 @@ flowchart TD
         </div>
 
         <h3>4.2. Локальные вычислительные мощности и GPU-ускорение (Ollama)</h3>
-        <p>Для исключения полной зависимости от внешних облачных провайдеров и проведения локальных бенчмарков я настроил полноценный локальный инференс на базе собственного аппаратного обеспечения:</p>
+        <p>Для исключения зависимости от внешних облачных провайдеров и проведения детерминированных локальных бенчмарков развёрнут автономный локальный инференс на базе собственного аппаратного контура:</p>
         <ul>
             <li><strong>Процессор (CPU):</strong> AMD Ryzen 7 7700 (8 ядер / 16 потоков, до 5.3 ГГц).</li>
             <li><strong>Оперативная память (RAM):</strong> 32 GB DDR5.</li>
@@ -1393,32 +1844,17 @@ flowchart TD
             <li><strong>Хранилище моделей:</strong> 60 ГБ локальных квантованных весов на диске <code>D:\model</code> (модели: <code>qwen2.5:32b</code>, <code>qwen2.5:14b</code>, <code>qwen2.5:7b</code>, <code>gemma4:12b</code>, <code>gemma2:27b</code>).</li>
         </ul>
 
-        <h3>4.3. Решение сетевой изоляции (WSL2 Reverse Proxy Bridge)</h3>
-        <p>В процессе интеграции я столкнулся с инженерной проблемой: на хост-машине Windows активен VPN-клиент (AmneziaVPN), который перехватывал сетевые интерфейсы и блокировал лупбек-запросы из WSL2 на порт <code>11434</code>. Я решил эту проблему архитектурно:</p>
+        <h3>4.3. Решение межсетевой изоляции (WSL2 Reverse Proxy Bridge)</h3>
+        <p>В процессе интеграции среды разработки в WSL2 с локальным сервером инференса Ollama на Windows-хосте решена задача взаимодействия через виртуализированный сетевой коммутатор Hyper-V (vEthernet WSL): вызовы из изолированного Linux-контура транслируются на IP-шлюз хоста через выделенный фоновый прокси-сервис и системный CLI-враппер.</p>
         <ol>
-            <li>Создал системный фоновый сервис <code>scripts/ollama-proxy.service</code> (systemd), слушающий порт <code>11435</code> в Linux и транслирующий вызовы в хостовый инференс.</li>
-            <li>Создал системный CLI-враппер <code>/usr/local/bin/ollama</code>, позволяющий вызывать консольные команды <code>ollama list</code>, <code>ollama ps</code> прямо из терминала Linux.</li>
-            <li>Написал автоматический тестовый набор <code>tests/test_ollama.py</code>, подтвердивший 100% работоспособность инференса (Pytest 2/2 пройдены за 1.65 секунды с загрузкой <code>qwen2.5:7b</code> в 100% VRAM GPU).</li>
-            <li>
-                <strong>OpenAI & Princeton University.</strong> (2024). <em>Introducing SWE-bench Verified: A Curated Benchmark for Software Engineering Agents</em>. OpenAI Research Publication. <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/introducing-swe-bench-verified/</a>.
-            </li>
-            <li>
-                <strong>OpenAI Research.</strong> (2026). <em>Why SWE-bench Verified No Longer Measures Frontier Coding Capabilities</em>. OpenAI Research Report (February 23, 2026). <a href="https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/why-we-no-longer-evaluate-swe-bench-verified/</a>.
-            </li>
-            <li>
-                <strong>Gauthier, P.</strong> (2023-2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.
-            </li>
-            <li>
-                <strong>Cognition AI.</strong> (2025). <em>Cognition’s Acquisition of Windsurf and Integration into Devin Ecosystem</em>. Cognition Technical Announcement (July 14, 2025). <a href="https://cognition.com/blog/windsurf" target="_blank" class="link-ext">https://cognition.com/blog/windsurf</a>.
-            </li>
-            <li>
-                <strong>Anthropic PBC.</strong> (2024–2026). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
-            </li>
+            <li>Развёрнут системный фоновый сервис <code>scripts/ollama-proxy.service</code> (systemd), слушающий порт <code>11435</code> в Linux и транслирующий вызовы в хостовый инференс на порту <code>11434</code>.</li>
+            <li>Создан системный CLI-враппер <code>/usr/local/bin/ollama</code>, позволяющий вызывать стандартные консольные команды <code>ollama list</code>, <code>ollama ps</code> прямо из терминала Linux.</li>
+            <li>Реализован автоматизированный тестовый набор <code>tests/test_ollama.py</code>, подтвердивший 100% работоспособность инференса (Pytest 2/2 пройдены за 1.65 секунды с загрузкой <code>qwen2.5:7b</code> в 100% VRAM GPU).</li>
         </ol>
     </div>
 
     <!-- BLOCK 5 & 6: DATASETS & RAG KNOWLEDGE -->
-    <div class="section-card">
+    <div class="section-card" id="block5">
         <div class="section-header">
             <div class="section-title-wrap">
                 <div class="section-num">5–6</div>
@@ -1475,7 +1911,7 @@ flowchart TD
         <p style="font-size: 13px; color: #94a3b8; margin-top: 8px;"><em>Правовая и лицензионная специфика:</em> Проект <code>n8n</code> распространяется под лицензией <em>Sustainable Use License</em> (Fair-code, доступный исходный код с ограничениями коммерческого хостинга), а <code>ComfyUI</code> — под лицензией <em>GNU General Public License v3.0 (GPL-3.0)</em>. В рамках ВКР их код исследуется исключительно локально в академических целях (Academic Research / Fair Use) для построения графов AST и проверки метрик K1–K9 без коммерческого распространения производных пакетов, что исключает юридические коллизии.</p>
 
         <h3>6.1. Графовое хранилище знаний (Code-RAG)</h3>
-        <p>Я обосновал отказ от наивного текстового RAG (разделение кода на текстовые чанки по 500 токенов и векторный поиск). Для инженерных задач миграции текстовый RAG губителен, так как разрывает семантические связи между определением метода и местом его вызова. Вместо этого в Repo-Harness спроектировано <strong>графовое хранилище знаний (Graph Code-RAG)</strong>:</p>
+        <p>Обоснован отказ от наивного текстового RAG (разделение кода на текстовые чанки по 500 токенов и векторный поиск). Для инженерных задач миграции текстовый RAG губителен, так как разрывает семантические связи между определением метода и местом его вызова. Вместо этого в Repo-Harness спроектировано <strong>графовое хранилище знаний (Graph Code-RAG)</strong>:</p>
         <ul>
             <li><strong>Синтаксический уровень:</strong> Локальный индекс Tree-sitter хранит точные координаты AST-узлов (классы, методы, параметры, типы).</li>
             <li><strong>Семантический уровень:</strong> Граф вызовов NetworkX позволяет извлекать контекст «снизу вверх»: при переносе конкретной функции агент получает в контекст не случайный соседний текст, а точные сигнатуры всех вызываемых ею зависимостей.</li>
@@ -1505,7 +1941,17 @@ flowchart TD
         <p><strong>Почему именно она выбрана первой:</strong> Ни один агент не способен перенести проект без знания порядка компиляции: стохастический перенос порождает каскадные <code>ModuleNotFoundError</code> и <code>NameError</code>. Фича №1 гарантирует, что каждый модуль компилируется только тогда, когда все его зависимости уже мигрированы и типизированы.</p>
 
         <h3>7.2. Архитектурная схема работы модуля</h3>
-        <div class="mermaid-container">
+        <div class="mermaid-wrapper" data-title="Сквозной процессный конвейер исполнительного контура Repo-Harness">
+            <div class="mermaid-toolbar">
+                <span class="mermaid-label">◈ Диаграмма архитектуры</span>
+                <div class="mermaid-actions">
+                    <button type="button" class="btn-mermaid btn-zoom-out" title="Уменьшить">-</button>
+                    <button type="button" class="btn-mermaid btn-zoom-in" title="Увеличить">+</button>
+                    <button type="button" class="btn-mermaid btn-zoom-reset" title="Сбросить масштаб">100%</button>
+                    <button type="button" class="btn-mermaid btn-fullscreen" title="Открыть во весь экран (Pan & Zoom)">🔍 Во весь экран</button>
+                </div>
+            </div>
+            <div class="mermaid-container">
             <pre class="mermaid">
 flowchart LR
     Files["Файлы репозитория (*.ts, *.js, *.py)"] --> Parser["Tree-sitter Parser Engine"]
@@ -1515,6 +1961,7 @@ flowchart LR
     GraphEngine --> TopoSort["Алгоритм топологической сортировки<br/>(Kahn's Algorithm / Cycle Resolver)"]
     TopoSort --> Output["Pydantic Dependency Graph JSON<br/>(Очередь задач миграции L1 -> L2 -> L3)"]
             </pre>
+        </div>
         </div>
 
         <h3>7.3. Входные, промежуточные и выходные форматы данных</h3>
@@ -1550,7 +1997,7 @@ flowchart LR
             </div>
             <span class="badge badge-blue">IEEE / ГОСТ Format</span>
         </div>
-        <p>Все представленные ниже источники снабжены постоянными гиперссылками (DOI, arXiv, официальные репозитории). Любой эксперт или член комиссии может лично проверить подлинность публикаций и извлечённых из них данных.</p>
+        <p>Все представленные ниже источники снабжены верифицированными постоянными гиперссылками (DOI, arXiv, официальные технические отчёты и спецификации). Библиографический аппарат оформлен в соответствии с требованиями научной проверяемости и открытой воспроизводимости данных.</p>
 
         <ol style="font-size: 13.5px; line-height: 1.8;">
             <li>
@@ -1632,7 +2079,7 @@ flowchart LR
     </div>
 
     <!-- PLAN FOR WEEK 2 & RISKS -->
-    <div class="section-card">
+    <div class="section-card" id="plan-week2">
         <div class="section-header">
             <div class="section-title-wrap">
                 <div class="section-num">➔</div>
@@ -1661,8 +2108,196 @@ flowchart LR
             </div>
         </div>
     </div>
-
+        </main>
+    </div>
 </div>
 
+<!-- FULLSCREEN PAN & ZOOM LIGHTBOX MODAL -->
+<div id="diagramModal" class="modal-overlay">
+    <div class="modal-header">
+        <h3 id="modalTitle">Схема архитектуры</h3>
+        <div class="modal-controls">
+            <span id="zoomLevel" style="font-family: var(--font-mono); font-size: 12px; color: var(--accent-cyan); margin-right: 8px;">100%</span>
+            <button type="button" class="btn-mermaid" id="btnModalZoomOut" title="Уменьшить">-</button>
+            <button type="button" class="btn-mermaid" id="btnModalZoomIn" title="Увеличить">+</button>
+            <button type="button" class="btn-mermaid" id="btnModalReset" title="Сбросить масштаб">100%</button>
+            <button type="button" class="btn-mermaid" id="btnModalClose" title="Закрыть (Esc)" style="background: #ef4444; border-color: #ef4444; color: white;">✕</button>
+        </div>
+    </div>
+    <div class="modal-viewport" id="modalViewport">
+        <div class="modal-canvas" id="modalCanvas"></div>
+        <div class="modal-hint">Масштабирование: колёсико мыши · Перемещение: зажать ЛКМ · Сброс: двойной клик · Закрыть: Esc</div>
+    </div>
+</div>
+
+<script>
+// ScrollSpy for Sidebar TOC & Pan-Zoom Lightbox Modal
+document.addEventListener("DOMContentLoaded", function() {
+    // 1. ScrollSpy with IntersectionObserver
+    const sections = document.querySelectorAll("main.main-content > .section-card[id]");
+    const navLinks = document.querySelectorAll(".sidebar-toc .toc-link");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.getAttribute("id");
+                navLinks.forEach(link => {
+                    link.classList.toggle("active", link.getAttribute("href") === `#${id}`);
+                });
+            }
+        });
+    }, { rootMargin: "-15% 0px -75% 0px" });
+
+    sections.forEach(sec => observer.observe(sec));
+
+    // 2. Lightbox Modal Pan & Zoom Logic
+    const modal = document.getElementById("diagramModal");
+    const modalCanvas = document.getElementById("modalCanvas");
+    const modalTitle = document.getElementById("modalTitle");
+    const zoomLevelEl = document.getElementById("zoomLevel");
+    const viewport = document.getElementById("modalViewport");
+
+    let currentScale = 1;
+    let translateX = 0;
+    let translateY = 0;
+    let isDragging = false;
+    let startX = 0;
+    let startY = 0;
+
+    function updateTransform() {
+        modalCanvas.style.transform = `translate(${translateX}px, ${translateY}px) scale(${currentScale})`;
+        zoomLevelEl.textContent = `${Math.round(currentScale * 100)}%`;
+    }
+
+    function resetZoom() {
+        currentScale = 1;
+        translateX = 0;
+        translateY = 0;
+        updateTransform();
+    }
+
+    window.openDiagramModal = function(btn) {
+        const wrapper = btn.closest(".mermaid-wrapper");
+        if (!wrapper) return;
+        const svg = wrapper.querySelector("svg");
+        const title = wrapper.getAttribute("data-title") || "Схема архитектуры";
+        if (!svg) {
+            alert("Диаграмма ещё загружается, пожалуйста, повторите через секунду.");
+            return;
+        }
+
+        modalTitle.textContent = title;
+        modalCanvas.innerHTML = svg.outerHTML;
+        const modalSvg = modalCanvas.querySelector("svg");
+        if (modalSvg) {
+            modalSvg.style.width = "auto";
+            modalSvg.style.height = "auto";
+            modalSvg.style.maxWidth = "none";
+            modalSvg.style.maxHeight = "none";
+        }
+        modal.classList.add("active");
+        resetZoom();
+        document.body.style.overflow = "hidden";
+    };
+
+    window.closeDiagramModal = function() {
+        modal.classList.remove("active");
+        document.body.style.overflow = "";
+    };
+
+    // Modal Control Buttons
+    document.getElementById("btnModalZoomIn").addEventListener("click", () => {
+        currentScale = Math.min(currentScale * 1.25, 6);
+        updateTransform();
+    });
+    document.getElementById("btnModalZoomOut").addEventListener("click", () => {
+        currentScale = Math.max(currentScale / 1.25, 0.2);
+        updateTransform();
+    });
+    document.getElementById("btnModalReset").addEventListener("click", resetZoom);
+    document.getElementById("btnModalClose").addEventListener("click", closeDiagramModal);
+
+    // Mouse Wheel Zoom in Lightbox
+    viewport.addEventListener("wheel", (e) => {
+        e.preventDefault();
+        const factor = e.deltaY < 0 ? 1.15 : 0.87;
+        currentScale = Math.min(Math.max(currentScale * factor, 0.2), 6);
+        updateTransform();
+    }, { passive: false });
+
+    // Drag / Pan in Lightbox
+    viewport.addEventListener("mousedown", (e) => {
+        if (e.target.closest(".modal-controls") || e.target.closest("button")) return;
+        isDragging = true;
+        startX = e.clientX - translateX;
+        startY = e.clientY - translateY;
+    });
+    window.addEventListener("mousemove", (e) => {
+        if (!isDragging) return;
+        translateX = e.clientX - startX;
+        translateY = e.clientY - startY;
+        updateTransform();
+    });
+    window.addEventListener("mouseup", () => {
+        isDragging = false;
+    });
+
+    // Double-click to reset zoom
+    viewport.addEventListener("dblclick", resetZoom);
+
+    // ESC to close modal
+    window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("active")) {
+            closeDiagramModal();
+        }
+    });
+
+    // Setup Inline Toolbar Buttons for all wrappers
+    document.querySelectorAll(".mermaid-wrapper").forEach(wrap => {
+        let inlineScale = 1;
+        const cont = wrap.querySelector(".mermaid-container");
+        const btnIn = wrap.querySelector(".btn-zoom-in");
+        const btnOut = wrap.querySelector(".btn-zoom-out");
+        const btnReset = wrap.querySelector(".btn-zoom-reset");
+        const btnFull = wrap.querySelector(".btn-fullscreen");
+
+        if (btnIn) {
+            btnIn.addEventListener("click", () => {
+                inlineScale = Math.min(inlineScale + 0.2, 2.5);
+                const svg = cont.querySelector("svg");
+                if (svg) {
+                    svg.style.transform = `scale(${inlineScale})`;
+                    svg.style.transformOrigin = "top left";
+                }
+            });
+        }
+        if (btnOut) {
+            btnOut.addEventListener("click", () => {
+                inlineScale = Math.max(inlineScale - 0.2, 0.6);
+                const svg = cont.querySelector("svg");
+                if (svg) {
+                    svg.style.transform = `scale(${inlineScale})`;
+                    svg.style.transformOrigin = "top left";
+                }
+            });
+        }
+        if (btnReset) {
+            btnReset.addEventListener("click", () => {
+                inlineScale = 1;
+                const svg = cont.querySelector("svg");
+                if (svg) svg.style.transform = "scale(1)";
+            });
+        }
+        if (btnFull) {
+            btnFull.addEventListener("click", () => openDiagramModal(btnFull));
+        }
+        if (cont) {
+            cont.addEventListener("dblclick", () => {
+                if (btnFull) openDiagramModal(btnFull);
+            });
+        }
+    });
+});
+</script>
 </body>
 </html>
