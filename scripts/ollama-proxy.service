@@ -1,0 +1,14 @@
+[Unit]
+Description=Ollama WSL Interop Proxy Bridge
+After=network.target
+
+[Service]
+Type=simple
+User=zhiga
+ExecStart=/mnt/c/Users/zhiga/vkr/.venv-linux/bin/python3 /mnt/c/Users/zhiga/vkr/scripts/ollama_proxy.py
+Restart=always
+RestartSec=3
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target
