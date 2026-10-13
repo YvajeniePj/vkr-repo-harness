@@ -411,6 +411,11 @@
             .section-card { padding: 20px 16px; }
         }
     </style>
+    <!-- KaTeX for crisp mathematical formula rendering -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js"
+            onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
 </head>
 <body>
 
@@ -533,20 +538,20 @@
         <div class="grid-2">
             <div class="card-inner">
                 <h4>Отчёт Stripe: «The Developer Coefficient» (2018)</h4>
-                <p>Согласно глобальному исследованию компании Stripe <a href="https://stripe.com/reports/developer-coefficient" target="_blank" class="link-ext">[Stripe, 2018]</a>, мировая экономика теряет свыше <strong>$300 млрд ежегодно</strong> из-за неэффективности разработчиков, вызванной плохим кодом и техническим долгом:</p>
+                <p>Согласно масштабному исследованию Stripe <em>«The Developer Coefficient»</em> <a href="https://stripe.com/files/reports/the-developer-coefficient.pdf" target="_blank" class="link-ext">[Stripe Research, 2018]</a>, глобальная экономика теряет <strong>до $300 млрд ежегодно</strong> из-за совокупных барьеров неэффективности разработчиков, из которых порядка <strong>$85 млрд ежегодно связаны напрямую с низким качеством кодовых баз и техническим долгом</strong>:</p>
                 <ul>
-                    <li>Разработчики тратят в среднем <strong>17.3 часа в неделю</strong> (более 42% рабочего времени) на обслуживание существующего кода, отладку, рефакторинг и исправление багов.</li>
-                    <li>Непосредственно на борьбу с техническим долгом уходит <strong>13.5 часов в неделю</strong> (33% всей инженерной ёмкости компании).</li>
-                    <li>Ликвидация барьеров неэффективности способна увеличить глобальный ВВП на $3 трлн в течение десятилетия.</li>
+                    <li>Инженеры тратят в среднем <strong>17.3 часа в неделю</strong> (более 42% рабочего времени) на сопровождение legacy-кода, отладку и устранение дефектов.</li>
+                    <li>Непосредственно на технический долг приходится <strong>13.5 часов в неделю</strong> (33% доступных инженерных ресурсов).</li>
+                    <li>Устранение потерь на поддержку устаревшего кода способно повысить глобальный ВВП на $3 трлн за десятилетие.</li>
                 </ul>
             </div>
             <div class="card-inner">
                 <h4>Исследования Gartner и Standish Group</h4>
-                <p>Аналитические отчёты Gartner по модернизации корпоративных приложений <a href="https://www.gartner.com/en/newsroom/press-releases" target="_blank" class="link-ext">[Gartner, 2023]</a> и статистика Standish Group CHAOS Report фиксируют катастрофическую статистику классических переписываний систем:</p>
+                <p>Анализ Gartner по стратегиям модернизации приложений (<em>«Strategies for Enterprise Applications Modernization Success»</em>, ноябрь 2024 г.) <a href="https://www.gartner.com/en/documents/5959999" target="_blank" class="link-ext">[Gartner, 2024]</a> и отчёты Standish Group CHAOS демонстрируют системные барьеры:</p>
                 <ul>
-                    <li>Более <strong>70% проектов модернизации и миграции легаси-систем</strong> терпят неудачу: срывают сроки, превышают бюджет или не достигают целевых бизнес-метрик.</li>
-                    <li>От <strong>60% до 80% всего IT-бюджета</strong> корпоративного сектора тратится исключительно на поддержание работоспособности устаревших систем («keeping the lights on»).</li>
-                    <li>Попытки полного ручного переписывания кодовой базы с нуля («rewrite from scratch») имеют вероятность провала свыше <strong>60%</strong> из-за потери скрытых контекстов и неявных инвариантов.</li>
+                    <li>До <strong>70% комплексных инициатив модернизации</strong> не укладываются в изначально заложенные сроки, бюджеты или не достигают целевых функциональных показателей.</li>
+                    <li>От <strong>60% до 80% IT-бюджетов</strong> корпоративного сектора заморожены в задачах поддержания работоспособности устаревших контуров («run the business»).</li>
+                    <li>Ручной перенос больших систем («rewrite from scratch») сопряжён с риском регрессий из-за неявных инвариантов, что доказывает необходимость автоматизированного графового харнеса.</li>
                 </ul>
             </div>
         </div>
@@ -554,20 +559,9 @@
         <h3>1.2. Почему именно миграция на Python и межрепозиторный синтез?</h3>
         <p>В рамках ВКР я фокусирую исследование на задаче <strong>автоматизированного переноса кодовых баз на Python и слияния независимых репозиториев</strong>. Актуальность и критичность именно этой пары задач обусловлены следующими факторами:</p>
         <ol>
-            <li><strong>Python как монопольный рантайм искусственного интеллекта:</strong> По данным отчётов GitHub State of the Octoverse (2024) и рейтингов TIOBE, Python занимает первое место в мире по популярности. Весь современный стек глубокого обучения, агентов, ML-инференса и научной обработки данных (PyTorch, Hugging Face, vLLM, LangChain) существует исключительно вокруг экосистемы Python. При этом миллионы строк критического бэкенд-кода корпораций написаны на PHP, Java, Ruby или C++. Компании не могут интегрировать современные ИИ-контуры в свои продукты, пока их утилиты и модели данных физически разделены языковым барьером.</li>
-            <li><strong>Проблема семантической фрагментации микросервисов (Multi-Repo Hell):</strong> В эпоху бума микросервисов компании раздробили кодовые базы на десятки изолированных репозиториев. Сегодня тренд развернулся в сторону модульных монолитов (Shopify, Basecamp, Uber) из-за колоссальных накладных расходов на рассинхронизацию контрактов API. Ручное слияние двух репозиториев требует сотен часов рутинной работы: разрешения конфликтов импортов, устранения дублирования утилит, унификации схем валидации (например, Pydantic) и сквозного переписывания тестов.</li>
-            <li>
-                <strong>OpenAI & Princeton University.</strong> (2024). <em>Introducing SWE-bench Verified: A Curated Benchmark for Software Engineering Agents</em>. OpenAI Research Publication. <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/introducing-swe-bench-verified/</a>.
-            </li>
-            <li>
-                <strong>Gauthier, P.</strong> (2023-2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.
-            </li>
-            <li>
-                <strong>Codeium Inc.</strong> (2024). <em>Windsurf IDE and the Cascade Agentic Flow Architecture</em>. Codeium Technical Whitepaper. <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">https://codeium.com/windsurf</a>.
-            </li>
-            <li>
-                <strong>Anthropic PBC.</strong> (2024). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
-            </li>
+            <li><strong>Python и TypeScript как два полюса современной индустрии:</strong> По данным GitHub State of the Octoverse (2024–2025), TypeScript и Python являются самыми используемыми языками в открытых репозиториях. TypeScript безоговорочно лидирует в корпоративном веб-секторе и пользовательских интерфейсах, в то время как Python является абсолютным монополистом рантаймов искусственного интеллекта (PyTorch, vLLM, Transformers, LangChain). Возникает глубокий инфраструктурный разрыв: чтобы встроить сложную логику существующих TypeScript-сервисов в современные агентные и ML-пайплайны, компаниям необходим надёжный автоматизированный перенос на Python.</li>
+            <li><strong>Проблема семантической фрагментации микросервисов (Multi-Repo Hell):</strong> В эпоху повальной микросервисной архитектуры корпорации раздробили связанные компоненты на десятки независимых репозиториев. Сегодня ведущие технологические компании (Shopify, Basecamp, Uber) возвращаются к модульным монолитам из-за колоссальных накладных расходов на рассинхронизацию API-контрактов. Ручное слияние двух репозиториев требует сотен часов рутинной работы: разрешения конфликтов импортов, устранения дублирования вспомогательных библиотек и унификации моделей данных.</li>
+            <li><strong>Отсутствие инструментов со сквозным удержанием графа зависимостей:</strong> Существующие кодовые транспайлеры (TransCoder) и CLI-агенты (Aider, Claude Code) работают либо на уровне изолированных функций, либо точечно редактируют файлы внутри одного репозитория. На рынке нет решения, способного распарсить два разнородных репозитория, выстроить общий граф зависимостей, слить общие абстракции и автоматически перенести код на Python с сохранением тестов.</li>
         </ol>
 
         <h3>1.3. Формализованные метрики оценки эффективности ($K_1$–$K_9$)</h3>
@@ -583,64 +577,65 @@
                         <th>Интерпретация и целевое значение</th>
                     </tr>
                 </thead>
-                <tbody>
+                                <tbody>
                     <tr>
                         <td><strong>K1</strong></td>
-                        <td><strong>Semantic Compilation Rate</strong></td>
-                        <td>$$K_1 = rac{N_{\text{valid\_ast}}}{N_{\text{total\_files}}} \times 100\%$$</td>
-                        <td>Доля сгенерированных целевых файлов, проходящих валидацию парсером Tree-sitter и <code>ast.parse()</code> без синтаксических ошибок. Цель: <strong>100%</strong>.</td>
+                        <td><strong>Синтаксическая компилируемость (Syntax Compilation Rate)</strong></td>
+                        <td>$$K_1 = \frac{N_{\text{valid\_ast}}}{N_{\text{total\_files}}} \times 100\%$$</td>
+                        <td>Доля сгенерированных файлов, проходящих синтаксический анализ парсером Tree-sitter и <code>ast.parse()</code> без синтаксических ошибок. <em>Примечание:</em> Метрика верифицирует синтаксис; поведенческая эквивалентность измеряется через K2 и дифференциальное тестирование ($K_{2\text{diff}}$). Целевая инженерная гипотеза: <strong>100%</strong>.</td>
                     </tr>
                     <tr>
                         <td><strong>K2</strong></td>
-                        <td><strong>Test Suite Retention Rate</strong></td>
-                        <td>$$K_2 = rac{T_{\text{pass\_target}}}{T_{\text{pass\_source}}} \times 100\%$$</td>
-                        <td>Отношение числа успешно пройденных unit/integration тестов в целевом репозитории (pytest) к числу тестов в исходном. Отражает сохранение бизнес-логики. Цель: <strong>&ge; 90%</strong>.</td>
+                        <td><strong>Сохранение тестов и поведения (Test Suite Retention & Behavioral Equivalence)</strong></td>
+                        <td>$$K_2 = \frac{T_{\text{pass\_target}}}{T_{\text{pass\_source}}} \times 100\%, \quad K_{2\text{diff}} = \frac{N_{\text{match\_io}}}{N_{\text{total\_io}}} \times 100\%$$</td>
+                        <td>Отношение числа пройденных семантически эквивалентных тестов в целевом репозитории (pytest) к числу тестов в исходном, дополненное коэффициентом дифференциального тестирования ($K_{2\text{diff}}$) на идентичных входных векторах (fuzzing / property-based testing). Целевая инженерная гипотеза: <strong>&ge; 90%</strong>.</td>
                     </tr>
                     <tr>
                         <td><strong>K3</strong></td>
                         <td><strong>Branch Coverage Equivalence</strong></td>
                         <td>$$K_3 = \frac{\text{Cov}_{\text{target}}}{\text{Cov}_{\text{source}}} \times 100\%$$</td>
-                        <td>Сохранение покрытия ветвлений кода (branch coverage). Гарантирует отсутствие удаленных неявных краевых условий при миграции. Цель: <strong>&ge; 95%</strong>.</td>
+                        <td>Сохранение покрытия ветвлений кода (branch coverage). Гарантирует отсутствие удаленных неявных краевых условий при миграции. Целевая инженерная гипотеза: <strong>&ge; 95%</strong>.</td>
                     </tr>
                     <tr>
                         <td><strong>K4</strong></td>
                         <td><strong>Type Safety Index</strong></td>
-                        <td>$$K_4 = 1 - \frac{E_{\text{mypy}}}{L_{\text{total}} / 1000}$$</td>
-                        <td>Плотность ошибок строгой статической типизации (mypy / pyright) на 1000 строк кода. Гарантирует корректность Pydantic/Type Hints аннотаций. Цель: <strong>&ge; 0.98</strong>.</td>
+                        <td>$$K_4 = \max\left(0, 1 - \frac{E_{\text{mypy}}}{L_{\text{total}} / 1000}\right)$$</td>
+                        <td>Плотность ошибок строгой статической типизации (mypy --strict / pyright) на 1000 строк кода. Нормирована на интервал $[0, 1]$. Гарантирует корректность Pydantic/Type Hints аннотаций. Целевая инженерная гипотеза: <strong>&ge; 0.98</strong>.</td>
                     </tr>
                     <tr>
                         <td><strong>K5</strong></td>
                         <td><strong>Cyclomatic Complexity Stability</strong></td>
                         <td>$$K_5 = \left| 1 - \frac{M_{\text{target}}}{M_{\text{source}}} \right|$$</td>
-                        <td>Дельта цикломатической сложности МакКейба (McCabe Complexity). Показывает, не превратил ли агент код в «лапшу» из вложенных if-else. Цель: <strong>&le; 0.15</strong>.</td>
+                        <td>Дельта цикломатической сложности МакКейба (McCabe Complexity). Показывает, не превратил ли агент код в «лапшу» из вложенных if-else. Целевая инженерная гипотеза: <strong>&le; 0.15</strong>.</td>
                     </tr>
                     <tr>
                         <td><strong>K6</strong></td>
                         <td><strong>Cross-Repo Unification Ratio</strong></td>
                         <td>$$K_6 = 1 - \frac{D_{\text{post}}}{D_{\text{pre}}}$$</td>
-                        <td>Коэффициент устранения дублирования кода при слиянии репозиториев (выделение общих утилит в shared-модуль). Измеряется токенизированным AST-сравнением. Цель: <strong>&gt; 0.25</strong>.</td>
+                        <td>Коэффициент устранения дублирования кода при слиянии репозиториев (выделение общих утилит в shared-модуль). Измеряется токенизированным AST-сравнением. Целевая инженерная гипотеза: <strong>&gt; 0.25</strong>.</td>
                     </tr>
                     <tr>
                         <td><strong>K7</strong></td>
                         <td><strong>Self-Correction Efficiency</strong></td>
                         <td>$$K_7 = \frac{N_{\text{resolved\_errors}}}{N_{\text{sandbox\_errors}}} \times 100\%$$</td>
-                        <td>Доля ошибок песочницы (traceback, compilation error), успешно устраненных субагентами без участия человека в замкнутом цикле рефлексии. Цель: <strong>&ge; 75%</strong>.</td>
+                        <td>Доля ошибок песочницы (traceback, compilation error), успешно устраненных субагентами без участия человека в замкнутом цикле рефлексии. Целевая инженерная гипотеза: <strong>&ge; 75%</strong>.</td>
                     </tr>
                     <tr>
                         <td><strong>K8</strong></td>
                         <td><strong>Token Cost per Converted LoC</strong></td>
-                        <td>$$K_8 = \frac{\sum \text{Tokens}_{\text{in}} \times P_{\text{in}} + \sum \text{Tokens}_{\text{out}} \times P_{\text{out}}}{L_{\text{migrated}}}$$</td>
-                        <td>Экономическая эффективность: стоимость в долларах США на 1000 успешно мигрированных строк кода с учетом оверхеда субагентов. Цель: <strong>&le; $0.08 / KLoC</strong>.</td>
+                        <td>$$K_8 = \frac{\sum \text{Tokens}_{\text{in}} \times P_{\text{in}} + \sum \text{Tokens}_{\text{out}} \times P_{\text{out}}}{L_{\text{migrated}} / 1000}$$</td>
+                        <td>Экономическая эффективность: стоимость в долларах США на 1000 успешно мигрированных строк кода (KLoC) с учетом оверхеда субагентов. Целевая инженерная гипотеза: <strong>&le; $0.08 / \text{KLoC}$</strong>.</td>
                     </tr>
                     <tr>
                         <td><strong>K9</strong></td>
                         <td><strong>Human Intervention Time Saved</strong></td>
                         <td>$$K_9 = 1 - \frac{t_{\text{review}} + t_{\text{manual\_fix}}}{t_{\text{manual\_migration\_baseline}}}$$</td>
-                        <td>Экономия времени ведущего инженера-архитектора по сравнению с эталонным ручным переносом. Цель: <strong>&ge; 80%</strong>.</td>
+                        <td>Экономия времени ведущего инженера-архитектора по сравнению с эталонным ручным переносом. Целевая инженерная гипотеза: <strong>&ge; 80%</strong>.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+        <p style="font-size: 13px; color: #94a3b8; margin-top: 10px;"><em>* Примечание по академической строгости:</em> Все численные пороги метрик $K_1$–$K_9$ на этапе Недели 1 зафиксированы как <strong>предварительные инженерные гипотезы</strong>. Их экспериментальная верификация и калибровка будут осуществлены в ходе эмпирических прогонов харнеса на тестовых выборках Small, Medium и Large.</p>
     </div>
 
     <!-- BLOCK 2: SYSTEMATIC LITERATURE REVIEW (PRISMA 2020) & COMPETITORS AUDIT -->
@@ -691,29 +686,159 @@ AND ("harness" OR "sandbox" OR "execution feedback"
         <div class="mermaid-container">
             <pre class="mermaid">
 flowchart TD
-    ID["Идентификация: Поиск в базах данных (N = 184)<br/>IEEE Xplore: 42 | ACM DL: 38 | Scopus: 31 | arXiv: 73"] --> DEDUP["Удаление дубликатов (N = 142)"]
+    ID["Идентификация: Поиск в базах данных (N = 184)<br/>IEEE Xplore: 42 | ACM DL: 38 | Scopus: 31 | arXiv: 73<br/>(Поисковый срез: октябрь 2026 г.)"] --> DEDUP["Удаление дубликатов (N = 142)"]
     DEDUP --> SCREEN["Скрининг названий и аннотаций (N = 142)"]
-    SCREEN --> EXCL1["Исключено по критериям EC1-EC2 (N = 104)<br/>(только сниппеты HumanEval, концептуальные эссе)"]
+    SCREEN --> EXCL1["Исключено по критериям EC1-EC2 (N = 104)<br/>(только функции HumanEval/MBPP, концептуальные эссе)"]
     SCREEN --> FULL["Полнотекстовый анализ соответствия (N = 38)"]
-    FULL --> EXCL2["Исключено после чтения (N = 22)<br/>(нет метрик компиляции, нет исходного кода)"]
-    FULL --> INC["Включено в финальный обзор (N = 16)<br/>Ключевые работы: SWE-bench, SWE-agent, OpenHands,<br/>RepoCoder, TransCoder, MetaGPT, ChatDev и др."]
+    FULL --> EXCL2["Исключено после детального чтения (N = 22)<br/>(отсутствие метрик сборки/тестов, закрытый исходный код)"]
+    FULL --> INC["Включено в итоговый синтез (N = 16)<br/>Рецензируемые публикации и фундаментальные препринты"]
             </pre>
         </div>
 
+        <h4>Таблица 16 публикаций, отобранных по протоколу PRISMA 2020</h4>
+        <div class="table-responsive" style="margin-top: 16px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 40px;">№</th>
+                        <th style="width: 220px;">Авторы и публикация</th>
+                        <th style="width: 140px;">Площадка / Год</th>
+                        <th>Фокус исследования и ключевой результат</th>
+                        <th style="width: 70px;">RQ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td><strong>Jimenez et al.</strong> (SWE-bench)</td>
+                        <td>ICLR 2024</td>
+                        <td>Бенчмарк из 2 294 задач реальных репозиториев для оценки кодовых моделей.</td>
+                        <td><span class="badge badge-blue">RQ3</span></td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td><strong>Yang et al.</strong> (SWE-agent)</td>
+                        <td>arXiv 2024</td>
+                        <td>Интерфейс Agent-Computer Interface (ACI) для управляемого редактирования репозиториев.</td>
+                        <td><span class="badge badge-purple">RQ1, RQ2</span></td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td><strong>Xingyao Wang et al.</strong> (OpenHands)</td>
+                        <td>arXiv 2024</td>
+                        <td>Открытая платформа автономных программных агентов с песочницей Docker.</td>
+                        <td><span class="badge badge-purple">RQ1, RQ2</span></td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td><strong>Fengji Zhang et al.</strong> (RepoCoder)</td>
+                        <td>ACM TOSEM 2023</td>
+                        <td>Итеративный поиск контекста на уровне репозитория (Repository-Level Code Completion).</td>
+                        <td><span class="badge badge-cyan">RQ1</span></td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td><strong>Lachaux et al.</strong> (TransCoder)</td>
+                        <td>NeurIPS 2020*</td>
+                        <td>Фундаментальный безнадзорный перенос кода между языками программирования (C++, Java, Python).</td>
+                        <td><span class="badge badge-blue">RQ3</span></td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td><strong>Lu et al.</strong> (CodeXGLUE)</td>
+                        <td>NeurIPS 2021</td>
+                        <td>Бенчмарк для задач понимания и генерации кода, включая трансляцию программ.</td>
+                        <td><span class="badge badge-blue">RQ3</span></td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td><strong>Sirui Hong et al.</strong> (MetaGPT)</td>
+                        <td>ICLR 2024</td>
+                        <td>Многоагентная ролевая координация по методологии SOP (Standard Operating Procedures).</td>
+                        <td><span class="badge badge-cyan">RQ1</span></td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td><strong>Chen Qian et al.</strong> (ChatDev)</td>
+                        <td>ACL 2024</td>
+                        <td>Коммуникативные программные агенты в симулированной цепочке водопада разработки.</td>
+                        <td><span class="badge badge-cyan">RQ1</span></td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td><strong>Mark Chen et al.</strong> (OpenAI Codex)</td>
+                        <td>arXiv 2021</td>
+                        <td>Оценка больших языковых моделей, дообученных на открытом коде (HumanEval).</td>
+                        <td><span class="badge badge-cyan">RQ1</span></td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td><strong>Hao Yu et al.</strong> (Agentless)</td>
+                        <td>arXiv 2024</td>
+                        <td>Минималистичный двухфазный подход к локализации и исправлению ошибок без сложного агента.</td>
+                        <td><span class="badge badge-blue">RQ1, RQ3</span></td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td><strong>John Yang et al.</strong> (InterCode)</td>
+                        <td>NeurIPS 2023</td>
+                        <td>Стандартизированная интерактивная среда исполнения кода (Bash, Python, SQL) для обратной связи.</td>
+                        <td><span class="badge badge-amber">RQ2</span></td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td><strong>Schick et al.</strong> (Toolformer)</td>
+                        <td>NeurIPS 2023</td>
+                        <td>Обучение языковых моделей самостоятельному вызову инструментов и API.</td>
+                        <td><span class="badge badge-amber">RQ2</span></td>
+                    </tr>
+                    <tr>
+                        <td>13</td>
+                        <td><strong>Shinn et al.</strong> (Reflexion)</td>
+                        <td>NeurIPS 2023</td>
+                        <td>Архитектура вербального самообучения через текстовую память и анализ ошибок исполнения.</td>
+                        <td><span class="badge badge-cyan">RQ1</span></td>
+                    </tr>
+                    <tr>
+                        <td>14</td>
+                        <td><strong>Zhong et al.</strong> (LDB Debugger)</td>
+                        <td>ICLR 2024</td>
+                        <td>Пошаговая отладка кода агентами на основе трейсов выполнения промежуточных переменных.</td>
+                        <td><span class="badge badge-purple">RQ1, RQ2</span></td>
+                    </tr>
+                    <tr>
+                        <td>15</td>
+                        <td><strong>Cassano et al.</strong> (MultiPL-E)</td>
+                        <td>IEEE TSE 2023</td>
+                        <td>Масштабируемый мультиязычный бенчмарк параллельного синтеза программ на 18 языках.</td>
+                        <td><span class="badge badge-blue">RQ3</span></td>
+                    </tr>
+                    <tr>
+                        <td>16</td>
+                        <td><strong>Hou et al.</strong> (LLMs for SE Survey)</td>
+                        <td>ACM CSUR 2024</td>
+                        <td>Комплексный мета-анализ применения LLM в разработке программного обеспечения и верификации.</td>
+                        <td><span class="badge badge-blue">RQ1–RQ3</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-size: 13px; color: #94a3b8; margin-top: 6px;"><em>* Примечание:</em> Работа TransCoder (NeurIPS 2020) включена в выборку как классический фундаментальный базис для задач трансляции кода, несмотря на ограничение основного поискового окна 2021–2026 гг.</p>
+
         
         <div class="callout callout-info" style="margin: 20px 0;">
-            <div class="callout-title">Эволюция бенчмаркинга: от «сырого» SWE-bench к стандарту SWE-bench Verified (2024–2026)</div>
-            <p>В рамках ответа на <strong>RQ3</strong> я зафиксировал критический методологический сдвиг в индустрии оценки кодовых агентов. Первоначальный бенчмарк <strong>SWE-bench</strong> <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">[Jimenez et al., ICLR 2024]</a> (2 294 задачи из реальных репозиториев) стал революционным прорывом, однако к середине 2024 года вскрыл серьёзные фундаментальные изъяны:</p>
+            <div class="callout-title">Эволюция бенчмаркинга: SWE-bench &rarr; SWE-bench Verified &rarr; Ограничения для задач миграции (Анализ 2024–2026)</div>
+            <p>В рамках ответа на <strong>RQ3</strong> я проанализировал эволюцию индустриальных бенчмарков оценки кодовых агентов:</p>
             <ul>
-                <li><strong>Проблема нестабильности тестов (Flaky & Underspecified Tests):</strong> Значительная часть задач содержала неполные unit-тесты, падавшие из-за внешних сетевых зависимостей или нерелевантных настроек окружения, что искажало реальную оценку моделей.</li>
-                <li><strong>Утечка данных (Data Contamination):</strong> По мере выхода новых поколений моделей (GPT-4o, Claude 3.5 Sonnet, Gemini 1.5/2.0) репозитории обучающих выборок неизбежно вобрали в себя исходные коммиты из SWE-bench.</li>
+                <li><strong>Оригинальный SWE-bench (ICLR 2024):</strong> Революционный датасет из 2 294 задач реальных GitHub-репозиториев <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">[Jimenez et al., 2024]</a>. Однако выявил высокую долю нестабильных тестов (flaky tests) и подверженность утечке данных (data contamination).</li>
+                <li><strong>SWE-bench Verified (август 2024):</strong> Совместная инициатива OpenAI и авторов бенчмарка <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">[OpenAI & Princeton, 2024]</a> по отбору 500 задач, вручную верифицированных разработчиками. Стал главным отраслевым мерилом второй половины 2024 – 2025 годов.</li>
+                <li><strong>Кризис насыщения и исследование OpenAI (февраль 2026):</strong> 23 февраля 2026 года исследовательская группа OpenAI опубликовала отчёт <em>«Why SWE-bench Verified no longer measures frontier coding capabilities»</em>. В выборке из 138 наиболее сложных задач свыше <strong>59.4% имели существенные проблемы</strong> со спецификацией тестов или окружением, а передовые frontier-модели подошли к потолку разрешения известных проблем. В качестве частичной альтернативы предложен SWE-bench Pro.</li>
             </ul>
-            <p>В августе 2024 года исследовательская группа OpenAI совместно с авторами оригинального SWE-bench из Принстонского университета представила <strong>SWE-bench Verified</strong> <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">[OpenAI & Princeton, 2024]</a> — строго валидированный сабсет из <strong>500 задач</strong>, вручную проверенных профессиональными разработчиками программного обеспечения. В SWE-bench Verified гарантирована однозначность описания проблемы, полная детерминированность тестового окружения и независимость от случайных факторов. <strong>По состоянию на 2025–2026 годы именно SWE-bench Verified является золотым академическим стандартом</strong> для доказательства состоятельности агентных харнесов, что учитывается в проектировании нашего собственного бенчмарка.</p>
+            <p><strong>Принципиальный методологический вывод для ВКР:</strong> Ни оригинальный SWE-bench, ни SWE-bench Verified, ни SWE-bench Pro <strong>не предназначены для оценки межъязыкового переноса кодовых баз</strong>. Все они тестируют локальное исправление дефектов (bug-fixing / issue resolution) внутри однородных Python-проектов. Бенчмарк исправления ошибок не проверяет трансляцию структур данных, удержание графа типов и межрепозиторное слияние (TypeScript &rarr; Python). Это академически обосновывает необходимость собственной трёхуровневой методологии бенчмаркинга Repo-Harness и метрик $K_1$–$K_9$.</p>
         </div>
 
         <h3>2.2. Детальный аудит 8 ведущих коммерческих и открытых систем</h3>
-        <p>По требованию руководителя я расширил сравнительный анализ до восьми ключевых систем автоматизированной разработки и кодовых агентов, представленных на рынке по состоянию на 2025–2026 годы. В список включены главные прорывы последних лет: IDE-агент <strong>Windsurf (Cascade)</strong> от Codeium и эталонный open-source CLI-агент <strong>Aider</strong> с архитектурой RepoMap. Для каждой системы зафиксированы используемые инструменты, архитектура харнеса, модель разрешений, песочница, уровень доказательности и архитектурная диаграмма.</p>
-        <p>По требованию руководителя я провёл углублённый сравнительный анализ шести коммерческих систем автоматизированной разработки и кодовых агентов, представленных на рынке по состоянию на 2025–2026 годы. Для каждой системы зафиксированы используемые инструменты, архитектура харнеса, модель разрешений, песочница, уровень доказательности и архитектурная диаграмма.</p>
+        <p>По требованию руководителя я расширил сравнительный анализ до восьми ключевых систем автоматизированной разработки и кодовых агентов, представленных на рынке по состоянию на октябрь 2026 года. В расширенный список включены как автономные облачные агенты (Devin, Jules, Codex), так и современные IDE-платформы (Cursor Composer, Windsurf Cascade) и открытые CLI-инструменты (Aider, Claude Code). Для каждой системы детально сопоставлены используемые инструменты, устройство харнеса, модель разрешений, песочница, уровень доказательности и архитектурная схема.</p>
 
         <!-- COMPETITOR 1: CLAUDE CODE -->
         <div class="card-inner" style="margin-bottom: 24px;">
@@ -815,7 +940,7 @@ flowchart LR
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> GitHub Actions интеграция, клонирование репозитория, поиск по файловой структуре, установка зависимостей проекта, запуск существующих тестовых наборов и генерация новых тестов.</li>
                 <li><strong>Устройство Harness:</strong> Асинхронный пайплайн: считывание метаданных задачи &rarr; чтение файла инструкций <code>AGENTS.md</code> &rarr; генерация формального плана изменений &rarr; генерация кода &rarr; запуск тестов в облаке &rarr; создание PR.</li>
-                <li><strong>Модель разрешений (Permissions):</strong> <em>Human-Sign-Off on Plan</em>: до того, как агент изменит хоть один файл в репозитории, он обязан представить разработчику пошаговый план изменений для явного утверждения. Финальные изменения принимаются человеком через стандартный code review в GitHub PR.</li>
+                <li><strong>Модель разрешений (Permissions):</strong> Двухрежимная архитектура: в стандартном веб-интерфейсе реализован строгий <em>Human-Sign-Off on Plan</em> (план изменений требует явного утверждения человеком до модификации файлов). В официальном Jules API предусмотрен параметр <code>requirePlanApproval</code>: при значении <code>false</code> агент функционирует в полностью автономном headless-режиме, утверждая план автоматически. Финальные изменения передаются на ревью через GitHub PR.</li>
                 <li><strong>Песочница (Sandbox):</strong> Эфемерные виртуальные машины Google Cloud (GCP Ephemeral Sandboxes). Исходный код клонируется в защищённую изолированную среду, где выполняются тесты и сборка. Локальная машина разработчика не задействуется.</li>
                 <li><strong>Источник и уровень доказательности:</strong> Официальная платформа Google Jules <a href="https://jules.google.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence: Vendor Platform); официальный анонс в Google Blog <a href="https://blog.google/technology/developers/google-labs-jules-ai-code-agent/" target="_blank" class="link-ext">[Google Blog, 2024]</a> (Level 2 Evidence).</li>
             </ul>
@@ -861,30 +986,31 @@ flowchart LR
             </div>
         </div>
 
-        <!-- COMPETITOR 6: OPENAI CODEX & SWE-BENCH AGENT -->
+        <!-- COMPETITOR 6: OPENAI CODEX (2025–2026 AGENT) & SWE-BENCH BASELINE -->
         <div class="card-inner" style="margin-bottom: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">6. OpenAI Codex / SWE-bench Agent Harness (OpenAI & Academic SOTA)</h4>
-                <span class="badge badge-purple">Benchmark Baseline Harness</span>
+                <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">6. OpenAI Codex Agent (2025–2026) & SWE-Agent Baseline</h4>
+                <span class="badge badge-purple">Cloud/CLI Autonomous Agent</span>
             </div>
-            <p><strong>Описание:</strong> Исторический фундамент кодовых моделей (Codex) и современный референтный агентный харнес для оценки языковых моделей на реальных репозиториях GitHub в бенчмарке SWE-bench <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">[Chen et al., 2021]</a>, <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">[Jimenez et al., ICLR 2024]</a>.</p>
+            <p><strong>Описание:</strong> Эволюция OpenAI от исторической специализированной модели генерации кода <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">[Chen et al., 2021]</a> и академического харнеса SWE-agent <a href="https://arxiv.org/abs/2405.15793" target="_blank" class="link-ext">[Yang et al., 2024]</a> к <strong>полноценному автономному программному агенту OpenAI Codex</strong>, представленному в мае 2025 года и запущенному в открытый доступ осенью 2025 – 2026 гг. <a href="https://openai.com/index/openai-codex/" target="_blank" class="link-ext">[OpenAI Docs, 2025]</a>.</p>
             <ul>
-                <li><strong>Инструменты агента (Tools):</strong> Стандартные терминальные команды Linux через интерфейс Agent-Computer Interface (ACI): <code>open_file</code>, <code>goto_line</code>, <code>search_dir</code>, <code>edit_file</code>, <code>apply_patch</code>, <code>run_test</code>.</li>
-                <li><strong>Устройство Harness:</strong> Классический ReAct-цикл (Action &rarr; Observation &rarr; Thought). Контекстное окно очищается от устаревших длинных трейсов с сохранением сводки действий.</li>
-                <li><strong>Модель разрешений (Permissions):</strong> Полная изоляция внутри докер-контейнера задачи: агенту выдаются неограниченные права внутри контейнера, но доступ наружу заблокирован. Лимит по количеству шагов (обычно 30–50 итераций).</li>
-                <li><strong>Песочница (Sandbox):</strong> Эфемерные Docker-контейнеры, развернутые с точными слепками виртуального окружения (Python, Conda, зависимости на момент фиксации коммита). Сетевой доступ во время выполнения тестов блокируется для предотвращения утечек данных.</li>
-                <li><strong>Источник и уровень доказательности:</strong> Рецензируемая научная статья Chen et al. (Codex, 2021) <a href="https://arxiv.org/abs/2107.03374" target="_blank" class="link-ext">[arXiv:2107.03374]</a> [Level 1 Evidence]; статья Jimenez et al. (SWE-bench, ICLR 2024) <a href="https://arxiv.org/abs/2310.06770" target="_blank" class="link-ext">[arXiv:2310.06770]</a> [Level 1 Evidence: Peer-Reviewed].</li>
+                <li><strong>Инструменты агента (Tools):</strong> Унифицированный интерфейс терминального агента: автономное чтение файлов по путям, поиск по кодовой базе (ripgrep/file-search), генерация структурированных patch-блоков, выполнение команд в изолированном шелле и запуск тестовых наборов.</li>
+                <li><strong>Устройство Harness:</strong> Асинхронный многошаговый ReAct-цикл с поддержкой отслеживания контекста репозитория. В современном Codex Agent реализован управляемый планировщик и механизм контрольных точек для отката ошибочных изменений.</li>
+                <li><strong>Модель разрешений (Permissions):</strong> Настраиваемые политики: режим подтверждения потенциально деструктивных терминальных операций и автономный фоновый режим для работы в облачных контурах.</li>
+                <li><strong>Песочница (Sandbox):</strong> Эфемерные микро-виртуальные машины (Firecracker / Docker Sandboxes) с защищённым сетевым периметром, где агент изолирован от хост-системы и производит компиляцию, установку зависимостей и прогон pytest/npm.</li>
+                <li><strong>Источник и уровень доказательности:</strong> Официальная документация платформы OpenAI Codex <a href="https://openai.com" target="_blank" class="link-ext">[URL]</a> (Level 3 Evidence); исторические рецензируемые публикации Chen et al. (2021) и SWE-agent (2024) (Level 1 Evidence).</li>
             </ul>
             <div class="mermaid-container">
                 <pre class="mermaid">
 flowchart LR
-    IssueDesc["GitHub Issue Spec"] --> SWEAgent["SWE-Agent Harness Controller"]
-    SWEAgent -->|"Prompt + Step History"| Codex["LLM (Codex / GPT-4o / Sonnet)"]
-    Codex -->|"ACI Command (edit, search, run)"| Docker["Docker Container Snapshot<br/>(Conda Environment, No Network)"]
-    Docker -->|"Stdout / Stderr / Exit Code"| SWEAgent
-    SWEAgent -->|"Step Limit Check"| Decision{"Issue Resolved?"}
-    Decision -->|"No & Steps < Limit"| SWEAgent
-    Decision -->|"Yes or Limit Reached"| Patch["Export git diff Patch"]
+    Task["Repository Task / Issue"] --> CodexHarness["Codex Agent Orchestrator"]
+    CodexHarness -->|"Inspect & Plan"| Context["Repo Search & Diff History"]
+    CodexHarness -->|"Inference Call"| Model["OpenAI Frontier Reasoning Model"]
+    Model -->|"Tool Calls"| Sandbox["Isolated Ephemeral VM Sandbox"]
+    Sandbox -->|"Shell Commands & Tests"| Runner["Bash / Test Runner"]
+    Runner -->|"Execution Output & Errors"| CodexHarness
+    CodexHarness -->|"Self-Correction Loop"| Model
+    CodexHarness -->|"Verified Solution"| PR["Git Commit / Pull Request"]
                 </pre>
             </div>
         </div>
@@ -893,10 +1019,10 @@ flowchart LR
         <!-- COMPETITOR 7: WINDSURF CASCADE -->
         <div class="card-inner" style="margin-bottom: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-                <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">7. Windsurf & Cascade Agent (Codeium)</h4>
+                <h4 style="color: #60a5fa; margin: 0; font-size: 16px;">7. Windsurf & Cascade Agent (Cognition / Codeium)</h4>
                 <span class="badge badge-cyan" style="background: rgba(6, 182, 212, 0.2); color: #67e8f9; border: 1px solid rgba(6, 182, 212, 0.4);">AI Flow Paradigm IDE</span>
             </div>
-            <p><strong>Описание:</strong> Интегрированная среда разработки от компании Codeium, представившая концепцию «AI Flow» и агентного движка Cascade, ставшая главным рыночным соперником Cursor в 2024–2026 годах <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">[Codeium Docs, 2024]</a>.</p>
+            <p><strong>Описание:</strong> Интегрированная среда разработки нового поколения, представившая концепцию «AI Flow» и агентного движка Cascade <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">[Windsurf Docs, 2024]</a>. В июле 2025 года компания Cognition (создатель Devin) официально приобрела Windsurf, объединив под единым корпоративным контуром облачного автономного разработчика (Devin) и локальный IDE-инструмент (Cascade).</p>
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> Мультимодальный поиск по кодовой базе (Codebase RAG), непрерывное чтение и редактирование файлов, интеграция с терминалом (выполнение команд сборки, тестов, git), глубокий анализ LSP (Language Server Protocol), веб-поиск и проектные инструкции <code>.windsurfrules</code>.</li>
                 <li><strong>Устройство Harness:</strong> Парадигма <em>AI Flow</em>. В отличие от пошагового чата, Cascade способен выполнять цепочки из <strong>20–25 последовательных вызовов инструментов в рамках одного непрерывного цикла</strong> (Uninterrupted Flow). Поддерживает <strong>Persistent Project Memory</strong> — долговременную память архитектурных соглашений и решений между сессиями. В сложных сценариях задействует параллельных субагентов для монорепозиториев (один обновляет сигнатуру, второй правит зависимые вызовы, третий обновляет тесты).</li>
@@ -928,25 +1054,13 @@ flowchart LR
             <p><strong>Описание:</strong> Ведущий открытый терминальный инструмент парного программирования от Пола Готье, ставший де-факто мировым стандартом локального агентного рефакторинга с открытым исходным кодом <a href="https://github.com/paul-gauthier/aider" target="_blank" class="link-ext">[Gauthier, 2023-2024]</a>.</p>
             <ul>
                 <li><strong>Инструменты агента (Tools):</strong> Прямой доступ к Git (автоматические атомарные коммиты с информативными сообщениями), Tree-sitter парсинг более чем 100 языков программирования, выполнение терминальных тестовых команд (pytest, npm test), контекстный селектор файлов.</li>
-                <li><strong>Устройство Harness — Архитектура RepoMap:</strong> Выдающийся вклад Aider — алгоритм <strong>RepoMap</strong> <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">[Aider RepoMap Docs]</a>:
+                <li><strong>Устройство Harness — Архитектура RepoMap:</strong> Ключевой инженерный вклад Aider — алгоритм <strong>RepoMap</strong> <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">[Aider RepoMap Docs]</a>:
                     <ol>
-                        <li>С помощью Tree-sitter из всех файлов репозитория извлекаются определения (classes, functions, methods) и ссылки на них (identifiers).</li>
-                        <li>Строится ориентированный граф зависимостей кода на базе библиотеки <code>networkx</code>.</li>
-                        <li>Запускается алгоритм <strong>PageRank</strong>, который определяет топологическую важность каждого символа (наиболее часто вызываемые ключевые сущности получают высший ранг).</li>
-                        <li>Граф упаковывается в ультра-компактную текстовую «карту репозитория» с жестким лимитом бюджета (обычно ровно 1 024 токена), передаваемую в системный промпт LLM для обеспечения глобальной контекстной осведомленности.</li>
-                        <li>
-                <strong>OpenAI & Princeton University.</strong> (2024). <em>Introducing SWE-bench Verified: A Curated Benchmark for Software Engineering Agents</em>. OpenAI Research Publication. <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/introducing-swe-bench-verified/</a>.
-            </li>
-            <li>
-                <strong>Gauthier, P.</strong> (2023-2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.
-            </li>
-            <li>
-                <strong>Codeium Inc.</strong> (2024). <em>Windsurf IDE and the Cascade Agentic Flow Architecture</em>. Codeium Technical Whitepaper. <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">https://codeium.com/windsurf</a>.
-            </li>
-            <li>
-                <strong>Anthropic PBC.</strong> (2024). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
-            </li>
-        </ol>
+                        <li>С помощью Tree-sitter из файлов репозитория извлекаются определения (классы, функции, интерфейсы) и ссылки на идентификаторы.</li>
+                        <li>Строится ориентированный граф связей кода на базе библиотеки <code>networkx</code>.</li>
+                        <li>Применяется алгоритм <strong>PageRank</strong> для вычисления топологической важности каждого символа (наиболее связные сущности получают наивысший ранг).</li>
+                        <li>Граф упаковывается в компактную контекстную выжимку с лимитом бюджета (1 024 токена) и помещается в системный промпт модели для глобальной навигации.</li>
+                    </ol>
                 </li>
                 <li><strong>Принципиальное сопоставление Aider RepoMap с нашей Фичей №1 (Repo-Mapper):</strong>
                     <ul>
@@ -1289,6 +1403,9 @@ flowchart TD
                 <strong>OpenAI & Princeton University.</strong> (2024). <em>Introducing SWE-bench Verified: A Curated Benchmark for Software Engineering Agents</em>. OpenAI Research Publication. <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/introducing-swe-bench-verified/</a>.
             </li>
             <li>
+                <strong>OpenAI Research.</strong> (2026). <em>Why SWE-bench Verified No Longer Measures Frontier Coding Capabilities</em>. OpenAI Research Report (February 23, 2026). <a href="https://openai.com/index/why-swe-bench-verified-no-longer-measures-frontier-coding-capabilities/" target="_blank" class="link-ext">https://openai.com/index/why-swe-bench-verified-no-longer-measures-frontier-coding-capabilities/</a>.
+            </li>
+            <li>
                 <strong>Gauthier, P.</strong> (2023-2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.
             </li>
             <li>
@@ -1352,9 +1469,10 @@ flowchart TD
             </div>
             <div class="card-inner">
                 <h4>Репозиторий-акцептор: ComfyUI (Python)</h4>
-                <p>Репозиторий нодового пайплайна генерации <code>ComfyUI</code> (Python). Является фактическим мировым стандартом для построения модульных execution графов в области генеративного ИИ. Слияние нодовой архитектуры n8n с ядром ComfyUI представляет собой реальный индустриальный кейс объединения двух независимых open-source экосистем.</p>
+                <p>Репозиторий нодового пайплайна генерации <code>ComfyUI</code> (Python). Является фактическим мировым стандартом для построения модульных execution графов в области генеративного ИИ. Слияние нодовой архитектуры n8n с ядром ComfyUI представляет собой исследовательский кейс объединения двух независимых нодовых парадигм.</p>
             </div>
         </div>
+        <p style="font-size: 13px; color: #94a3b8; margin-top: 8px;"><em>Правовая и лицензионная специфика:</em> Проект <code>n8n</code> распространяется под лицензией <em>Sustainable Use License</em> (Fair-code, доступный исходный код с ограничениями коммерческого хостинга), а <code>ComfyUI</code> — под лицензией <em>GNU General Public License v3.0 (GPL-3.0)</em>. В рамках ВКР их код исследуется исключительно локально в академических целях (Academic Research / Fair Use) для построения графов AST и проверки метрик K1–K9 без коммерческого распространения производных пакетов, что исключает юридические коллизии.</p>
 
         <h3>6.1. Графовое хранилище знаний (Code-RAG)</h3>
         <p>Я обосновал отказ от наивного текстового RAG (разделение кода на текстовые чанки по 500 токенов и векторный поиск). Для инженерных задач миграции текстовый RAG губителен, так как разрывает семантические связи между определением метода и местом его вызова. Вместо этого в Repo-Harness спроектировано <strong>графовое хранилище знаний (Graph Code-RAG)</strong>:</p>
@@ -1377,8 +1495,14 @@ flowchart TD
 
         <h3>7.1. Название и архитектурная роль фичи</h3>
         <p><strong>Фича №1: Многоязычный синтаксический экстрактор и построитель графа зависимостей (Repo-Mapper & AST Extractor).</strong></p>
-        <p><strong>Опора на предшествующий опыт и новизна:</strong> Создание этого модуля опирается на доказанную эффективность извлечения синтаксических карт в проекте <strong>Aider RepoMap</strong> <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">[Gauthier, 2024]</a>. Однако, в отличие от Aider (где карта репозитория строится исключительно как read-only текстовая подсказка для человека в рамках одного Git-проекта), наш <strong>Repo-Mapper</strong> решает принципиально иную задачу: он строит <strong>строго типизированный направленный ациклический граф зависимостей (DAG) для N репозиториев одновременно</strong>.</p>
-        <p><strong>Почему именно она выбрана первой:</strong> Ни один субагент не способен корректно перенести хотя бы одну строчку кода, пока не решена фундаментальная проблема упорядочивания: в каком порядке компилировать модули? Попытка случайного переноса приводит к каскадным ошибкам <code>ModuleNotFoundError</code> и <code>NameError</code>. Фича №1 закладывает строгий детерминированный фундамент: строит топологический порядок миграции (от листьев дерева зависимостей к корню).</p>
+        <p><strong>Опора на предшествующий опыт и научная новизна:</strong> Создание этого модуля опирается на идеи извлечения синтаксических карт в проекте <strong>Aider RepoMap</strong> <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">[Gauthier, 2024]</a>. Однако, в отличие от Aider (где карта репозитория строится как эвристическая read-only текстовая подсказка в рамках одного проекта), наш <strong>Repo-Mapper</strong> выполняет глубокий структурный анализ для $N$ независимых репозиториев одновременно с формированием детерминированной очереди миграции.</p>
+        <p><strong>Архитектурная обработка циклических зависимостей (Directed Multigraph &rarr; Condensation DAG):</strong> В реальных кодовых базах (включая сложные проекты вроде n8n) зависимости между модулями не образуют чистый DAG: неизбежно присутствуют циклические импорты ($A \to B \to C \to A$). Прямой вызов <code>networkx.topological_sort()</code> на сыром графе приводит к исключению <code>NetworkXUnfeasible</code>. Поэтому алгоритм Repo-Mapper детерминированно разделён на 3 фазы:</p>
+        <ul>
+            <li><strong>Фаза 1 (Сырой мультиграф $G = (V, E)$):</strong> Построение ориентированного графа вызовов и импортов с помощью си-биндингов Tree-sitter.</li>
+            <li><strong>Фаза 2 (Конденсация компонент связности по алгоритму Тарьяна):</strong> Выделение сильно связанных компонент (Strongly Connected Components, SCC). Циклические группы файлов сворачиваются в неделимые мета-модули (кластеры совместной миграции).</li>
+            <li><strong>Фаза 3 (Топологическая сортировка факторизованного DAG $G_{\text{SCC}}$):</strong> Построение строгого ациклического порядка компиляции модулей алгоритмом Кана от независимых «листьев» к корневым контроллерам.</li>
+        </ul>
+        <p><strong>Почему именно она выбрана первой:</strong> Ни один агент не способен перенести проект без знания порядка компиляции: стохастический перенос порождает каскадные <code>ModuleNotFoundError</code> и <code>NameError</code>. Фича №1 гарантирует, что каждый модуль компилируется только тогда, когда все его зависимости уже мигрированы и типизированы.</p>
 
         <h3>7.2. Архитектурная схема работы модуля</h3>
         <div class="mermaid-container">
@@ -1445,10 +1569,10 @@ flowchart LR
                 <strong>Yang, J., Jimenez, C. E., Wettig, A., et al.</strong> (2024). <em>SWE-agent: Agent-Computer Interfaces Enable Automated Software Engineering</em>. arXiv preprint. <a href="https://arxiv.org/abs/2405.15793" target="_blank" class="link-ext">arXiv:2405.15793</a>.
             </li>
             <li>
-                <strong>Wang, G., et al.</strong> (2024). <em>OpenHands: An Open Platform for AI Software Developers as Generalist Agents</em>. arXiv preprint. <a href="https://arxiv.org/abs/2407.16741" target="_blank" class="link-ext">arXiv:2407.16741</a>.
+                <strong>Wang, Xingyao, et al.</strong> (2024). <em>OpenHands: An Open Platform for AI Software Developers as Generalist Agents</em>. arXiv preprint. <a href="https://arxiv.org/abs/2407.16741" target="_blank" class="link-ext">arXiv:2407.16741</a>.
             </li>
             <li>
-                <strong>Zhang, D., et al.</strong> (2023). <em>RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation</em>. In Proceedings of EMNLP 2023. <a href="https://arxiv.org/abs/2303.12570" target="_blank" class="link-ext">arXiv:2303.12570</a>.
+                <strong>Zhang, Fengji, et al.</strong> (2023). <em>RepoCoder: Repository-Level Code Completion Through Iterative Retrieval and Generation</em>. In Proceedings of EMNLP 2023. <a href="https://arxiv.org/abs/2303.12570" target="_blank" class="link-ext">arXiv:2303.12570</a>.
             </li>
             <li>
                 <strong>Roziere, B., Lachaux, M. A., Chanussot, L., & Lample, G.</strong> (2020). <em>Unsupervised Translation of Programming Languages</em>. In Advances in Neural Information Processing Systems (NeurIPS 2020), 33, 20601-20611. <a href="https://arxiv.org/abs/2006.03511" target="_blank" class="link-ext">arXiv:2006.03511</a>.
@@ -1515,23 +1639,12 @@ flowchart LR
             <div class="card-inner">
                 <h4>Инженерные задачи Недели 2</h4>
                 <ol>
-                    <li>Реализация базового модуля <code>RepoMapper</code> на Python с поддержкой Tree-sitter грамматик для TypeScript и Python в Linux WSL2.</li>
-                    <li>Разработка алгоритма построения графа зависимостей модулей на базе библиотеки <code>networkx</code> и генерация первой схемы <code>dependency_graph.json</code> для тестового репозитория <code>n8n</code>.</li>
-                    <li>Разработка шаблона генерации Pydantic-схем по AST-структурам TypeScript интерфейсов.</li>
-                    <li>Написание unit-тестов на Pytest для проверки корректности обхода циклических импортов в графе зависимостей.</li>
-                    <li>
-                <strong>OpenAI & Princeton University.</strong> (2024). <em>Introducing SWE-bench Verified: A Curated Benchmark for Software Engineering Agents</em>. OpenAI Research Publication. <a href="https://openai.com/index/introducing-swe-bench-verified/" target="_blank" class="link-ext">https://openai.com/index/introducing-swe-bench-verified/</a>.
-            </li>
-            <li>
-                <strong>Gauthier, P.</strong> (2023-2024). <em>Aider: AI Pair Programming in Your Terminal and the RepoMap Architecture</em>. Open Source Project Documentation. <a href="https://aider.chat/docs/repomap.html" target="_blank" class="link-ext">https://aider.chat/docs/repomap.html</a>.
-            </li>
-            <li>
-                <strong>Codeium Inc.</strong> (2024). <em>Windsurf IDE and the Cascade Agentic Flow Architecture</em>. Codeium Technical Whitepaper. <a href="https://codeium.com/windsurf" target="_blank" class="link-ext">https://codeium.com/windsurf</a>.
-            </li>
-            <li>
-                <strong>Anthropic PBC.</strong> (2024). <em>Model Context Protocol (MCP) Specification: Open standard for secure AI tool integration</em>. Open Source Specification. <a href="https://modelcontextprotocol.io" target="_blank" class="link-ext">https://modelcontextprotocol.io</a>.
-            </li>
-        </ol>
+                    <li>Реализация базового модуля <code>RepoMapper</code> на Python с поддержкой Tree-sitter грамматик для TypeScript и Python в среде Linux WSL2.</li>
+                    <li>Разработка алгоритма свёртки циклических импортов через конденсацию SCC (алгоритм Тарьяна) в библиотеке <code>networkx</code> и генерация первого отчёта <code>dependency_graph.json</code>.</li>
+                    <li>Разработка шаблона автоматической генерации Pydantic v2 схем по AST-узлам TypeScript-интерфейсов.</li>
+                    <li>Написание unit-тестов на Pytest для проверки устойчивости построения DAG при наличии циклических ссылок.</li>
+                    <li>Подготовка изолированной тестовой выборки из 15 репрезентативных модулей n8n и ComfyUI для калибровки точности парсинга.</li>
+                </ol>
             </div>
             <div class="card-inner">
                 <h4>Идентифицированные риски и меры минимизации</h4>
