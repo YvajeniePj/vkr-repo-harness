@@ -571,13 +571,13 @@
             align-items: center;
             justify-content: center;
             user-select: none;
+            will-change: transform;
         }
 
         .modal-canvas svg {
             max-width: none !important;
             max-height: none !important;
-            width: auto !important;
-            height: auto !important;
+            display: block !important;
         }
 
         .modal-hint {
@@ -2166,6 +2166,7 @@ document.addEventListener("DOMContentLoaded", function() {
     const viewport = document.getElementById("modalViewport");
 
     let currentScale = 1;
+    let defaultScale = 1;
     let translateX = 0;
     let translateY = 0;
     let isDragging = false;
@@ -2178,7 +2179,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function resetZoom() {
-        currentScale = 1;
+        currentScale = defaultScale;
         translateX = 0;
         translateY = 0;
         updateTransform();
@@ -2190,7 +2191,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const svg = wrapper.querySelector("svg");
         const title = wrapper.getAttribute("data-title") || "Схема архитектуры";
         if (!svg) {
-            alert("Диаграмма ещё загружается, пожалуйста, повторите через секунду.");
+            alert("Диаграмма ещё формируется библиотекой Mermaid, пожалуйста, повторите через 1–2 секунды.");
             return;
         }
 
@@ -2198,13 +2199,56 @@ document.addEventListener("DOMContentLoaded", function() {
         modalCanvas.innerHTML = svg.outerHTML;
         const modalSvg = modalCanvas.querySelector("svg");
         if (modalSvg) {
-            modalSvg.style.width = "auto";
-            modalSvg.style.height = "auto";
+            // Determine intrinsic SVG dimensions from viewBox or bounding box
+            let w = 1000;
+            let h = 600;
+            if (svg.viewBox && svg.viewBox.baseVal && svg.viewBox.baseVal.width > 0) {
+                w = svg.viewBox.baseVal.width;
+                h = svg.viewBox.baseVal.height;
+            } else {
+                const vbAttr = svg.getAttribute("viewBox");
+                if (vbAttr) {
+                    const parts = vbAttr.trim().split(/[\s,]+/).map(Number);
+                    if (parts.length === 4 && parts[2] > 0 && parts[3] > 0) {
+                        w = parts[2];
+                        h = parts[3];
+                    }
+                } else {
+                    const bbox = svg.getBoundingClientRect();
+                    if (bbox.width > 0 && bbox.height > 0) {
+                        w = bbox.width;
+                        h = bbox.height;
+                    }
+                }
+            }
+
+            modalSvg.style.width = `${w}px`;
+            modalSvg.style.height = `${h}px`;
             modalSvg.style.maxWidth = "none";
             modalSvg.style.maxHeight = "none";
+            modalSvg.style.display = "block";
+            modalSvg.style.transform = "none";
+            modalSvg.setAttribute("width", w);
+            modalSvg.setAttribute("height", h);
+
+            // Open modal to get real client dimensions
+            modal.classList.add("active");
+            const vpWidth = viewport.clientWidth || window.innerWidth;
+            const vpHeight = viewport.clientHeight || (window.innerHeight - 50);
+            const scaleX = (vpWidth - 80) / w;
+            const scaleY = (vpHeight - 80) / h;
+            const initialFit = Math.min(scaleX, scaleY);
+            defaultScale = Math.max(Math.min(initialFit, 1.0), 0.2);
+            currentScale = defaultScale;
+        } else {
+            modal.classList.add("active");
+            currentScale = 1;
+            defaultScale = 1;
         }
-        modal.classList.add("active");
-        resetZoom();
+
+        translateX = 0;
+        translateY = 0;
+        updateTransform();
         document.body.style.overflow = "hidden";
     };
 
@@ -2219,7 +2263,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updateTransform();
     });
     document.getElementById("btnModalZoomOut").addEventListener("click", () => {
-        currentScale = Math.max(currentScale / 1.25, 0.2);
+        currentScale = Math.max(currentScale / 1.25, 0.15);
         updateTransform();
     });
     document.getElementById("btnModalReset").addEventListener("click", resetZoom);
@@ -2229,7 +2273,7 @@ document.addEventListener("DOMContentLoaded", function() {
     viewport.addEventListener("wheel", (e) => {
         e.preventDefault();
         const factor = e.deltaY < 0 ? 1.15 : 0.87;
-        currentScale = Math.min(Math.max(currentScale * factor, 0.2), 6);
+        currentScale = Math.min(Math.max(currentScale * factor, 0.15), 6);
         updateTransform();
     }, { passive: false });
 
@@ -2239,6 +2283,7 @@ document.addEventListener("DOMContentLoaded", function() {
         isDragging = true;
         startX = e.clientX - translateX;
         startY = e.clientY - translateY;
+        modalCanvas.style.transition = "none";
     });
     window.addEventListener("mousemove", (e) => {
         if (!isDragging) return;
@@ -2247,11 +2292,24 @@ document.addEventListener("DOMContentLoaded", function() {
         updateTransform();
     });
     window.addEventListener("mouseup", () => {
-        isDragging = false;
+        if (isDragging) {
+            isDragging = false;
+            modalCanvas.style.transition = "transform 0.05s ease-out";
+        }
     });
 
     // Double-click to reset zoom
-    viewport.addEventListener("dblclick", resetZoom);
+    viewport.addEventListener("dblclick", (e) => {
+        if (e.target.closest(".modal-controls") || e.target.closest("button")) return;
+        resetZoom();
+    });
+
+    // Click on backdrop outside viewport content to close
+    modal.addEventListener("click", (e) => {
+        if (e.target === modal) {
+            closeDiagramModal();
+        }
+    });
 
     // ESC to close modal
     window.addEventListener("keydown", (e) => {
